@@ -1,0 +1,69 @@
+erDiagram
+
+USER {
+  int id PK
+  string firstname
+}
+
+CATEGORY {
+  int id PK
+  string name
+}
+
+COUNTRY {
+  int id PK
+  string name
+}
+
+CITY {
+  int id PK
+  string name
+  int country_id FK
+}
+
+PLACE {
+  int id PK
+  string name
+  int city_id FK
+  int category_id FK
+  int user_id FK
+}
+
+PLACE_IMAGE {
+  int id PK
+  int place_id FK
+  string url
+}
+
+CITY_IMAGE {
+  int id PK
+  int city_id FK
+  string url
+}
+
+BOOKING {
+  int id PK
+  int user_id FK
+  int place_id FK
+  date date
+}
+
+REVIEW {
+  int id PK
+  int user_id FK
+  int place_id FK
+  date date
+  string message
+  int rate
+}
+
+COUNTRY ||--o{ CITY : has
+CITY ||--o{ PLACE : contains
+CITY ||--o{ CITY_IMAGE : has
+CATEGORY ||--o{ PLACE : classifies
+USER ||--o{ PLACE : owns
+PLACE ||--o{ PLACE_IMAGE : has
+USER ||--o{ BOOKING : makes
+PLACE ||--o{ BOOKING : receives
+USER ||--o{ REVIEW : writes
+PLACE ||--o{ REVIEW : gets
