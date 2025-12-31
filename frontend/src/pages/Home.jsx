@@ -1,4 +1,5 @@
 import { Header } from "../components/Header";
+import { Hero } from "../components/Hero";
 
 export const Home = () => {
   return (
@@ -6,6 +7,7 @@ export const Home = () => {
       {/* ========= header ============= */}
       <Header />
       {/* ============ Hero ======= */}
+      <Hero />
       {/* ============ serach ======= */}
       {/* ============ categories ======= */}
       {/* ============ Popular Hotels and Accommodations ======= */}
