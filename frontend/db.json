@@ -2,13 +2,28 @@
   "users": [
     {
       "id": 1,
-      "firstname": "Juma"
+      "firstname": "Juma",
+      "lastname": "Qasimi",
+      "email": "juma@gmail.com",
+      "password": "123",
+      "scurityQuestion": {
+        "what is your born city?": "jaghori",
+        "what is your birth day?": "12"
+      }
     }
   ],
   "categories": [
     {
+      "id": 1,
+      "name": "Hospital"
+    },
+    {
       "id": 2,
       "name": "Hotel"
+    },
+    {
+      "id": 3,
+      "name": "suoermarket"
     }
   ],
   "countries": [
@@ -22,6 +37,11 @@
       "id": 1,
       "name": "Jaghori",
       "country_id": 1
+    },
+    {
+      "id": 2,
+      "name": "kabul",
+      "country_id": 1
     }
   ],
   "places": [
@@ -31,23 +51,30 @@
       "city_id": 1,
       "category_id": 2,
       "user_id": 1
+    },
+    {
+      "id": 2,
+      "name": "supermarket ",
+      "city_id": 1,
+      "category_id": 2,
+      "user_id": 1
     }
   ],
   "place_images": [
     {
       "id": 1,
       "place_id": 1,
-      "url": "image1.jpg"
+      "url": "images/supermarket/image1.jpg"
     },
     {
       "id": 2,
       "place_id": 1,
-      "url": "image2.jpg"
+      "url": "images/supermarket/image2.jpg"
     }
   ],
   "city_images": [
-    { "id": 1, "city_id": 1, "url": "images/jaghoriimage.png" },
-    { "id": 2, "city_id": 1, "url": "images/jaghoriimage.png" }
+    { "id": 1, "city_id": 1, "url": "images/city/jaghoriimage.png" },
+    { "id": 2, "city_id": 1, "url": "images/city/jaghoriimage.png" }
   ],
   "bookings": [
     {
