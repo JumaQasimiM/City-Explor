@@ -20,12 +20,12 @@ export const Hero = () => {
       <div className="relative z-10 max-w-3xl text-center px-5 flex flex-col items-center animate-fadeIn">
         {/* Headline */}
         <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-6 leading-tight drop-shadow-lg">
-          Welcome to{" "}
+          <span className="font-milonga"> Welcome to</span>{" "}
           <span className="text-green-400 font-caveat">City Explor</span>
         </h1>
 
         {/* descption */}
-        <p className="text-white text-lg md:text-xl mb-8 leading-relaxed max-w-xl drop-shadow-md">
+        <p className="text-white text-lg md:text-xl mb-8 leading-relaxed max-w-xl drop-shadow-md font-roboto">
           Discover the best places in the city with our curated guides, maps,
           and tips. Explore, experience, and enjoy every moment.
         </p>

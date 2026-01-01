@@ -6,6 +6,9 @@
 
 @import "tailwindcss";
 
+/* theme change */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   /* fonts */
   --font-roboto: "Roboto", sans-serif;
@@ -13,4 +16,6 @@
   --font-milonga: "Milonga", serif;
 
   /* colors */
+
+  --color-brand: #22c55e; /* green-500 */
 }

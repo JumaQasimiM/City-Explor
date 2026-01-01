@@ -1,5 +1,7 @@
 import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
+import { PlaceArtical } from "../components/PlaceArtical";
+import { PopularPlaces } from "../components/PopularPlaces";
 
 export const Home = () => {
   return (
@@ -9,8 +11,11 @@ export const Home = () => {
       {/* ============ Hero ======= */}
       <Hero />
       {/* ============ serach ======= */}
-      {/* ============ categories ======= */}
-      {/* ============ Popular Hotels and Accommodations ======= */}
+
+      {/* ============ Place Artical  ======= */}
+      <PlaceArtical />
+      {/* ============ Popular place ======= */}
+      <PopularPlaces />
       {/* ============ Popular Restaurants ======= */}
       {/* ============ offer ======= */}
       {/* ============ News and Events ======= */}
