@@ -19,3 +19,82 @@
 
   --color-brand: #22c55e; /* green-500 */
 }
+/* Swiper navigation buttons */
+/* ============================= */
+/* Swiper Navigation Buttons */
+/* ============================= */
+/* ============================= */
+/* Swiper Navigation Buttons */
+/* ============================= */
+
+.swiper {
+  position: relative;
+}
+/* Common styles for both buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  width: 28px !important;
+  height: 28px !important;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 9999px;
+  top: 50% !important;
+  transform: translateY(-50%);
+  z-index: 20;
+}
+/* Arrow icon */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 7px !important;
+  font-weight: bold;
+  color: white;
+}
+
+/* Position */
+.swiper-button-next {
+  right: 10px !important;
+}
+
+.swiper-button-prev {
+  left: 10px !important;
+}
+
+/* ============================= */
+/* Swiper Pagination */
+/* ============================= */
+
+.swiper-pagination {
+  position: absolute;
+  bottom: 0px !important;
+}
+
+/* Pagination bullets */
+.swiper-pagination-bullet {
+  width: 13px !important;
+  height: 13px !important;
+  background-color: #1e539c;
+  opacity: 1;
+}
+
+/* Active bullet */
+.swiper-pagination-bullet-active {
+  background-color: #22c55e; /* brand green */
+}
+
+/* ============================= */
+/* Dark Mode */
+/* ============================= */
+
+.dark .swiper-button-next,
+.dark .swiper-button-prev {
+  background-color: rgba(3, 112, 1, 0.25) !important;
+  opacity: 10 !important;
+}
+
+.dark .swiper-button-next::after,
+.dark .swiper-button-prev::after {
+  color: rgb(255, 3, 3) !important;
+}
+
+.dark .swiper-pagination-bullet {
+  background-color: #34f100;
+}

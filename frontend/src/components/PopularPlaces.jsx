@@ -1,4 +1,5 @@
 import jaghoriImage from "../assets/hero.jpeg";
+import { PopularPlacesSwiper } from "./PopularPlaceSwiper";
 
 export const PopularPlaces = () => {
   return (
@@ -40,41 +41,8 @@ export const PopularPlaces = () => {
           </div>
 
           {/* RIGHT ARTICLES */}
-          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
-            {[1, 2].map((item) => (
-              <article key={item} className="group">
-                {/* Image */}
-                <div className="overflow-hidden">
-                  <img
-                    src={jaghoriImage}
-                    alt="Jaghori Afghanistan"
-                    className="w-full h-[240px] object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                </div>
-
-                {/* Text */}
-                <div className="mt-5 space-y-3">
-                  <span className="text-xs tracking-widest uppercase text-green-600">
-                    Hotel · Jaghori
-                  </span>
-
-                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white leading-snug">
-                    Stunning Buildings in the Center of Budapest
-                  </h3>
-
-                  <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed">
-                    Discover affordable stays, cultural landmarks, and hidden
-                    gems perfect for budget travelers.
-                  </p>
-
-                  <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
-                    <span>Dec 13, 2024</span>
-                    <span className="w-1 h-1 bg-slate-400 rounded-full"></span>
-                    <span>By Mohammad Juma Qasimi</span>
-                  </div>
-                </div>
-              </article>
-            ))}
+          <div className="lg:col-span-2 grid grid-cols-1 md:grid-cols-1 gap-10">
+            <PopularPlacesSwiper />
           </div>
         </div>
       </div>
