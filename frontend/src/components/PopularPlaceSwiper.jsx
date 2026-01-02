@@ -32,7 +32,7 @@ export const PopularPlacesSwiper = () => {
                 <img
                   src={jaghoriImage}
                   alt="Jaghori Afghanistan"
-                  className="w-full h-[240px] object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-[240px] object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
                 />
               </div>
 
@@ -51,7 +51,7 @@ export const PopularPlacesSwiper = () => {
                   perfect for budget travelers.
                 </p>
 
-                <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400">
+                <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-5 mb-3">
                   <span>Dec 13, 2024</span>
                   <span className="w-1 h-1 bg-slate-400 rounded-full"></span>
                   <span>By Mohammad Juma Qasimi</span>

@@ -17,12 +17,12 @@ export const PopularPlaces = () => {
               <img
                 src={jaghoriImage}
                 alt="Architecture Budapest"
-                className="w-full h-[520px] object-cover group-hover:scale-105 transition-transform duration-700"
+                className="w-full h-[520px] object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
               />
             </div>
 
             {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent rounded-2xl"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
             {/* Text overlay */}
             <div className="absolute bottom-6 left-6 right-6 text-white space-y-3">
