@@ -6,6 +6,7 @@ import { FaRegUser, FaHeart } from "react-icons/fa";
 import { useState } from "react";
 import { useTheme } from "../context/ThemeContext";
 
+import { Link } from "react-router-dom";
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   // theme hook
@@ -22,7 +23,11 @@ export const Header = () => {
   };
 
   // navitems
-  const navItem = ["Home", "About", "Contact"];
+  const navItem = [
+    { id: 1, name: "Home", url: "/" },
+    { id: 2, name: "About", url: "/about" },
+    { id: 3, name: "Contact", url: "/contact" },
+  ];
 
   return (
     <header className="w-full fixed top-0 left-0 z-50 shadow-md bg-gray-100 dark:bg-slate-800 dark:text-white/80">
@@ -36,10 +41,13 @@ export const Header = () => {
         <nav className="hidden md:flex">
           <ul className="flex items-center gap-10">
             {navItem.map((item) => (
-              <div key={item} className="relative group">
-                <li className="cursor-pointer font-semibold">{item}</li>
+              <li
+                key={item.id}
+                className="relative group cursor-pointer font-semibold"
+              >
+                <Link to={item.url}>{item.name}</Link>
                 <span className="absolute w-0 left-1/2 -translate-x-1/2 -bottom-1 bg-green-500 h-[2px] group-hover:w-full transition-all duration-300 ease-out"></span>
-              </div>
+              </li>
             ))}
           </ul>
         </nav>
@@ -88,7 +96,7 @@ export const Header = () => {
       {/* Mobi
       le Navbar */}
       <nav
-        className={`absolute w-full text-center md:hidden bg-gray-200 border-t-2 border-t-white/60 overflow-hidden transition-all duration-500 ${
+        className={`absolute w-full text-center md:hidden dark:bg-slate-700 dark:text-white bg-gray-300 border-t-2 border-t-white/60 overflow-hidden transition-all duration-500 ${
           isOpen
             ? "max-h-96 opacity-100 pointer-events-auto shadow-lg"
             : "max-h-0 opacity-0 pointer-events-none"
@@ -97,10 +105,10 @@ export const Header = () => {
         <ul className="flex flex-col gap-5 py-5">
           {navItem.map((item) => (
             <li
-              key={item}
+              key={item.id}
               className="cursor-pointer font-semibold hover:text-green-500 transition"
             >
-              {item}
+              <Link to={item.url}>{item.name}</Link>
             </li>
           ))}
         </ul>

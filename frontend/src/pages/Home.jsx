@@ -1,4 +1,3 @@
-import { Header } from "../components/Header";
 import { Hero } from "../components/Hero";
 import { PlaceArtical } from "../components/PlaceArtical";
 import { PopularHotels } from "../components/PopularHotels";
@@ -8,8 +7,6 @@ import { PopularRestaurants } from "../components/PopularRestaurants";
 export const Home = () => {
   return (
     <>
-      {/* ========= header ============= */}
-      <Header />
       {/* ============ Hero ======= */}
       <Hero />
       {/* ============ serach ======= */}
@@ -23,10 +20,9 @@ export const Home = () => {
       <PopularHotels />
       {/* ============ Popular Restaurants ======= */}
       <PopularRestaurants />
-      {/* ============  ======= */}
-      {/* ============ News and Events ======= */}
+      {/* ============ testmonial ======= */}
+
       {/* ============ advertisment or offer ======= */}
-      {/* ============ footer ======= */}
     </>
   );
 };
