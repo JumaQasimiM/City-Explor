@@ -10,6 +10,8 @@ import { MainLayout } from "./layouts/MainLayout";
 import { Users } from "./pages/dashbord/Users";
 import { Cities } from "./pages/dashbord/Cities";
 import { Places } from "./pages/dashbord/Places";
+import { AddPlace } from "./pages/dashbord/AddPlace";
+import { Country } from "./pages/dashbord/Country";
 function App() {
   return (
     <>
@@ -24,9 +26,20 @@ function App() {
           {/* dashboard layout */}
           <Route element={<DashboardLayout />}>
             <Route path="/dashboard" element={<Dashboard />} />
+
+            {/* users */}
             <Route path="/dashboard/users" element={<Users />} />
+            <Route path="/dashboard/users/add" element={<Users />} />
+
+            {/* cities */}
             <Route path="/dashboard/cities" element={<Cities />} />
+
+            {/* places */}
             <Route path="/dashboard/places" element={<Places />} />
+            <Route path="/dashboard/places/add" element={<AddPlace />} />
+
+            {/* countray */}
+            <Route path="/dashboard/countries" element={<Country />} />
           </Route>
         </Routes>
       </BrowserRouter>

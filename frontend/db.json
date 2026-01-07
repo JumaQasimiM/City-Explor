@@ -6,10 +6,19 @@
       "lastname": "Qasimi",
       "email": "juma@gmail.com",
       "password": "123",
-      "scurityQuestion": {
-        "what is your born city?": "jaghori",
-        "what is your birth day?": "12"
-      }
+      "status": "pending",
+      "securityQuestions": [
+        {
+          "question": "What is your birth city?",
+          "answer": "jaghori"
+        },
+        {
+          "question": "What is your birth day?",
+          "answer": "12"
+        }
+      ],
+      "created_at": "2026-01-10",
+      "role": "admin"
     }
   ],
   "categories": [
@@ -48,6 +57,14 @@
     {
       "id": 1,
       "name": "Hotel Jaghori",
+      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
+      "address": "jaghori, Angori",
+      "srevices": [
+        "3 time food",
+        "bett",
+        "hot and clean room"
+      ],
+      "price": 120,
       "city_id": 1,
       "category_id": 2,
       "user_id": 1
@@ -55,9 +72,32 @@
     {
       "id": 2,
       "name": "supermarket ",
+      "address": "jaghori, Angori, sari charrah",
+      "description": "jaghori suoermarket is the top supermarket in the jaghori city , and you cann evry thing find and buy very good",
+      "price": 0,
+      "srevices": [
+        "firsh food",
+        "all in one"
+      ],
       "city_id": 1,
       "category_id": 2,
       "user_id": 1
+    },
+    {
+      "id": "f4f2",
+      "name": "lmöl",
+      "address": "lmsö",
+      "price": 12,
+      "description": "ldsfadlfngi",
+      "srevices": [
+        "lafnk",
+        "nsfl",
+        "snfl",
+        "knfl"
+      ],
+      "city_id": 12,
+      "category_id": 12,
+      "user_id": 12
     }
   ],
   "place_images": [
@@ -73,8 +113,16 @@
     }
   ],
   "city_images": [
-    { "id": 1, "city_id": 1, "url": "images/city/jaghoriimage.png" },
-    { "id": 2, "city_id": 1, "url": "images/city/jaghoriimage.png" }
+    {
+      "id": 1,
+      "city_id": 1,
+      "url": "images/city/jaghoriimage.png"
+    },
+    {
+      "id": 2,
+      "city_id": 1,
+      "url": "images/city/jaghoriimage.png"
+    }
   ],
   "bookings": [
     {

@@ -26,7 +26,6 @@ export const DashboardLayout = () => {
     { name: "Dashboard", to: "/dashboard", icon: <MdDashboard /> },
     {
       name: "Places",
-      to: "/dashboard/places",
       icon: <HiMiniHomeModern />,
       dropdown: [
         { name: "Add place", to: "/dashboard/places/add" },
@@ -36,7 +35,6 @@ export const DashboardLayout = () => {
     { name: "Bookings", to: "/dashboard/bookings", icon: <FaClipboardList /> },
     {
       name: "Users",
-      to: "/dashboard/users",
       icon: <FaUsers />,
       dropdown: [
         { name: "Add User", to: "/dashboard/users/add" },
@@ -46,19 +44,12 @@ export const DashboardLayout = () => {
     {
       name: "Cities",
       icon: <FaCity />,
-      dropdown: [
-        { name: "Add City", to: "/dashboard/cities/add" },
-        { name: "City List", to: "/dashboard/cities" },
-      ],
+      to: "/dashboard/cities",
     },
     {
       name: "Country",
-      to: "/dashboard/country",
       icon: <FaGlobe />,
-      dropdown: [
-        { name: "Add Country", to: "/dashboard/countries/add" },
-        { name: "Country List", to: "/dashboard/countries" },
-      ],
+      to: "/dashboard/countries",
     },
     { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];
@@ -68,7 +59,7 @@ export const DashboardLayout = () => {
       {/* ================= SIDEBAR ================= */}
       <div>
         {/* Avatar section */}
-        <div className="bg-slate-700 flex items-center gap-4 py-4 px-3 border-b-2 border-b-gray-600">
+        <div className="hidden md:flex bg-slate-700 flex items-center gap-4 py-4 px-3 border-b-2 border-b-gray-600">
           <img
             src={avator}
             alt="Admin Avatar"
@@ -84,7 +75,7 @@ export const DashboardLayout = () => {
         </div>
 
         {/* Sidebar */}
-        <aside className="w-60 bg-slate-800 min-h-screen p-4 flex flex-col">
+        <aside className="hidden md:flex w-60 bg-slate-800 min-h-screen p-4 flex flex-col">
           <ul className="flex-1 space-y-2 overflow-y-auto">
             {navItems.map((item, index) => (
               <li key={index}>
