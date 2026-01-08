@@ -1,26 +1,98 @@
 import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
-
+import { useState } from "react";
 /**
- * custom Hook to fetch Cities from api
+ * Custom hook to fetch cities from API
  *
  * src/hooks/useCities.js
  *
- * usage:
+ * Usage:
+ * const { cities, loading, error, hasCity, refetch } = useCities();
  *
- * const {cities, loading, error, hasUsers} = useCities();
- *
- * @returns {object} { cities, loading, error, hasCity }
- *
+ * @returns {object}
  */
-
-// get all cities
 export const useCities = () => {
-  const { data = [], error, loading } = useFetch(`${ApiUrl}/cities`);
+  const { data, error, loading, refetch } = useFetch(`${ApiUrl}/cities`);
+
   return {
     cities: data,
-    error,
     loading,
-    hasCity: data.lenght > 0,
+    error,
+    hasCity: data.length > 0,
+    refetch,
   };
+};
+
+/**
+ * Custom hook to delete a city
+ *
+ * Usage:
+ * const { deleteCity, loading, error } = useDeleteCity();
+ */
+export const useDeleteCity = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const deleteCity = async (cityId) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/cities/${cityId}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete city");
+      }
+
+      return true;
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { deleteCity, loading, error };
+};
+
+// create
+/**
+ * custom hook to create new city
+ *
+ * usage:
+ *
+ * const {createCity, error, loading} = useCreateCity()
+ *
+ * @returns {object} {createCity, error, loading}
+ */
+
+export const useCreateCity = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const createCity = async (payload) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${ApiUrl}/cities`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to create city");
+      }
+      return await res.json();
+    } catch (error) {
+      setError(error.message || "something went wrong");
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { error, loading, createCity };
 };
