@@ -1,27 +1,22 @@
 import { useEffect, useState } from "react";
+import { useUsers } from "../../hooks/useUsers";
+import { NotFoundData } from "../../components/helper/NotFoundData";
+import { ErrorMessage } from "../../components/helper/Error";
+import { Loader } from "../../components/helper/Loading";
 
 export const Users = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/users");
-        const data = await res.json();
-        setUsers(data || []);
-      } catch (err) {
-        console.error("Failed to fetch users", err);
-      }
-    };
-    fetchUsers();
-  }, []);
-
+  const { users, error, loading, hasUsers } = useUsers();
   // handleUserStatus
   const handleUserStatus = () => {
     // not completet
     users.status = "acrive";
     alert("active");
   };
+
+  // show errror and laoding (helper)
+  if (error) return <ErrorMessage />;
+  if (loading) return <Loader />;
+
   return (
     <section className="p-6 bg-gray-900 min-h-screen">
       <h1 className="text-2xl font-bold mb-6">Users</h1>
@@ -43,10 +38,10 @@ export const Users = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-100">
-            {users.length === 0 ? (
+            {!hasUsers ? (
               <tr>
                 <td colSpan="9" className="text-center py-6 text-gray-500">
-                  No users found
+                  <NotFoundData text="No users found" />
                 </td>
               </tr>
             ) : (

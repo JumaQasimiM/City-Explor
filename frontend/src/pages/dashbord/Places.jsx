@@ -1,40 +1,21 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { usePlaceOwner, usePlaces } from "../../hooks/usePlaces";
 
 export const Places = () => {
-  const [places, setPlaces] = useState([]);
-  const [cities, setCities] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [users, setUsers] = useState([]);
+  // use usePlaces hook
+  const { data: places, error, loading } = usePlaces();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch("http://localhost:3000/places"); // json-server full db
-        const data = await res.json();
-
-        setPlaces(data);
-        setCities(data.cities || []);
-        setCategories(data.categories || []);
-        setUsers(data.users || []);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  // const { data } = usePlaceOwner(places.user_id);
   // Helpers
-  const getCityName = (id) => cities.find((c) => c.id === id)?.name || "-";
+  // const getCityName = (id) => cities.find((c) => c.id === id)?.name || "-";
 
-  const getCategoryName = (id) =>
-    categories.find((c) => c.id === id)?.name || "-";
+  // const getCategoryName = (id) =>
+  //   categories.find((c) => c.id === id)?.name || "-";
 
-  const getUserName = (id) => {
-    const user = users.find((u) => u.id === id);
-    return user ? `${user.firstname} ${user.lastname}` : "-";
-  };
+  // const getUserName = (id) => {
+  //   const user = users.find((u) => u.id === id);
+  //   return user ? `${user.firstname} ${user.lastname}` : "-";
+  // };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -72,7 +53,7 @@ export const Places = () => {
 
         {/* Table */}
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-blue-600 text-white">
+          <thead className="bg-slate-900 text-white">
             <tr>
               <th className="px-6 py-3">#</th>
               <th className="px-6 py-3">Name</th>
@@ -90,7 +71,7 @@ export const Places = () => {
             {places.length === 0 ? (
               <tr>
                 <td colSpan="9" className="text-center py-6 text-gray-500">
-                  No places found
+                  No places found 🫥
                 </td>
               </tr>
             ) : (
@@ -105,10 +86,8 @@ export const Places = () => {
                     {place.description?.slice(0, 35)}...
                   </td>
                   <td className="px-6 py-4">{place.address}</td>
-                  <td className="px-6 py-4">
-                    {getCategoryName(place.category_id)}
-                  </td>
-                  <td className="px-6 py-4">{getUserName(place.user_id)}</td>
+                  <td className="px-6 py-4">Hotel</td>
+                  <td className="px-6 py-4">1</td>
                   <td className="px-6 py-4">${place.price}</td>
                   <td className="px-6 py-4">{place.srevices?.join(", ")}</td>
                   <td className="px-6 py-4 flex gap-2">
