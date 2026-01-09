@@ -1,6 +1,6 @@
 import { Home } from "./pages/Home";
-import { Footer } from "./components/Footer";
-import { Header } from "./components/Header";
+
+import { ToastContainer, Bounce } from "react-toastify";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { About } from "./pages/About";
@@ -12,10 +12,26 @@ import { Cities } from "./pages/dashbord/Cities";
 import { Places } from "./pages/dashbord/Places";
 import { AddPlace } from "./pages/dashbord/AddPlace";
 import { Country } from "./pages/dashbord/Country";
+import { Category } from "./pages/dashbord/Category";
 function App() {
   return (
     <>
       <BrowserRouter>
+        {/* Notification */}
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick={false}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          transition={Bounce}
+        />
+
         <Routes>
           {/* website layout */}
           <Route element={<MainLayout />}>
@@ -40,6 +56,8 @@ function App() {
 
             {/* countray */}
             <Route path="/dashboard/countries" element={<Country />} />
+            {/* category */}
+            <Route path="/dashboard/categories" element={<Category />} />
           </Route>
         </Routes>
       </BrowserRouter>

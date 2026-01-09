@@ -47,9 +47,14 @@ export const DashboardLayout = () => {
       to: "/dashboard/cities",
     },
     {
-      name: "Country",
+      name: "Countries",
       icon: <FaGlobe />,
       to: "/dashboard/countries",
+    },
+    {
+      name: "Categories",
+      icon: <FaGlobe />,
+      to: "/dashboard/categories",
     },
     { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];

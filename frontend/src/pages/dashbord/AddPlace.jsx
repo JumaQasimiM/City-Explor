@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useUsers } from "../../hooks/useUsers";
+import { useCities } from "../../hooks/useCities";
+import { useCategories } from "../../hooks/useCategories";
 
+// helper component
+import { InputField } from "../../components/helper/Input";
+import { SelectField } from "../../components/helper/SelectField";
 export const AddPlace = () => {
   const navigate = useNavigate();
 
@@ -15,9 +21,8 @@ export const AddPlace = () => {
     user_id: "",
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleServiceChange = (index, value) => {
     const updated = [...form.services];
@@ -54,160 +59,143 @@ export const AddPlace = () => {
     }
   };
 
-  return (
-    <section className="p-4 sm:p-6 md:p-8 bg-gray-100 dark:bg-gray-900 min-h-screen">
-      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-gray-800 dark:text-white">
-        Add New Place
-      </h1>
+  const { users } = useUsers();
+  const { cities } = useCities();
+  const { categories } = useCategories();
 
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6
-          bg-white dark:bg-slate-800 p-6 rounded-lg shadow-md"
-      >
-        {/* Place Name */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Place Name
-          </label>
-          <input
-            type="text"
+  return (
+    <section className="p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
+          Add New Place
+        </h1>
+
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6
+                     bg-white dark:bg-slate-800 p-6 rounded-xl shadow"
+        >
+          {/* Basic Info */}
+          <InputField
+            label="Place Name"
             name="name"
             value={form.name}
             onChange={handleChange}
             placeholder="Enter place name"
             required
-            className="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
           />
-        </div>
 
-        {/* Address */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Address
-          </label>
-          <input
-            type="text"
+          <InputField
+            label="Address"
             name="address"
             value={form.address}
             onChange={handleChange}
             placeholder="Enter address"
-            className="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
           />
-        </div>
 
-        {/* Price */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Price
-          </label>
-          <input
-            type="number"
-            min="0"
+          <InputField
+            label="Price"
             name="price"
+            type="number"
             value={form.price}
             onChange={handleChange}
             placeholder="Enter price"
-            className="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
           />
-        </div>
 
-        {/* Services */}
-        <div className="flex flex-col col-span-1 sm:col-span-2 lg:col-span-1">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Services
-          </label>
-          {form.services.map((s, i) => (
-            <input
-              key={i}
-              value={s}
-              onChange={(e) => handleServiceChange(i, e.target.value)}
-              placeholder={`Service ${i + 1}`}
-              className="mb-2 px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
-            />
-          ))}
-        </div>
-
-        {/* Description */}
-        <div className="flex flex-col col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={form.description}
-            onChange={handleChange}
-            placeholder="Enter a short description"
-            rows={4}
-            className="w-full px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
-          />
-        </div>
-
-        {/* City ID */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            City ID
-          </label>
-          <input
-            type="number"
-            name="city_id"
-            value={form.city_id}
-            onChange={handleChange}
-            placeholder="City ID"
-            className="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
-          />
-        </div>
-
-        {/* Category ID */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Category ID
-          </label>
-          <input
-            type="number"
+          {/* Selects */}
+          <SelectField
+            label="Category"
             name="category_id"
             value={form.category_id}
             onChange={handleChange}
-            placeholder="Category ID"
-            className="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
+            options={categories}
+            placeholder="Select category"
+            optionLabel="name"
           />
-        </div>
 
-        {/* User ID */}
-        <div className="flex flex-col">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            User ID
-          </label>
-          <input
-            type="number"
+          <SelectField
+            label="City"
+            name="city_id"
+            value={form.city_id}
+            onChange={handleChange}
+            options={cities}
+            placeholder="Select city"
+            optionLabel="name"
+          />
+
+          <SelectField
+            label="Owner"
             name="user_id"
             value={form.user_id}
             onChange={handleChange}
-            placeholder="User ID"
-            className="px-3 py-2 rounded border focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:text-white"
+            options={users}
+            placeholder="Select user"
+            optionLabel={(u) => `${u.firstname} ${u.lastname}`}
           />
-        </div>
 
-        {/* Image Uploads */}
-        <div className="flex flex-col col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 gap-2">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Images
-          </label>
-          <input type="file" className="border rounded p-2" />
-          <input type="file" className="border rounded p-2" />
-          <input type="file" className="border rounded p-2" />
-        </div>
+          {/* Services */}
+          <div className="flex flex-col lg:col-span-1">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
+              Services
+            </label>
+            {form.services.map((s, i) => (
+              <input
+                key={i}
+                value={s}
+                onChange={(e) => handleServiceChange(i, e.target.value)}
+                placeholder={`Service ${i + 1}`}
+                className="mb-2 px-3 py-2 rounded border
+                           focus:ring-2 focus:ring-blue-500
+                           dark:bg-slate-700 dark:text-white"
+              />
+            ))}
+          </div>
 
-        {/* Submit Button */}
-        <div className="col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4">
-          <button
-            type="submit"
-            className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded font-semibold transition"
-          >
-            Save Place
-          </button>
-        </div>
-      </form>
+          {/* Description */}
+          <div className="flex flex-col md:col-span-2 lg:col-span-3">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={form.description}
+              onChange={handleChange}
+              rows={4}
+              placeholder="Short description about the place"
+              className="px-3 py-2 rounded border
+                         focus:ring-2 focus:ring-blue-500
+                         dark:bg-slate-700 dark:text-white"
+            />
+          </div>
+
+          {/* Images */}
+          <div className="flex flex-col md:col-span-2 lg:col-span-3">
+            <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
+              Images
+            </label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {[1, 2, 3].map((i) => (
+                <input
+                  key={i}
+                  type="file"
+                  className="border rounded p-2 dark:bg-slate-700"
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Submit */}
+          <div className="md:col-span-2 lg:col-span-3 flex justify-end">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700
+                         text-white px-8 py-3 rounded-lg font-semibold transition"
+            >
+              Save Place
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
   );
 };
