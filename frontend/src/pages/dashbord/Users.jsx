@@ -1,16 +1,21 @@
 import { useEffect, useState } from "react";
-import { useUsers } from "../../hooks/useUsers";
+import { useActiveUser, useUsers } from "../../hooks/useUsers";
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { ErrorMessage } from "../../components/helper/Error";
 import { Loader } from "../../components/helper/Loading";
-
+import { toast } from "react-toastify";
 export const Users = () => {
-  const { users, error, loading, hasUsers } = useUsers();
+  const { users, error, loading, hasUsers, refetch } = useUsers();
+  const { activeUser } = useActiveUser();
   // handleUserStatus
-  const handleUserStatus = () => {
-    // not completet
-    users.status = "acrive";
-    alert("active");
+  const handleActivate = async (id) => {
+    const resualt = await activeUser(id);
+    if (resualt) {
+      toast.success("User activated successfully");
+      refetch();
+    } else {
+      toast.error(error.message || "Failed to acitve user");
+    }
   };
 
   // show errror and laoding (helper)
@@ -72,22 +77,20 @@ export const Users = () => {
                     {user.securityQuestions?.[1]?.answer || "-"}
                   </td>
 
-                  <td
-                    className="px-4 py-3 cursor-pointer"
-                    onClick={handleUserStatus}
-                  >
-                    <span
-                      className={`px-2 py-1 rounded text-sm font-medium
-                        ${
-                          user.status === "active"
-                            ? "bg-green-100 text-green-700"
-                            : user.status === "pending"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-red-100 text-red-700"
-                        }`}
+                  <td className="px-4 py-3 cursor-pointer">
+                    <button
+                      onClick={() => handleActivate(user.id)}
+                      disabled={user.status === "active" || loading}
+                      className={`px-3 py-1 rounded text-sm
+                                ${
+                                  user.status === "active"
+                                    ? "bg-gray-600 cursor-not-allowed text-green-200"
+                                    : "bg-green-600 hover:bg-green-500 cursor-pointer"
+                                }
+                              `}
                     >
-                      {user.status}
-                    </span>
+                      {user.status === "active" ? "Active" : "Activate"}
+                    </button>
                   </td>
                 </tr>
               ))
