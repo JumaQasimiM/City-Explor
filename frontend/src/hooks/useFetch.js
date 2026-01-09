@@ -7,27 +7,20 @@ import { useEffect, useState } from "react";
  */
 
 export const useFetch = (url) => {
-  // always start with empty array  -- useState([]);
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
     if (!url) return;
 
     setLoading(true);
-    setError(null);
-
     try {
       const res = await fetch(url);
-      if (!res.ok) throw new Error(`Cannot fetch data: ${res.statusText}`);
-      const result = await res.json();
-      // guarantee array ans safe no crush
-      setData(result || []);
+      const json = await res.json();
+      setData(json);
     } catch (err) {
-      setError(err.message || "Something went wrong");
-      // reset to empty array on error
-      setData([]);
+      setError(err);
     } finally {
       setLoading(false);
     }
@@ -37,5 +30,5 @@ export const useFetch = (url) => {
     fetchData();
   }, [url]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch: fetchData };
 };
