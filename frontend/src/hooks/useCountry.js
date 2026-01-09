@@ -1,26 +1,91 @@
 import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
+import { useState } from "react";
 
-/**
- * custom Hook to fetch Countries from api
- *
- * src/hooks/useCountry.js
- *
- * usage:
- *
- * const {countries, loading, error, hasUsers} = useCountries();
- *
- * @returns {object} { countries, loading, error, hasCountry }
- *
- */
-
-// get all countra
+// =======================
+// GET COUNTRIES
+// =======================
 export const useCountries = () => {
-  const { data = [], error, laoding } = useFetch(`${ApiUrl}/countries`);
+  const {
+    data = [],
+    error,
+    loading,
+    refetch,
+  } = useFetch(`${ApiUrl}/countries`);
+
   return {
     countries: data,
     error,
-    laoding,
-    hasCountry: data.lenght > 0,
+    loading,
+    hasCountry: data.length > 0,
+    refetch,
   };
+};
+
+// =======================
+// CREATE COUNTRY
+// =======================
+export const useCreateCountry = () => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const createCountry = async (payload) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/countries`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create country");
+      }
+
+      return await res.json();
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { createCountry, loading, error };
+};
+
+// =======================
+// DELETE COUNTRY
+// =======================
+export const useDeleteCountry = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const deleteCountry = async (country_id) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/countries/${country_id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete country");
+      }
+
+      return true;
+    } catch (err) {
+      setError(err.message || "Something went wrong");
+      return false;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { deleteCountry, error, loading };
 };

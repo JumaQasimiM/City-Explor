@@ -24,3 +24,13 @@ export const useUsers = () => {
     hasUsers: data.length > 0, // helper boolean to easily check if users exist
   };
 };
+
+// get user by id
+export const useGetUserById = (user_id) => {
+  const { data = [], error, loading } = useFetch(`${ApiUrl}/users/${user_id}`);
+  return {
+    user: data,
+    loading,
+    error,
+  };
+};
