@@ -46,13 +46,13 @@ export const CategoryCard = () => {
         >
           {/* Gradient bar */}
           <div
-            className={`absolute top-2 left-0 w-full h-1 bg-gradient-to-r ${item.color}`}
+            className={`absolute top-1 left-0 w-full h-1 bg-gradient-to-r ${item.color}`}
           />
 
           {/* Icon */}
           <div
             className={`w-14 h-14 rounded-xl flex items-center justify-center
-                        ${item.iconBg} mb-4 text-2xl`}
+                        ${item.iconBg} mb-4 mt-3 text-2xl`}
           >
             {item.icon}
           </div>
