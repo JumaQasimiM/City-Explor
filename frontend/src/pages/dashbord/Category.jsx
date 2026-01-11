@@ -6,12 +6,14 @@ import {
   useDeleteCategory,
 } from "../../hooks/useCategories";
 import { toast } from "react-toastify";
+import { Loader } from "../../components/helper/Loading";
+import { ErrorMessage } from "../../components/helper/Error";
 
 export const Category = () => {
   const [categoryName, setCategoryName] = useState("");
 
-  const { categories, refetch } = useCategories();
-  const { createCategory, loading } = useCreateCategory();
+  const { categories, error, loading, refetch } = useCategories();
+  const { createCategory, loading: createLoading } = useCreateCategory();
   const { deleteCategory } = useDeleteCategory();
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,9 +38,11 @@ export const Category = () => {
       toast.error(error.message);
     }
   };
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
-    <section className="my-4 p-4 bg-gray-900 rounded-lg shadow-md">
+    <section className=" bg-gray-900 rounded-lg shadow-md">
       <h1 className="text-xl font-semibold mb-4">Categories</h1>
 
       {/* Form to add category */}

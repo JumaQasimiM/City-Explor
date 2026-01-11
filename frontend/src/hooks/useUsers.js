@@ -26,7 +26,56 @@ export const useUsers = () => {
     refetch,
   };
 };
+// save to database - POST
+export const useCreateUser = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
+  const createUser = async (payload) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${ApiUrl}/users`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to create user");
+      }
+      return true;
+    } catch (error) {
+      setError(error.message || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { createUser, error, loading };
+};
+// delete user - DELETE
+
+export const useDeleteUser = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const deleteUser = async (user_id) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${ApiUrl}/users/${user_id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to delete user");
+      }
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { deleteUser, error, loading };
+};
 // get user by id
 export const useGetUserById = (user_id) => {
   const { data = [], error, loading } = useFetch(`${ApiUrl}/users/${user_id}`);
@@ -90,4 +139,25 @@ export const useActiveUser = () => {
   };
 
   return { activeUser, loading, error, success };
+};
+
+// check repeat email
+export const useCheckRepeatEmail = (email) => {
+  const [error, setError] = useState(null);
+  const { data, loading } = useFetch(
+    email ? `http://localhost:3000/users?email=${email}` : null
+  );
+
+  const checkEmail = async () => {
+    if (loading) return false;
+
+    if (Array.isArray(data) && data.length > 0) {
+      setError("This email already exists");
+      return false;
+    }
+
+    setError(null);
+    return true;
+  };
+  return { checkEmail, error, loading };
 };

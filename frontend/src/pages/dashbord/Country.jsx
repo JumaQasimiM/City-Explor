@@ -41,14 +41,15 @@ export const Country = () => {
     }
   };
 
-  if (error) return <ErrorMessage />;
+  // show error and loading
   if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
     <section>
-      <h1>Country</h1>
+      <h1 className="text-xl font-semibold mb-4">Country</h1>
 
-      <div className="bg-gray-900 rounded-lg shadow p-5">
+      <div className="bg-gray-900 rounded-lg shadow">
         <form className="flex gap-3 mb-4" onSubmit={handleSubmit}>
           <input
             className="flex-1 px-3 py-2 border border-gray-600 rounded"

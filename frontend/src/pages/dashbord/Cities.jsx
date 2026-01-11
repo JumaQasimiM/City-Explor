@@ -80,8 +80,8 @@ export const Cities = () => {
   if (error) return <ErrorMessage message={error} />;
 
   return (
-    <section className="p-4 md:p-6">
-      <div className="bg-gray-900 rounded-lg shadow p-5">
+    <section className="">
+      <div className="bg-gray-900 rounded-lg shadow">
         <h1 className="text-xl font-semibold mb-4">Cities</h1>
 
         {/* show error */}

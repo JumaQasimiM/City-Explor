@@ -32,12 +32,12 @@ export const DashboardLayout = () => {
         { name: "places List", to: "/dashboard/places" },
       ],
     },
-    { name: "Bookings", to: "/dashboard/bookings", icon: <FaClipboardList /> },
+
     {
       name: "Users",
       icon: <FaUsers />,
       dropdown: [
-        { name: "Add User", to: "/dashboard/users/add" },
+        { name: "Add User", to: "/register" },
         { name: "User list", to: "/dashboard/users" },
       ],
     },
@@ -56,15 +56,16 @@ export const DashboardLayout = () => {
       icon: <FaGlobe />,
       to: "/dashboard/categories",
     },
+    { name: "Bookings", to: "/dashboard/bookings", icon: <FaClipboardList /> },
     { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];
 
   return (
     <section className="min-h-screen flex dark:bg-slate-900 dark:text-white/80">
       {/* ================= SIDEBAR ================= */}
-      <div>
+      <div className="m-3">
         {/* Avatar section */}
-        <div className="hidden md:flex bg-slate-700 flex items-center gap-4 py-4 px-3 border-b-2 border-b-gray-600">
+        <div className="hidden md:flex bg-slate-700 flex items-center gap-4 py-4 px-3 border-b-2 border-b-gray-600 rounded">
           <img
             src={avator}
             alt="Admin Avatar"
@@ -80,7 +81,7 @@ export const DashboardLayout = () => {
         </div>
 
         {/* Sidebar */}
-        <aside className="hidden md:flex w-60 bg-slate-800 min-h-screen p-4 flex flex-col">
+        <aside className="hidden md:flex w-60 bg-slate-800 h-screen p-4 flex flex-col rounded">
           <ul className="flex-1 space-y-2 overflow-y-auto">
             {navItems.map((item, index) => (
               <li key={index}>
@@ -156,18 +157,16 @@ export const DashboardLayout = () => {
       <main className="flex-1 flex flex-col bg-gray-100 dark:bg-slate-900">
         {/* Header */}
         <header
-          className="flex justify-between items-center bg-white dark:bg-slate-900
-                           dark:text-white/80 px-6 py-4 border-b border-white/10"
+          className="flex justify-between items-center bg-white dark:bg-slate-800
+                           dark:text-white/80 px-6 py-4 border-b border-white/10 
+                          mt-3 mx-5 rounded
+                           "
         >
           <Link to="/dashboard">
-            <h1 className="text-xl font-bold">Dashboard</h1>
+            <h1 className="text-md md:text-xl font-bold">Dashboard</h1>
           </Link>
 
           <div className="flex items-center gap-5 text-lg">
-            <FaUser
-              size={23}
-              className="cursor-pointer hover:text-green-500 transition"
-            />
             <Link to="/">
               <AiOutlineLogout
                 size={23}

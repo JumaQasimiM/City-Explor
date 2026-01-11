@@ -1,33 +1,55 @@
-import { useEffect, useState } from "react";
-import { useActiveUser, useUsers } from "../../hooks/useUsers";
+import { useState } from "react";
+import { useActiveUser, useDeleteUser, useUsers } from "../../hooks/useUsers";
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { ErrorMessage } from "../../components/helper/Error";
 import { Loader } from "../../components/helper/Loading";
 import { toast } from "react-toastify";
+
 export const Users = () => {
-  const { users, error, loading, hasUsers, refetch } = useUsers();
+  const { users, error, loading, refetch } = useUsers();
+  const { deleteUser, error: deleteError } = useDeleteUser();
   const { activeUser } = useActiveUser();
-  // handleUserStatus
+
+  const [userLoading, setUserLoading] = useState({});
+
   const handleActivate = async (id) => {
-    const resualt = await activeUser(id);
-    if (resualt) {
+    setUserLoading((prev) => ({ ...prev, [id]: true }));
+    const result = await activeUser(id);
+    setUserLoading((prev) => ({ ...prev, [id]: false }));
+
+    if (result) {
       toast.success("User activated successfully");
       refetch();
     } else {
-      toast.error(error.message || "Failed to acitve user");
+      toast.error("Failed to activate user");
     }
   };
 
-  // show errror and laoding (helper)
+  const handleDelete = async (id) => {
+    setUserLoading((prev) => ({ ...prev, [id]: true }));
+    const result = await deleteUser(id);
+    setUserLoading((prev) => ({ ...prev, [id]: false }));
+
+    if (result) {
+      toast.success("User deleted successfully");
+      refetch();
+    } else {
+      toast.error(deleteError || "Failed to delete user");
+    }
+  };
+
   if (error) return <ErrorMessage />;
   if (loading) return <Loader />;
 
   return (
-    <section className="p-6 bg-gray-900 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">Users</h1>
+    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen p-4 md:p-8">
+      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
+        Users
+      </h1>
 
-      <div className="overflow-x-auto dark:bg-slate-900 bg-white shadow rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200">
+      {/* Table container with horizontal scroll */}
+      <div className="overflow-x-auto w-full rounded-lg shadow">
+        <table className="min-w-[800px] bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-blue-600 text-white">
             <tr>
               <th className="px-4 py-3 text-left">#</th>
@@ -38,38 +60,43 @@ export const Users = () => {
               <th className="px-4 py-3 text-left">Created</th>
               <th className="px-4 py-3 text-left">Security Q1</th>
               <th className="px-4 py-3 text-left">Security Q2</th>
-              <th className="px-4 py-3 text-left">Status</th>
+              <th className="px-4 py-3 text-center">Actions</th>
+              <th className="px-4 py-3 text-center">Status</th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-100">
-            {!hasUsers ? (
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+            {users.length === 0 ? (
               <tr>
-                <td colSpan="9" className="text-center py-6 text-gray-500">
+                <td
+                  colSpan="10"
+                  className="text-center py-6 text-gray-500 dark:text-gray-400"
+                >
                   <NotFoundData text="No users found" />
                 </td>
               </tr>
             ) : (
               users.map((user, index) => (
-                <tr key={user.id} className="hover:bg-gray-700">
+                <tr
+                  key={user.id}
+                  className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
                   <td className="px-4 py-3">{index + 1}</td>
                   <td className="px-4 py-3">{user.firstname}</td>
                   <td className="px-4 py-3">{user.lastname}</td>
                   <td className="px-4 py-3">{user.email}</td>
                   <td className="px-4 py-3">
                     <span
-                      className={`py-1 px-2 rounded ${
+                      className={`px-2 py-1 rounded text-sm font-semibold ${
                         user.role === "admin"
-                          ? "bg-green-500 text-black/70 font-semibold"
-                          : ""
+                          ? "bg-green-500 text-black/80"
+                          : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                       }`}
                     >
                       {user.role || "-"}
                     </span>
                   </td>
-
                   <td className="px-4 py-3">{user.created_at || "-"}</td>
-
                   <td className="px-4 py-3">
                     {user.securityQuestions?.[0]?.answer || "-"}
                   </td>
@@ -77,20 +104,44 @@ export const Users = () => {
                     {user.securityQuestions?.[1]?.answer || "-"}
                   </td>
 
-                  <td className="px-4 py-3 cursor-pointer">
+                  <td className="px-4 py-3 flex justify-center gap-2">
                     <button
                       onClick={() => handleActivate(user.id)}
-                      disabled={user.status === "active" || loading}
-                      className={`px-3 py-1 rounded text-sm
-                                ${
-                                  user.status === "active"
-                                    ? "bg-gray-600 cursor-not-allowed text-green-200"
-                                    : "bg-green-600 hover:bg-green-500 cursor-pointer"
-                                }
-                              `}
+                      disabled={
+                        user.status === "active" || userLoading[user.id]
+                      }
+                      className={`px-3 py-1 rounded text-sm font-semibold transition ${
+                        user.status === "active"
+                          ? "bg-gray-500 cursor-not-allowed text-green-200"
+                          : "bg-green-600 hover:bg-green-500 text-white"
+                      }`}
                     >
-                      {user.status === "active" ? "Active" : "Activate"}
+                      {userLoading[user.id]
+                        ? "Loading..."
+                        : user.status === "active"
+                        ? "Active"
+                        : "Activate"}
                     </button>
+
+                    <button
+                      onClick={() => handleDelete(user.id)}
+                      disabled={userLoading[user.id]}
+                      className="px-3 py-1 rounded text-sm font-semibold bg-red-600 hover:bg-red-500 text-white transition"
+                    >
+                      {userLoading[user.id] ? "Loading..." : "Delete"}
+                    </button>
+                  </td>
+
+                  <td className="px-4 py-3 text-center">
+                    <span
+                      className={`px-2 py-1 rounded text-sm font-medium ${
+                        user.status === "active"
+                          ? "bg-green-500 text-white"
+                          : "bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200"
+                      }`}
+                    >
+                      {user.status}
+                    </span>
                   </td>
                 </tr>
               ))

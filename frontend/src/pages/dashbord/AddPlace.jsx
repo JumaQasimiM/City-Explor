@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useUsers } from "../../hooks/useUsers";
 import { useCities } from "../../hooks/useCities";
 import { useCategories } from "../../hooks/useCategories";
-
-// helper component
+import { toast } from "react-toastify";
 import { InputField } from "../../components/helper/Input";
 import { SelectField } from "../../components/helper/SelectField";
+
 export const AddPlace = () => {
   const navigate = useNavigate();
 
@@ -38,10 +38,10 @@ export const AddPlace = () => {
       address: form.address,
       price: Number(form.price),
       description: form.description,
-      srevices: form.services.filter(Boolean),
-      city_id: Number(form.city_id),
-      category_id: Number(form.category_id),
-      user_id: Number(form.user_id),
+      services: form.services.filter(Boolean),
+      city_id: form.city_id,
+      category_id: form.category_id,
+      user_id: form.user_id,
     };
 
     try {
@@ -51,11 +51,11 @@ export const AddPlace = () => {
         body: JSON.stringify(payload),
       });
 
-      alert("Place added successfully!");
+      toast.success("Place added successfully!");
       navigate("/dashboard/places");
     } catch (error) {
       console.error(error);
-      alert("Failed to add place");
+      toast.error("Failed to add place");
     }
   };
 
@@ -64,7 +64,7 @@ export const AddPlace = () => {
   const { categories } = useCategories();
 
   return (
-    <section className="p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
+    <section className="p-4 md:p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
           Add New Place
@@ -75,7 +75,7 @@ export const AddPlace = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6
                      bg-white dark:bg-slate-800 p-6 rounded-xl shadow"
         >
-          {/* Basic Info */}
+          {/* Place Name */}
           <InputField
             label="Place Name"
             name="name"
@@ -85,6 +85,7 @@ export const AddPlace = () => {
             required
           />
 
+          {/* Address */}
           <InputField
             label="Address"
             name="address"
@@ -93,6 +94,7 @@ export const AddPlace = () => {
             placeholder="Enter address"
           />
 
+          {/* Price */}
           <InputField
             label="Price"
             name="price"
@@ -102,7 +104,7 @@ export const AddPlace = () => {
             placeholder="Enter price"
           />
 
-          {/* Selects */}
+          {/* Category */}
           <SelectField
             label="Category"
             name="category_id"
@@ -113,6 +115,7 @@ export const AddPlace = () => {
             optionLabel="name"
           />
 
+          {/* City */}
           <SelectField
             label="City"
             name="city_id"
@@ -123,6 +126,7 @@ export const AddPlace = () => {
             optionLabel="name"
           />
 
+          {/* Owner */}
           <SelectField
             label="Owner"
             name="user_id"
@@ -144,7 +148,7 @@ export const AddPlace = () => {
                 value={s}
                 onChange={(e) => handleServiceChange(i, e.target.value)}
                 placeholder={`Service ${i + 1}`}
-                className="mb-2 px-3 py-2 rounded border
+                className="mb-2 px-3 py-2 rounded border w-full
                            focus:ring-2 focus:ring-blue-500
                            dark:bg-slate-700 dark:text-white"
               />
@@ -162,7 +166,7 @@ export const AddPlace = () => {
               onChange={handleChange}
               rows={4}
               placeholder="Short description about the place"
-              className="px-3 py-2 rounded border
+              className="px-3 py-2 rounded border w-full
                          focus:ring-2 focus:ring-blue-500
                          dark:bg-slate-700 dark:text-white"
             />
@@ -178,18 +182,18 @@ export const AddPlace = () => {
                 <input
                   key={i}
                   type="file"
-                  className="border rounded p-2 dark:bg-slate-700"
+                  className="border rounded p-2 dark:bg-slate-700 w-full"
                 />
               ))}
             </div>
           </div>
 
-          {/* Submit */}
-          <div className="md:col-span-2 lg:col-span-3 flex justify-end">
+          {/* Submit Button */}
+          <div className="md:col-span-2 lg:col-span-3 flex justify-end mt-2">
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700
-                         text-white px-8 py-3 rounded-lg font-semibold transition"
+                         text-white px-6 py-3 rounded-lg font-semibold transition w-full md:w-auto"
             >
               Save Place
             </button>

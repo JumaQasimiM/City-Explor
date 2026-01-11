@@ -5,3 +5,7 @@ https://preview.themeforest.net/item/panagea-travel-and-tours-listings-template/
 https://themewagon.github.io/pluto/dashboard.html
 
 https://themewagon.com/themes/pluto-free-bootstrap-4-html5-admin-dashboard-template/
+
+<!-- not compltet -->
+
+1. place detail in dashboard --- services --refactur

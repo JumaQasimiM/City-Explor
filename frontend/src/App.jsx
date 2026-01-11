@@ -1,67 +1,65 @@
-import { Home } from "./pages/Home";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer, Bounce } from "react-toastify";
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+// website pages
+import { Home } from "./pages/Home";
 import { About } from "./pages/About";
-import { Dashboard } from "./pages/dashbord/Dashboard";
-import { DashboardLayout } from "./layouts/DashboardLayout";
+
+// layout
 import { MainLayout } from "./layouts/MainLayout";
+import { DashboardLayout } from "./layouts/DashboardLayout";
+
+// dashboard pages
+import { Dashboard } from "./pages/dashbord/Dashboard";
 import { Users } from "./pages/dashbord/Users";
 import { Cities } from "./pages/dashbord/Cities";
 import { Places } from "./pages/dashbord/Places";
 import { AddPlace } from "./pages/dashbord/AddPlace";
 import { Country } from "./pages/dashbord/Country";
 import { Category } from "./pages/dashbord/Category";
+import { PlaceDetail } from "./pages/dashbord/PlaceDetail";
+import { Login } from "./pages/Login";
+import { RegisterUser } from "./pages/Resgister";
+import { ResetPassword } from "./pages/ResetPassword";
+
 function App() {
   return (
-    <>
-      <BrowserRouter>
-        {/* Notification */}
-        <ToastContainer
-          position="top-center"
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="colored"
-          transition={Bounce}
-        />
+    <BrowserRouter>
+      <ToastContainer
+        position="top-center"
+        autoClose={2000}
+        theme="colored"
+        transition={Bounce}
+      />
 
-        <Routes>
-          {/* website layout */}
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
+      <Routes>
+        {/* Website */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<RegisterUser />} />
+          <Route path="/resetpassword" element={<ResetPassword />} />
+        </Route>
+
+        {/* Dashboard */}
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
+
+          <Route path="users" element={<Users />} />
+          <Route path="cities" element={<Cities />} />
+
+          <Route path="places">
+            <Route index element={<Places />} />
+            <Route path="add" element={<AddPlace />} />
+            <Route path=":id" element={<PlaceDetail />} />
           </Route>
 
-          {/* dashboard layout */}
-          <Route element={<DashboardLayout />}>
-            <Route path="/dashboard" element={<Dashboard />} />
-
-            {/* users */}
-            <Route path="/dashboard/users" element={<Users />} />
-            <Route path="/dashboard/users/add" element={<Users />} />
-
-            {/* cities */}
-            <Route path="/dashboard/cities" element={<Cities />} />
-
-            {/* places */}
-            <Route path="/dashboard/places" element={<Places />} />
-            <Route path="/dashboard/places/add" element={<AddPlace />} />
-
-            {/* countray */}
-            <Route path="/dashboard/countries" element={<Country />} />
-            {/* category */}
-            <Route path="/dashboard/categories" element={<Category />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </>
+          <Route path="countries" element={<Country />} />
+          <Route path="categories" element={<Category />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

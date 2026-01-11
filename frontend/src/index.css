@@ -98,3 +98,36 @@
 .dark .swiper-pagination-bullet {
   background-color: #34f100;
 }
+
+/* input style */
+
+/* Tailwind global styles */
+.input {
+  @apply px-3 py-2 border rounded-lg outline-none
+  border-gray-300 dark:border-slate-600
+  bg-white dark:bg-slate-700
+  text-gray-900 dark:text-white
+  focus:ring-2 focus:ring-blue-500;
+}
+
+.file-input {
+  @apply block w-full text-sm text-gray-600 dark:text-gray-300
+  file:mr-4 file:py-2 file:px-4
+  file:rounded-lg file:border-0
+  file:bg-sky-600 file:text-white
+  hover:file:bg-sky-700 border rounded-2xl border-gray-300;
+}
+
+.form-label {
+  @apply text-sm font-semibold text-gray-700 dark:text-gray-300;
+}
+
+.form-input {
+  @apply px-4 py-3 rounded-xl border
+  border-gray-300 dark:border-slate-600
+  bg-white/80 dark:bg-slate-700/80
+  text-gray-900 dark:text-white
+  outline-none
+  focus:ring-2 focus:ring-blue-500 focus:border-transparent
+  transition-all;
+}

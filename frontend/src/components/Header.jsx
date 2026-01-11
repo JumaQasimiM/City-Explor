@@ -54,10 +54,13 @@ export const Header = () => {
 
         {/* Icons */}
         <div className="flex items-center gap-5">
-          <FaRegUser
-            size={23}
-            className="cursor-pointer hover:text-green-700 transition"
-          />
+          <Link to="login">
+            {" "}
+            <FaRegUser
+              size={23}
+              className="cursor-pointer hover:text-green-700 transition"
+            />
+          </Link>
           <FaHeart
             size={23}
             className="cursor-pointer hover:text-green-700 transition"
