@@ -1,0 +1,77 @@
+import avator from "../assets/hero.jpeg";
+import { Link } from "react-router-dom";
+export const Login = () => {
+  return (
+    <section
+      style={{ backgroundImage: `url(${avator})` }}
+      className="min-h-screen bg-cover bg-center bg-no-repeat relative flex items-center justify-center px-4"
+    >
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/60"></div>
+
+      {/* Card */}
+      <div className="relative w-full max-w-md bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl shadow-2xl p-8 md:p-10">
+        {/* Header */}
+        <div className="text-center mb-8">
+          <h1 className="text-xl md:text-4xl font-bold text-gray-900 dark:text-white">
+            Welcome Back
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            Login to your account
+          </p>
+        </div>
+
+        {/* Form */}
+        <form className="space-y-6">
+          <div className="flex flex-col gap-2">
+            <label className="form-label">Username or Email</label>
+            <input
+              type="text"
+              placeholder="you@email.com"
+              className="form-input"
+            />
+          </div>
+
+          <div className="flex flex-col gap-2">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className="form-input"
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full mt-2 py-3 rounded-xl text-lg font-semibold text-white 
+            bg-gradient-to-r from-blue-600 to-indigo-600
+            hover:from-blue-700 hover:to-indigo-700
+            shadow-lg hover:shadow-xl transition-all"
+          >
+            Login
+          </button>
+        </form>
+
+        {/* Links */}
+        <div className="mt-6 text-center text-sm space-y-3">
+          <a
+            href="#"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
+          >
+            Forgot your password?
+          </a>
+
+          <p className="text-gray-600 dark:text-gray-400">
+            Don’t have an account?{" "}
+            <Link
+              to="/register"
+              className="text-blue-600 dark:text-blue-400 font-semibold hover:underline"
+            >
+              Sign up
+            </Link>
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
