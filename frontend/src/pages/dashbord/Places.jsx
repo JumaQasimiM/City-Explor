@@ -98,24 +98,24 @@ export const Places = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 lg:p-3">
       <h1 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white">
         Places Dashboard
       </h1>
 
-      <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-lg">
+      <div className="bg-white dark:bg-slate-800 rounded shadow-lg">
         {/* Top Bar */}
         <div className="flex flex-col md:flex-row md:justify-between gap-4 p-5 border-b dark:border-slate-700">
           <Link
             to="add"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-semibold"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-semibold lg:text-md text-sm"
           >
-            + Add Place
+            Add <span className="hidden lg:block"> Place</span>
           </Link>
 
           <form
             onSubmit={handleSearchSubmit}
-            className="flex gap-2 w-full md:w-1/3"
+            className="flex gap-2 w-full md:1/2 lg:w-1/3"
           >
             <input
               placeholder="Search places..."

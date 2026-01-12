@@ -57,9 +57,9 @@ export const PlaceDetailOnSite = () => {
       {/* Top Header */}
       <div className="max-w-7xl mx-auto px-4 pt-20 pb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
-          <div className="flex items-center gap-5">
-            <h1 className="text-2xl md:text-3xl font-bold">{place.name}</h1>
-            <h1 className="text-md md:text-lg flex text-orange-400">
+          <div className="flex items-center gap-5 mt-3">
+            <h1 className="text-lg md:text-3xl font-bold">{place.name}</h1>
+            <h1 className="text-sm md:text-lg flex text-orange-400">
               {[1, 2, 3, 4, 5].map((_, i) => (
                 <FaStar key={i} />
               ))}

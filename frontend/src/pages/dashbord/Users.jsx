@@ -42,7 +42,7 @@ export const Users = () => {
   if (loading) return <Loader />;
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen p-4 md:p-8">
+    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen lg:p-3">
       <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
         Users
       </h1>

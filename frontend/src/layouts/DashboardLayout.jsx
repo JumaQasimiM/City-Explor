@@ -63,7 +63,7 @@ export const DashboardLayout = () => {
   return (
     <section className="min-h-screen flex overflow-hidden dark:bg-slate-900 dark:text-white/80">
       {/* ================= SIDEBAR ================= */}
-      <div className="m-3">
+      <div className="md:m-3">
         {/* Avatar section */}
         <div className="hidden md:flex bg-slate-700 flex items-center gap-4 py-4 px-3 border-b-2 border-b-gray-600 rounded">
           <img
@@ -159,7 +159,7 @@ export const DashboardLayout = () => {
         <header
           className="flex justify-between items-center bg-white dark:bg-slate-800
                dark:text-white/80 px-6 py-4 border-b border-white/10 
-               mt-3 mx-5 rounded"
+               mt-3 md:mx-5 rounded"
         >
           <Link to="/dashboard">
             <h1 className="text-md md:text-xl font-bold">Dashboard</h1>
@@ -180,7 +180,7 @@ export const DashboardLayout = () => {
         </header>
 
         {/* Page Content */}
-        <div className="p-6 flex-1 overflow-hidden">
+        <div className="p-5 lg:p-1 flex-1 overflow-hidden">
           <Outlet />
         </div>
       </main>
