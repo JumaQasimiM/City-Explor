@@ -1,9 +1,10 @@
 import { useUsers } from "../../hooks/useUsers";
 
+import avatorImage from "../../assets/hero.jpeg";
 export const UserListInfoDashboard = () => {
   const { users, error, loading, hasUsers, refetch } = useUsers();
   return (
-    <section className="bg-white dark:bg-slate-800 rounded-lg shadow-lg w-full">
+    <section className="bg-white dark:bg-slate-800 rounded shadow-lg w-full">
       {/* Header */}
       <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-slate-700">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
@@ -67,7 +68,7 @@ export const UserListInfoDashboard = () => {
                       user.role === "admin"
                         ? "bg-green-100 text-sky-500 dark:bg-green-900 dark:text-white"
                         : "bg-purple-100 text-sky-500 dark:bg-purple-800 dark:text-white"
-                    } px-3 py-2 rounded-full text-xs font-semibold
+                    } px-3 py-2 rounded text-xs font-semibold
                    `}
                   >
                     {user.role}
@@ -78,10 +79,12 @@ export const UserListInfoDashboard = () => {
                   {user.dateOfBirth}
                 </td>
                 <td className="px-5 py-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full dark:bg-gray-700 mx-auto"></div>
+                  <div className="w-10 h-10 bg-gray-200 rounded-full dark:bg-gray-700 mx-auto object-contain">
+                    <img src={avatorImage} alt="" />
+                  </div>
                 </td>
                 <td className="px-5 py-3 text-center">
-                  <span className="px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
+                  <span className="px-3 py-1 rounded text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
                     {user.status}
                   </span>
                 </td>
