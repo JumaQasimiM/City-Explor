@@ -21,6 +21,8 @@ import { PlaceDetail } from "./pages/dashbord/PlaceDetail";
 import { Login } from "./pages/Login";
 import { RegisterUser } from "./pages/Resgister";
 import { ResetPassword } from "./pages/ResetPassword";
+import { PlacesInSite } from "./pages/Places";
+import { PlaceDetailOnSite } from "./pages/PlaceDetailOnSite";
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         {/* Website */}
         <Route element={<MainLayout />}>
           <Route path="/" element={<Home />} />
+          <Route path="/places" element={<PlacesInSite />} />
+          <Route path="/place/:id" element={<PlaceDetailOnSite />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterUser />} />

@@ -5,16 +5,16 @@ export const PopularHotelCard = ({ hotel, image }) => {
   return (
     <article className="relative w-full h-[200px] overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300">
       {/* Image */}
-      <Link to={`/hotels/${hotel.id}`}>
-        <img
-          src={image}
-          alt={hotel.name}
-          className="absolute inset-0 w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700"
-        />
-      </Link>
+      <img
+        src={image}
+        alt={hotel.name}
+        className="absolute inset-0 w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700"
+      />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      <Link to={`/place/${hotel.id}`}>
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+      </Link>
 
       {/* Rating badge */}
       <div className="absolute top-3 right-3 bg-green-500 text-white text-sm font-semibold px-2 py-1 rounded-md shadow">

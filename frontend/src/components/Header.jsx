@@ -25,8 +25,9 @@ export const Header = () => {
   // navitems
   const navItem = [
     { id: 1, name: "Home", url: "/" },
-    { id: 2, name: "About", url: "/about" },
-    { id: 3, name: "Contact", url: "/contact" },
+    { id: 2, name: "Places", url: "/places" },
+    { id: 3, name: "About", url: "/about" },
+    { id: 4, name: "Contact", url: "/contact" },
   ];
 
   return (

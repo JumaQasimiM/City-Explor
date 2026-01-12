@@ -10,359 +10,141 @@
       "role": "business",
       "dateOfBirth": "2026-01-10",
       "created_at": "2026-01-11",
-      "avator": "tailwind.png",
+      "avatar": "tailwind.png",
       "securityQuestions": [
-        {
-          "question": "What is your birth city?",
-          "answer": "jaghori"
-        },
-        {
-          "question": "What is your birth day?",
-          "answer": "12"
-        }
+        { "question": "What is your birth city?", "answer": "Jaghori" },
+        { "question": "What is your birth day?", "answer": "12" }
       ]
     }
   ],
   "categories": [
-    {
-      "id": "1",
-      "name": "hotel"
-    },
-    {
-      "id": "ce5f",
-      "name": "restoraunt"
-    }
+    { "id": "1", "name": "Hotel" },
+    { "id": "ce5f", "name": "Restaurant" },
+    { "id": "ce53", "name": "Hospital" },
+    { "id": "ce5d", "name": "Supermarket" },
+    { "id": "c25f", "name": "Pharmacy" },
+    { "id": "565f", "name": "WG" }
   ],
-  "countries": [
-    {
-      "id": "f889",
-      "name": "Germany"
-    }
-  ],
+  "countries": [{ "id": "afg1", "name": "Afghanistan" }],
   "cities": [
     {
-      "id": "12",
-      "name": "Heilbronn",
-      "country_id": "f889"
+      "id": "jaghori1",
+      "name": "Jaghori",
+      "country_id": "afg1",
+      "description": "Jaghori is a beautiful district located in Ghazni Province, Afghanistan.\nIt is known for its lush green valleys, rolling hills, and serene landscapes.\nThe district is predominantly inhabited by the Hazara people, who are welcoming and hospitable.\nEducation is highly valued, making Jaghori one of the more literate areas in Afghanistan.\nThe climate is moderate, and the land is fertile, supporting agriculture and orchards.\nVisitors can enjoy scenic mountains, rivers, and wildflower-filled valleys in spring and summer.\nJaghori has a rich cultural heritage, with local bazaars, mosques, and traditional crafts.\nThe district offers essential services, including hotels, restaurants, hospitals, and pharmacies.\nHandmade textiles and artisanal goods reflect generations of local craftsmanship.\nLife in Jaghori is peaceful, and the community emphasizes harmony and cooperation.\nTourists can explore hiking trails, cultural sites, and enjoy authentic Afghan cuisine.\nOverall, Jaghori is a hidden gem, combining natural beauty, culture, and a welcoming community.",
+      "lat": 34.309,
+      "lng": 68.352
     }
   ],
   "places": [
     {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
+      "id": "place1",
+      "name": "Jaghori Grand Hotel",
+      "description": "The Jaghori Grand Hotel is a premier destination in the heart of Jaghori district, offering luxurious rooms, top-notch services, and a welcoming atmosphere. Guests can enjoy spacious, clean rooms, three-time meals, high-speed Wi-Fi, and exceptional hospitality. The hotel is ideal for business travelers and tourists seeking comfort in a serene environment surrounded by the picturesque Afghan highlands.",
+      "address": "Main Street, Jaghori",
+      "services": [
+        "3-time meals",
+        "Comfortable bed",
+        "Hot and clean rooms",
+        "Free Wi-Fi"
+      ],
       "price": 120,
-      "city_id": 12,
+      "city_id": "jaghori1",
       "category_id": "1",
-      "user_id": "aba4"
+      "user_id": "aba4",
+      "lat": 34.309,
+      "lng": 68.352
     },
     {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
+      "id": "place2",
+      "name": "Jaghori Restaurant",
+      "description": "Jaghori Restaurant is known for its authentic Afghan cuisine, offering visitors a delightful culinary experience. From freshly prepared local dishes to seasonal specialties, every meal is a celebration of taste and culture. The restaurant provides comfortable seating, a welcoming ambiance, and attentive service, making it an excellent choice for families, tourists, and business lunches.",
+      "address": "Bazaar Road, Jaghori",
+      "services": ["Local food", "Delivery", "Outdoor seating"],
+      "price": 30,
+      "city_id": "jaghori1",
       "category_id": "ce5f",
-      "user_id": "aba4"
+      "user_id": "aba4",
+      "lat": 34.31,
+      "lng": 68.353
     },
     {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
+      "id": "place3",
+      "name": "Hospital Fatima Zahra",
+      "description": "Hospital Fatima Zahra is a leading healthcare facility in Jaghori district, committed to providing comprehensive medical services to the community. Equipped with modern technology, dedicated staff, and specialized departments, the hospital ensures quality care for patients. Services include emergency care, inpatient and outpatient treatment, maternity support, and community health programs, making it a trusted choice for local residents.",
+      "address": "Health Avenue, Jaghori",
+      "services": [
+        "Emergency care",
+        "Inpatient treatment",
+        "Outpatient services",
+        "Maternity care"
+      ],
+      "price": 0,
+      "city_id": "jaghori1",
+      "category_id": "ce53",
+      "user_id": "aba4",
+      "lat": 34.308,
+      "lng": 68.354
     },
     {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
+      "id": "place4",
+      "name": "Maajiri SuperMarket",
+      "description": "Maajiri SuperMarket is the largest supermarket in Jaghori, offering a wide variety of fresh produce, groceries, household items, and personal care products. Known for its cleanliness, organized layout, and friendly staff, it provides a convenient shopping experience for families and individuals. The store operates 24/7, ensuring accessibility at all times and maintaining high standards of quality and service.",
+      "address": "Market Road, Jaghori",
+      "services": [
+        "Fresh produce",
+        "24/7 availability",
+        "Household items",
+        "Clean and organized"
+      ],
+      "price": 0,
+      "city_id": "jaghori1",
+      "category_id": "ce5d",
+      "user_id": "aba4",
+      "lat": 34.31,
+      "lng": 68.355
     },
     {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
-    },
-    {
-      "id": "1345",
-      "name": "Hospital",
-      "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
-      "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
-      "price": 120,
-      "city_id": 12,
-      "category_id": "1",
-      "user_id": "aba4"
-    },
-    {
-      "id": "cff1",
-      "name": "Jaghori",
-      "address": "Jaghori, Angori",
-      "price": 234,
-      "description": "",
-      "services": ["tw"],
-      "city_id": "12",
-      "category_id": "ce5f",
-      "user_id": "aba4"
+      "id": "place5",
+      "name": "Pharmacy 24/7",
+      "description": "Pharmacy 24/7 in Jaghori district offers reliable pharmaceutical services with a wide range of medicines, health supplements, and wellness products. Staffed with licensed pharmacists, the pharmacy ensures accurate prescriptions, health advice, and emergency medical supplies. Open around the clock, it provides critical support to residents and travelers, making it a vital part of the local healthcare infrastructure.",
+      "address": "Health Avenue, Jaghori",
+      "services": [
+        "Prescription medicines",
+        "Health supplements",
+        "24/7 service",
+        "Professional pharmacists"
+      ],
+      "price": 0,
+      "city_id": "jaghori1",
+      "category_id": "c25f",
+      "user_id": "aba4",
+      "lat": 34.311,
+      "lng": 68.356
     }
   ],
   "place_images": [
+    { "id": "1", "place_id": "place1", "url": "images/places/hotel1.jpg" },
+    { "id": "2", "place_id": "place1", "url": "images/places/hotel2.jpg" },
+    { "id": "3", "place_id": "place2", "url": "images/places/restaurant1.jpg" },
+    { "id": "4", "place_id": "place2", "url": "images/places/restaurant2.jpg" },
+    { "id": "5", "place_id": "place3", "url": "images/places/hospital1.jpg" },
     {
-      "id": "1",
-      "place_id": 1,
-      "url": "images/supermarket/image1.jpg"
+      "id": "6",
+      "place_id": "place4",
+      "url": "images/places/supermarket1.jpg"
     },
-    {
-      "id": "2",
-      "place_id": 1,
-      "url": "images/supermarket/image2.jpg"
-    }
+    { "id": "7", "place_id": "place5", "url": "images/places/pharmacy1.jpg" }
   ],
   "city_images": [
-    {
-      "id": "1",
-      "city_id": 1,
-      "url": "images/city/jaghoriimage.png"
-    },
-    {
-      "id": "2",
-      "city_id": 1,
-      "url": "images/city/jaghoriimage.png"
-    }
+    { "id": "1", "city_id": "jaghori1", "url": "images/cities/jaghori1.png" },
+    { "id": "2", "city_id": "jaghori1", "url": "images/cities/jaghori2.png" }
   ],
   "bookings": [
     {
-      "id": "1",
-      "user_id": 1,
-      "place_id": 1,
+      "id": "booking1",
+      "user_id": "aba4",
+      "place_id": "place1",
       "check_in": "2026-01-12",
       "check_out": "2026-01-15",
       "status": "confirmed"
@@ -370,11 +152,11 @@
   ],
   "reviews": [
     {
-      "id": "1",
-      "user_id": 1,
-      "place_id": 1,
+      "id": "review1",
+      "user_id": "aba4",
+      "place_id": "place1",
       "date": "2026-01-12",
-      "message": "very good",
+      "message": "Very good experience, rooms were clean and staff friendly.",
       "rate": 4
     }
   ]
