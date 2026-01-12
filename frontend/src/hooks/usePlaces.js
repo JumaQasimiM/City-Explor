@@ -55,3 +55,19 @@ export const usePlaceCity = (city_id) => {
 export const usePlaceCategory = (cate_id) => {
   return useFetch(cate_id ? `${ApiUrl}/categories/${cate_id}` : null);
 };
+
+// placeList
+export const usePopularPlace = (category_id) => {
+  const {
+    data: popularPlace,
+    error,
+    loading,
+  } = useFetch(
+    category_id ? `${ApiUrl}/places?category_id = ${category_id}` : null
+  );
+  return {
+    popularPlace: popularPlace ? popularPlace.slice(0, 4) : [],
+    error,
+    loading,
+  };
+};

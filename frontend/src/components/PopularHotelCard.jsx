@@ -1,16 +1,17 @@
-import jaghoriImage from "../assets/hero.jpeg";
-import jaghoriImage1 from "../assets/hero.jpg";
 import { FaStar } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
-export const PopularHotelCard = () => {
+export const PopularHotelCard = ({ hotel, image }) => {
   return (
     <article className="relative w-full h-[200px] overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300">
       {/* Image */}
-      <img
-        src={jaghoriImage}
-        alt="Jaghori Hotel"
-        className="absolute inset-0 w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700"
-      />
+      <Link to={`/hotels/${hotel.id}`}>
+        <img
+          src={image}
+          alt={hotel.name}
+          className="absolute inset-0 w-full h-full object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700"
+        />
+      </Link>
 
       {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
@@ -30,10 +31,10 @@ export const PopularHotelCard = () => {
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-semibold leading-tight">Jaghori Hotel</h3>
+        <h3 className="text-lg font-semibold leading-tight">{hotel.name}</h3>
 
-        {/* Subtitle */}
-        <p className="text-sm text-white/80">Affordable stay · Afghanistan</p>
+        {/* Address */}
+        <p className="text-sm text-white/80 truncate">{hotel.address}</p>
       </div>
     </article>
   );

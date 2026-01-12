@@ -16,7 +16,7 @@ import { GrLanguage } from "react-icons/gr";
 import { AiOutlineLogout } from "react-icons/ai";
 
 // image
-import avator from "../assets/hero.jpg";
+import avator from "../assets/hero.jpeg";
 
 export const DashboardLayout = () => {
   const [openMenu, setOpenMenu] = useState(null);

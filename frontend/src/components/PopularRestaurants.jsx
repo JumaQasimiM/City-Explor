@@ -1,6 +1,16 @@
 import { PopularRestaurantCard } from "./PopularRestaurantCard";
 
+import { usePopularPlace } from "../hooks/usePlaces";
+
+// images
+import restaurant1 from "../assets/restaurant1.jpg";
+import restaurant2 from "../assets/restaurant2.jpg";
+import restaurant3 from "../assets/restaurant3.jpg";
+import restaurant4 from "../assets/restaurant4.jpg";
+const restaurantImages = [restaurant1, restaurant2, restaurant3, restaurant4];
+
 export const PopularRestaurants = () => {
+  const { popularPlace: restaurant, error } = usePopularPlace("ce5f");
   return (
     <section className="w-full dark:bg-slate-900 dark:text-white py-16">
       <div className="max-w-8xl px-5 mx-10">
@@ -19,8 +29,12 @@ export const PopularRestaurants = () => {
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[1, 2, 3, 4].map((card) => (
-            <PopularRestaurantCard />
+          {restaurant.map((restaurant, index) => (
+            <PopularRestaurantCard
+              key={index}
+              restaurant={restaurant}
+              image={restaurantImages[index % restaurantImages.length]}
+            />
           ))}
         </div>
       </div>
