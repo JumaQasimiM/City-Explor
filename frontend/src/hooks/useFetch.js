@@ -17,6 +17,9 @@ export const useFetch = (url) => {
     setLoading(true);
     try {
       const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error("Failed to fetch data");
+      }
       const json = await res.json();
       setData(json);
     } catch (err) {

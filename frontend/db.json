@@ -21,28 +21,6 @@
           "answer": "12"
         }
       ]
-    },
-    {
-      "id": "aea4",
-      "firstname": "Mohammad Juma",
-      "lastname": "Qasimi",
-      "email": "juma82db@gmail.com",
-      "password": "123",
-      "status": "active",
-      "role": "admin",
-      "dateOfBirth": "2026-01-10",
-      "created_at": "2026-01-11",
-      "avator": "tailwind.png",
-      "securityQuestions": [
-        {
-          "question": "What is your birth city?",
-          "answer": "jaghori"
-        },
-        {
-          "question": "What is your birth day?",
-          "answer": "12"
-        }
-      ]
     }
   ],
   "categories": [
@@ -74,26 +52,27 @@
       "name": "Hospital",
       "description": "jaghori hotel is the top Hotel in the jaghori city , and you cann evry thing find and buy very good",
       "address": "jaghori, Angori",
-      "services": ["3 time food", "bett", "hot and clean room"],
+      "services": [
+        "3 time food",
+        "bett",
+        "hot and clean room"
+      ],
       "price": 120,
       "city_id": 12,
-      "category_id": "04c4",
+      "category_id": "1",
       "user_id": "aba4"
     },
     {
-      "id": "8b0a",
+      "id": "cff1",
       "name": "Jaghori",
       "address": "Jaghori, Angori",
-      "price": 230,
-      "description": "dsmfalsnfasdfakdfngsdfkgsdnfgksdfgbsdfkgsdfäg",
+      "price": 234,
+      "description": "",
       "services": [
-        "schnell deinstleistung",
-        "gut Qualität",
-        "rund um die Uhr",
-        "rund um die Uhr"
+        "tw"
       ],
-      "city_id": 12,
-      "category_id": "1",
+      "city_id": "12",
+      "category_id": "ce5f",
       "user_id": "aba4"
     }
   ],

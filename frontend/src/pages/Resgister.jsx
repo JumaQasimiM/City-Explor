@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useCreateUser } from "../hooks/useUsers";
-
+import { IoIosWarning } from "react-icons/io";
 import avator from "../assets/hero.jpeg";
 import { toast } from "react-toastify";
 export const RegisterUser = () => {
@@ -86,7 +86,7 @@ export const RegisterUser = () => {
       style={{ backgroundImage: `url(${avator})` }}
       className="min-h-screen mt-14 flex items-center justify-center bg-gray-100 dark:bg-slate-900 px-4"
     >
-      <div className="w-full max-w-3xl bg-white dark:bg-slate-800 dark:text-white/90 rounded-xl shadow-lg p-6 md:p-8">
+      <div className="w-full max-w-3xl my-23 bg-white dark:bg-slate-800 dark:text-white/90 rounded-xl shadow-lg p-6 md:p-8">
         <h1 className="text-3xl font-semibold text-center mb-6 dark:text-white">
           Register User
         </h1>
@@ -113,7 +113,6 @@ export const RegisterUser = () => {
               />
             </div>
           </div>
-
           {/* DOB / Role */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
@@ -129,7 +128,6 @@ export const RegisterUser = () => {
               </select>
             </div>
           </div>
-
           {/* Email / Password */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-1">
@@ -152,6 +150,10 @@ export const RegisterUser = () => {
             </div>
           </div>
           {/* Security Questions */}
+
+          <h1 className="text-orange-400">
+            <IoIosWarning size={30} /> Security Questions
+          </h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
               <label className="text-sm font-medium">
@@ -176,13 +178,11 @@ export const RegisterUser = () => {
               />
             </div>
           </div>
-
           {/* Image */}
           <div className="flex flex-col gap-1">
             <label className="text-sm font-medium">Profile Image</label>
             <input type="file" name="avator" className="file-input" />
           </div>
-
           {/* Submit */}
           <button
             type="submit"

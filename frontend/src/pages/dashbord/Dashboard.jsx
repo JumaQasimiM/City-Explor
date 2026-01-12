@@ -1,5 +1,6 @@
 import { CategoryCard } from "../../components/dashboardComponent/CategoryCard";
 import { PlacesChart } from "../../components/dashboardComponent/PlacesChart";
+import { PlacesListDashboard } from "../../components/dashboardComponent/PlacesListDashboard";
 import { UserListInfoDashboard } from "../../components/dashboardComponent/UserListInfoDashboard";
 import { UsersChart } from "../../components/dashboardComponent/UsersChart";
 
@@ -41,6 +42,9 @@ export const Dashboard = () => {
 
       {/* ================= USERS LIST ================= */}
       <UserListInfoDashboard />
+
+      {/* =============== Places List ========== */}
+      <PlacesListDashboard />
     </section>
   );
 };

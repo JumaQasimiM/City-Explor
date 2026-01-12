@@ -7,10 +7,12 @@ import { toast } from "react-toastify";
 
 export const Users = () => {
   const { users, error, loading, refetch } = useUsers();
-  const { deleteUser, error: deleteError } = useDeleteUser();
+  const {
+    deleteUser,
+    error: deleteError,
+    loading: deleteLoading,
+  } = useDeleteUser();
   const { activeUser } = useActiveUser();
-
-  const [userLoading, setUserLoading] = useState({});
 
   const handleActivate = async (id) => {
     setUserLoading((prev) => ({ ...prev, [id]: true }));
@@ -26,9 +28,7 @@ export const Users = () => {
   };
 
   const handleDelete = async (id) => {
-    setUserLoading((prev) => ({ ...prev, [id]: true }));
     const result = await deleteUser(id);
-    setUserLoading((prev) => ({ ...prev, [id]: false }));
 
     if (result) {
       toast.success("User deleted successfully");
@@ -106,42 +106,31 @@ export const Users = () => {
 
                   <td className="px-4 py-3 flex justify-center gap-2">
                     <button
+                      onClick={() => handleDelete(user.id)}
+                      className="px-3 py-1 rounded text-sm font-semibold bg-sky-600 hover:bg-sky-500 text-white transition"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(user.id)}
+                      className="px-3 py-1 rounded text-sm font-semibold bg-red-600 hover:bg-red-500 text-white transition"
+                    >
+                      {deleteLoading ? "Loading..." : "Delete"}
+                    </button>
+                  </td>
+
+                  <td className="text-center">
+                    <button
                       onClick={() => handleActivate(user.id)}
-                      disabled={
-                        user.status === "active" || userLoading[user.id]
-                      }
+                      disabled={user.status === "active"}
                       className={`px-3 py-1 rounded text-sm font-semibold transition ${
                         user.status === "active"
                           ? "bg-gray-500 cursor-not-allowed text-green-200"
                           : "bg-green-600 hover:bg-green-500 text-white"
                       }`}
                     >
-                      {userLoading[user.id]
-                        ? "Loading..."
-                        : user.status === "active"
-                        ? "Active"
-                        : "Activate"}
+                      {user.status === "active" ? "Active" : "Activate"}
                     </button>
-
-                    <button
-                      onClick={() => handleDelete(user.id)}
-                      disabled={userLoading[user.id]}
-                      className="px-3 py-1 rounded text-sm font-semibold bg-red-600 hover:bg-red-500 text-white transition"
-                    >
-                      {userLoading[user.id] ? "Loading..." : "Delete"}
-                    </button>
-                  </td>
-
-                  <td className="px-4 py-3 text-center">
-                    <span
-                      className={`px-2 py-1 rounded text-sm font-medium ${
-                        user.status === "active"
-                          ? "bg-green-500 text-white"
-                          : "bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-gray-200"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
                   </td>
                 </tr>
               ))

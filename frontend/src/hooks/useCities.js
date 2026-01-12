@@ -12,7 +12,7 @@ import { useState } from "react";
  * @returns {object}
  */
 export const useCities = () => {
-  const { data, error, loading, refetch } = useFetch(`${ApiUrl}/cities`);
+  const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/cities`);
 
   return {
     cities: data,
