@@ -71,3 +71,13 @@ export const usePopularPlace = (category_id) => {
     loading,
   };
 };
+
+// search by category
+
+export const useSearchByCategory = (category_id) => {
+  const {
+    data: category,
+    error,
+    loading,
+  } = useFetch(`${ApiUrl}/places?category_id = ${category_id}`);
+};

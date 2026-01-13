@@ -1,8 +1,13 @@
-import { PopularHotelCard } from "../components/PopularHotelCard";
-import { usePlaces } from "../hooks/usePlaces";
+import { useMemo, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
-import { useCategories } from "../hooks/useCategories";
+import { motion, AnimatePresence } from "framer-motion";
 
+import { usePlaces } from "../hooks/usePlaces";
+import { useCategories } from "../hooks/useCategories";
+import { PlaceCard } from "../components/PlaceCard";
+import { NotFoundData } from "../components/helper/NotFoundData";
+
+// images
 import Hotel1 from "../assets/Hotel1.jpg";
 import Hotel2 from "../assets/Hotel2.jpg";
 import Hotel3 from "../assets/Hotel3.jpg";
@@ -22,8 +27,8 @@ const placeImages = [
   Hotel2,
   Hotel3,
   Hotel4,
-  HotelRoom2,
   HotelRoom1,
+  HotelRoom2,
   restaurant1,
   restaurant2,
   restaurant3,
@@ -34,20 +39,54 @@ const placeImages = [
 ];
 
 export const PlacesInSite = () => {
-  const { places = [], loading, error } = usePlaces();
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const { places = [], loading } = usePlaces();
   const { categories = [] } = useCategories();
 
+  const filteredPlace = useMemo(() => {
+    return places.filter((place) => {
+      const category = categories.find((cate) => cate.id === place.category_id);
+
+      const matchCategory =
+        activeCategory === "All" || category?.name === activeCategory;
+
+      const matchQuery = place.name
+        ?.toLowerCase()
+        .includes(query.toLowerCase());
+
+      return matchCategory && matchQuery;
+    });
+  }, [places, categories, activeCategory, query]);
+
   return (
-    <section className="my-20 py-5 bg-gray-100 dark:bg-slate-900 text-black/80 dark:text-white/90">
+    <section className="my-20 py-5 bg-gray-100 dark:bg-slate-900">
       <div className="max-w-8xl mx-auto px-4 md:px-8">
-        {/* Top Controls */}
-        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-10 py-2">
+        {/* Controls */}
+        <div className="flex flex-col lg:flex-row lg:justify-between gap-6 mb-10">
           {/* Categories */}
           <ul className="flex gap-4 overflow-x-auto scrollbar-hide py-2">
+            <li
+              onClick={() => setActiveCategory("All")}
+              className={`px-4 py-2 rounded cursor-pointer font-semibold ${
+                activeCategory === "All"
+                  ? "bg-green-500 text-white"
+                  : "bg-white dark:bg-slate-3 00 hover:bg-green-500 hover:text-white"
+              }`}
+            >
+              All
+            </li>
+
             {categories.map((cate) => (
               <li
                 key={cate.id}
-                className="whitespace-nowrap cursor-pointer px-4 py-2 rounded bg-white dark:bg-slate-800 shadow-sm hover:bg-green-500 hover:text-white transition text-sm font-semibold"
+                onClick={() => setActiveCategory(cate.name)}
+                className={`px-4 py-2 rounded cursor-pointer font-semibold ${
+                  activeCategory === cate.name
+                    ? "bg-green-500 text-white"
+                    : "bg-white dark:bg-slate-300 hover:bg-green-500 hover:text-white"
+                }`}
               >
                 {cate.name}
               </li>
@@ -57,40 +96,45 @@ export const PlacesInSite = () => {
           {/* Search */}
           <div className="relative w-full sm:max-w-md">
             <input
-              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder="Search places..."
-              className="w-full py-3 pl-5 pr-12 dark:bg-slate-800 border-b-2 dark:border-white/10 focus:ring-2 focus:ring-green-400 focus:outline-none"
+              className="w-full py-3 pl-5 pr-12 dark:bg-slate-600 dark:text-white/90 border-b"
             />
             <MdOutlineSearch
-              size={22}
-              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+              size={30}
+              className="absolute right-4 top-1/2 -translate-y-1/2"
             />
           </div>
         </div>
 
-        {/* Content */}
-        {loading && (
-          <p className="text-center text-gray-500">Loading places...</p>
+        {/* Results */}
+        {filteredPlace.length === 0 ? (
+          <NotFoundData text="No result found" />
+        ) : (
+          <AnimatePresence>
+            <motion.div
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+            >
+              {filteredPlace.map((place, index) => (
+                <motion.div
+                  key={place.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <PlaceCard
+                    place={place}
+                    image={placeImages[index % placeImages.length]}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </AnimatePresence>
         )}
-
-        {error && (
-          <p className="text-center text-red-500">Failed to load places.</p>
-        )}
-
-        {!loading && places.length === 0 && (
-          <p className="text-center text-gray-500">No places found.</p>
-        )}
-
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {places.map((place, index) => (
-            <PopularHotelCard
-              key={place.id}
-              hotel={place}
-              image={placeImages[index % placeImages.length]}
-            />
-          ))}
-        </div>
       </div>
     </section>
   );

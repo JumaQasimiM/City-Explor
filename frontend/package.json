@@ -14,6 +14,7 @@
     "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.1.18",
     "emailjs": "^5.0.0",
+    "framer-motion": "^12.26.1",
     "json-server": "^1.0.0-beta.3",
     "leaflet": "^1.9.4",
     "react": "^19.2.0",
