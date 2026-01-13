@@ -124,6 +124,7 @@ export const RegisterUser = () => {
               <select className="input" name="role">
                 <option value="">Select purpose</option>
                 <option value="guest">Guest / Trip</option>
+                <option value="writer">Writer</option>
                 <option value="business">Business</option>
               </select>
             </div>

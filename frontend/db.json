@@ -140,6 +140,80 @@
     { "id": "1", "city_id": "jaghori1", "url": "images/cities/jaghori1.png" },
     { "id": "2", "city_id": "jaghori1", "url": "images/cities/jaghori2.png" }
   ],
+  "blogs": [
+    {
+      "id": "7009",
+      "user_id": "aba4",
+      "created_at": "2026-01-12",
+      "updated_at": "2026-01-12",
+      "rate": 4.5,
+      "title": "Discover Jaghori: A Peaceful City in Central Afghanistan",
+      "slug": "discover-jaghori-peaceful-city-central-afghanistan",
+      "description": "Jaghori is a peaceful and beautiful district located in the heart of Ghazni Province, Afghanistan. Surrounded by green valleys, mountains, and fertile farmland, it is known for its calm environment and strong community life. The people of Jaghori are widely respected for their love of education, unity, and hard work. Visitors can experience authentic Afghan hospitality, traditional food, and daily life shaped by cooperation and resilience.",
+      "image": "images/blogs/jaghori1.jpg",
+      "tags": [
+        "Jaghori",
+        "Travel",
+        "Culture",
+        "Afghanistan",
+        "Nature",
+        "Tourism"
+      ],
+      "category_id": "ce53",
+      "published": true,
+      "views": 1250,
+      "comments_count": 12
+    },
+    {
+      "id": "789",
+      "user_id": "aba4",
+      "created_at": "2026-01-12",
+      "updated_at": "2026-01-12",
+      "rate": 4.5,
+      "title": "Exploring the Beauty of Jaghori",
+      "slug": "exploring-the-beauty-of-jaghori",
+      "description": "The natural beauty of Jaghori is one of its greatest treasures. From rolling green hills to wide valleys and seasonal rivers, the landscape changes beautifully throughout the year. Walking through these areas allows visitors to connect with nature and experience a slower, more meaningful way of life.",
+      "image": "images/blogs/jaghori1.jpg",
+      "tags": ["Jaghori", "Nature", "Photography", "Adventure", "Travel"],
+      "category_id": "ce5f",
+      "published": true,
+      "views": 980,
+      "comments_count": 8
+    },
+    {
+      "id": "565",
+      "user_id": "aba4",
+      "created_at": "2026-01-13",
+      "updated_at": "2026-01-13",
+      "rate": 4.7,
+      "title": "Top Hotels and Restaurants in Jaghori",
+      "slug": "top-hotels-and-restaurants-in-jaghori",
+      "description": "Jaghori offers a growing number of hotels and restaurants that provide comfort and quality services for both locals and visitors. Local restaurants serve delicious traditional Afghan food, including rice dishes, kebabs, fresh bread, and dairy products made from local farms. Travelers can enjoy authentic flavors and friendly service.",
+      "image": "images/blogs/jaghori2.jpg",
+      "tags": ["Jaghori", "Food", "Hotels", "Travel", "Afghanistan"],
+      "category_id": "ce5f",
+      "published": true,
+      "views": 870,
+      "comments_count": 5
+    },
+    {
+      "id": "353",
+      "user_id": "aba4",
+      "created_at": "2026-01-14",
+      "updated_at": "2026-01-14",
+      "rate": 4.6,
+      "title": "Cultural and Historical Sites in Jaghori",
+      "slug": "cultural-and-historical-sites-in-jaghori",
+      "description": "Jaghori has a rich cultural and historical identity shaped by centuries of tradition and community life. Local bazaars, mosques, and gathering places reflect the heritage of the Hazara people. Handicrafts, traditional clothing, and customs are preserved and shared through generations, making Jaghori a meaningful destination for cultural exploration.",
+      "image": "images/blogs/jaghori3.jpg",
+      "tags": ["Jaghori", "Culture", "History", "Heritage", "Travel"],
+      "category_id": "1",
+      "published": true,
+      "views": 790,
+      "comments_count": 6
+    }
+  ],
+
   "bookings": [
     {
       "id": "booking1",

@@ -1,4 +1,5 @@
 import jaghoriImage from "../assets/hero.jpeg";
+import restaurant1 from "../assets/restaurant1.jpg";
 import { PopularPlacesSwiper } from "./PopularPlaceSwiper";
 
 export const PopularPlaces = () => {
@@ -15,7 +16,7 @@ export const PopularPlaces = () => {
           <div className="relative group lg:col-span-1">
             <div className="overflow-hidden">
               <img
-                src={jaghoriImage}
+                src={restaurant1}
                 alt="Architecture Budapest"
                 className="w-full h-[520px] object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
               />

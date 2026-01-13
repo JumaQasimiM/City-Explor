@@ -9,3 +9,7 @@ https://themewagon.com/themes/pluto-free-bootstrap-4-html5-admin-dashboard-templ
 <!-- not compltet -->
 
 1. place detail in dashboard --- services --refactur
+
+blog page
+
+https://themewagon.github.io/sensive/

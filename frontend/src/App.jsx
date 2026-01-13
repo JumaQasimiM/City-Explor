@@ -23,6 +23,8 @@ import { RegisterUser } from "./pages/Resgister";
 import { ResetPassword } from "./pages/ResetPassword";
 import { PlacesInSite } from "./pages/Places";
 import { PlaceDetailOnSite } from "./pages/PlaceDetailOnSite";
+import { Blog } from "./pages/Blog";
+import { BlogDetail } from "./pages/BlogDetail";
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/places" element={<PlacesInSite />} />
           <Route path="/place/:id" element={<PlaceDetailOnSite />} />
+          <Route path="/blogs" element={<Blog />} />
+          <Route path="/blogs/:id" element={<BlogDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<RegisterUser />} />
