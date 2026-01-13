@@ -1,6 +1,50 @@
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+// images
 import avator from "../assets/hero.jpeg";
-import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
 export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  // from auth context -- useAuth hook
+  const { user, login, loading, error } = useAuth();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    if (!email) {
+      toast.error("Email is requered");
+      return;
+    }
+    if (!password) {
+      toast.error("password is requered");
+      return;
+    }
+    if (password.length < 4) {
+      toast.error("Enter a valid password");
+      return;
+    }
+    // email validation
+    const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailExp.test(email)) {
+      toast.error("Enter a valid Email");
+      return;
+    }
+
+    await login(email, password);
+    navigate("/dashboard");
+  };
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+    if (user) {
+      toast.success(`Welcome ${user.firstname}`);
+    }
+  }, [error, user]);
+
   return (
     <section
       style={{ backgroundImage: `url(${avator})` }}
@@ -22,11 +66,13 @@ export const Login = () => {
         </div>
 
         {/* Form */}
-        <form className="space-y-6">
+        <form className="space-y-6" onSubmit={handleLogin}>
           <div className="flex flex-col gap-2">
             <label className="form-label">Username or Email</label>
             <input
               type="text"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
               className="form-input"
             />
@@ -36,6 +82,8 @@ export const Login = () => {
             <label className="form-label">Password</label>
             <input
               type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
               className="form-input"
             />
