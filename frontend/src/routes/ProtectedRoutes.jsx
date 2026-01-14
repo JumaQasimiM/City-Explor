@@ -17,4 +17,16 @@ export const ProtectedRoutes = () => {
   }
 
   return <Outlet />;
+
+  // if (!user) {
+  //   return <Navigate to="/login" replace />;
+  // }
+
+  // if (!allowRoles && allowRoles.includes(user.role)) {
+  //   // go to admin but just can see the relatet page like, add place and see his places and setting to change his profile
+  //   // return <Navigate to="/unauthorized" replace />;
+  //   return <Navigate to="/home" replace />;
+  // }
+
+  // return <Outlet />;
 };

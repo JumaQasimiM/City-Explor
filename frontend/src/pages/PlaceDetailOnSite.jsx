@@ -16,21 +16,35 @@ import restaurant1 from "../assets/restaurant1.jpg";
 import restaurant2 from "../assets/restaurant2.jpg";
 import restaurant3 from "../assets/restaurant3.jpg";
 import restaurant4 from "../assets/restaurant3.jpg";
+import hotel1 from "../assets/Hotel1.jpg";
 import hotel2 from "../assets/Hotel2.jpg";
+import hotel3 from "../assets/Hotel3.jpg";
+import hotel4 from "../assets/Hotel4.jpg";
 
+import hospital1 from "../assets/hospital1.jpg";
+import hospital2 from "../assets/hospital2.jpg";
+import hospital3 from "../assets/hospital3.jpg";
+import pharmacy1 from "../assets/pharmacy1.jpg";
+import pharmacy2 from "../assets/pharmacy2.webp";
+import supermarket1 from "../assets/supermarket1.jpg";
+import supermarket2 from "../assets/supermarket2.jpg";
+import supermarket3 from "../assets/supermarket3.jpg";
+import jaghori1 from "../assets/jaghori1.jpg";
 import avatorImage from "../assets/Hotel1.jpg";
 
-// Fix leaflet marker icon issue
-import L from "leaflet";
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
-  iconUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
-  shadowUrl:
-    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
-});
+const restaurantImage = [restaurant1, restaurant2, restaurant3, restaurant4];
+const hotelImage = [hotel1, hotel2, hotel3, hotel4];
+const supermarketImage = [supermarket1, supermarket2, supermarket3, jaghori1];
+const hospitalImage = [hospital1, hospital2, hospital3, pharmacy2];
+const pharmacyImage = [pharmacy1, pharmacy2, hospital3, hospital2];
+
+const categoryImagesMap = {
+  Hotel: hotelImage,
+  Restaurant: restaurantImage,
+  Hospital: hospitalImage,
+  Supermarket: supermarketImage,
+  Pharmacy: pharmacyImage,
+};
 
 export const PlaceDetailOnSite = () => {
   const { id } = useParams();
@@ -39,6 +53,8 @@ export const PlaceDetailOnSite = () => {
   const { data: owner } = usePlaceOwner(place?.user_id);
   const { data: city } = usePlaceCity(place?.city_id);
   const { data: category } = usePlaceCategory(place?.category_id);
+
+  const images = categoryImagesMap[category?.name] || [restaurant1, hospital1];
 
   // Default location: Jaghori, Afghanistan
   const defaultLat = 33.4579;
@@ -81,19 +97,31 @@ export const PlaceDetailOnSite = () => {
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="md:col-span-2">
           <img
-            src={restaurant1}
+            src={
+              category?.name === "Hotel"
+                ? hotel2
+                : category?.name === "Restaurant"
+                ? restaurant2
+                : category?.name === "Hospital"
+                ? hospital1
+                : category?.name === "Supermarket"
+                ? supermarket1
+                : category?.name === "Pharmacy"
+                ? pharmacy1
+                : supermarket2
+            }
             alt={place.name}
-            className="w-full h-[260px] md:h-[420px] object-cover rounded-2xl"
+            className="w-full h-[260px] md:h-[420px] object-cover rounded"
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          {[restaurant2, restaurant3, restaurant4, hotel2].map((img, index) => (
+          {images.map((img, index) => (
             <img
               key={index}
               src={img}
               alt=""
-              className="w-full h-[125px] md:h-[200px] object-cover rounded-xl"
+              className="w-full h-[125px] md:h-[200px] object-cover rounded"
             />
           ))}
         </div>
@@ -136,6 +164,7 @@ export const PlaceDetailOnSite = () => {
               {place.services?.map((service, index) => (
                 <span
                   key={index}
+                  title={service}
                   className="px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm font-medium"
                 >
                   {service}
@@ -184,24 +213,6 @@ export const PlaceDetailOnSite = () => {
             Back to places
           </Link>
         </aside>
-      </div>
-      {/* Map */}
-      <div className="mt-10">
-        <MapContainer
-          center={[place.lat || defaultLat, place.lng || defaultLng]}
-          zoom={15}
-          scrollWheelZoom={false}
-          className="w-full h-[300px] md:h-[400px] rounded-xl"
-        >
-          {/* Satellite tiles using ESRI */}
-          <TileLayer
-            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-            attribution="Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and others"
-          />
-          <Marker position={[place.lat || defaultLat, place.lng || defaultLng]}>
-            <Popup>{place.name}</Popup>
-          </Marker>
-        </MapContainer>
       </div>
     </section>
   );

@@ -5,6 +5,7 @@ export const PlaceCard = ({ place, image }) => {
   return (
     <article className="relative w-full h-[200px] overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300">
       {/* Image */}
+
       <img
         src={image}
         alt={place.name}
@@ -17,9 +18,11 @@ export const PlaceCard = ({ place, image }) => {
       </Link>
 
       {/* Rating badge */}
-      <div className="absolute top-3 right-3 bg-green-500 text-white text-sm font-semibold px-2 py-1 rounded-md shadow">
-        4.7
-      </div>
+      {place.rate && (
+        <div className="absolute top-3 right-3 bg-green-500 text-white text-sm font-semibold px-2 py-1 rounded-md shadow">
+          {place.rate}
+        </div>
+      )}
 
       {/* Content */}
       <div className="absolute bottom-4 left-4 right-4 text-white">

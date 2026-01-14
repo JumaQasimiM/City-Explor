@@ -4,10 +4,11 @@
       "id": "aba4",
       "firstname": "Mohammad Juma",
       "lastname": "Qasimi",
-      "email": "juma82db@gmail.com",
-      "password": "123",
+      "email": "juma@gmail.com",
+      "password": "123456",
       "status": "active",
       "role": "business",
+      "token": "vdf2$%mdsjfgh3454nds12!%$&000",
       "dateOfBirth": "2026-01-10",
       "created_at": "2026-01-11",
       "avatar": "tailwind.png",
@@ -17,129 +18,346 @@
       ]
     }
   ],
+
   "categories": [
     { "id": "1", "name": "Hotel" },
     { "id": "ce5f", "name": "Restaurant" },
     { "id": "ce53", "name": "Hospital" },
     { "id": "ce5d", "name": "Supermarket" },
-    { "id": "c25f", "name": "Pharmacy" },
-    { "id": "565f", "name": "WG" }
+    { "id": "c25f", "name": "Pharmacy" }
   ],
+
   "countries": [{ "id": "afg1", "name": "Afghanistan" }],
+
   "cities": [
     {
       "id": "jaghori1",
       "name": "Jaghori",
       "country_id": "afg1",
-      "description": "Jaghori is a beautiful district located in Ghazni Province, Afghanistan.\nIt is known for its lush green valleys, rolling hills, and serene landscapes.\nThe district is predominantly inhabited by the Hazara people, who are welcoming and hospitable.\nEducation is highly valued, making Jaghori one of the more literate areas in Afghanistan.\nThe climate is moderate, and the land is fertile, supporting agriculture and orchards.\nVisitors can enjoy scenic mountains, rivers, and wildflower-filled valleys in spring and summer.\nJaghori has a rich cultural heritage, with local bazaars, mosques, and traditional crafts.\nThe district offers essential services, including hotels, restaurants, hospitals, and pharmacies.\nHandmade textiles and artisanal goods reflect generations of local craftsmanship.\nLife in Jaghori is peaceful, and the community emphasizes harmony and cooperation.\nTourists can explore hiking trails, cultural sites, and enjoy authentic Afghan cuisine.\nOverall, Jaghori is a hidden gem, combining natural beauty, culture, and a welcoming community.",
+      "description": "A peaceful and green district in Ghazni Province.",
       "lat": 34.309,
       "lng": 68.352
+    },
+    {
+      "id": "kabul1",
+      "name": "Kabul",
+      "country_id": "afg1",
+      "description": "Capital city of Afghanistan.",
+      "lat": 34.5553,
+      "lng": 69.2075
+    },
+    {
+      "id": "ghazni1",
+      "name": "Ghazni",
+      "country_id": "afg1",
+      "description": "Historic city with rich Islamic heritage.",
+      "lat": 33.5451,
+      "lng": 68.4174
     }
   ],
+
   "places": [
     {
-      "id": "place1",
+      "id": "pl1",
       "name": "Jaghori Grand Hotel",
-      "description": "The Jaghori Grand Hotel is a premier destination in the heart of Jaghori district, offering luxurious rooms, top-notch services, and a welcoming atmosphere. Guests can enjoy spacious, clean rooms, three-time meals, high-speed Wi-Fi, and exceptional hospitality. The hotel is ideal for business travelers and tourists seeking comfort in a serene environment surrounded by the picturesque Afghan highlands.",
+      "description": "Luxury hotel.",
       "address": "Main Street, Jaghori",
-      "services": [
-        "3-time meals",
-        "Comfortable bed",
-        "Hot and clean rooms",
-        "Free Wi-Fi"
-      ],
+      "services": ["Wi-Fi", "Meals"],
       "price": 120,
       "city_id": "jaghori1",
       "category_id": "1",
       "user_id": "aba4",
+      "distance": 2,
+      "rate": 4.5,
       "lat": 34.309,
       "lng": 68.352
     },
     {
-      "id": "place2",
+      "id": "pl2",
+      "name": "Green Valley Hotel",
+      "description": "Affordable hotel.",
+      "address": "Hill Road, Jaghori",
+      "services": ["Breakfast"],
+      "price": 80,
+      "city_id": "jaghori1",
+      "category_id": "1",
+      "user_id": "aba4",
+      "distance": 5,
+      "rate": 4.5,
+      "lat": 34.312,
+      "lng": 68.349
+    },
+    {
+      "id": "pl3",
       "name": "Jaghori Restaurant",
-      "description": "Jaghori Restaurant is known for its authentic Afghan cuisine, offering visitors a delightful culinary experience. From freshly prepared local dishes to seasonal specialties, every meal is a celebration of taste and culture. The restaurant provides comfortable seating, a welcoming ambiance, and attentive service, making it an excellent choice for families, tourists, and business lunches.",
+      "description": "Traditional Afghan food.",
       "address": "Bazaar Road, Jaghori",
-      "services": ["Local food", "Delivery", "Outdoor seating"],
-      "price": 30,
+      "services": ["Local food"],
+      "price": 25,
       "city_id": "jaghori1",
       "category_id": "ce5f",
       "user_id": "aba4",
+      "distance": 1,
       "lat": 34.31,
       "lng": 68.353
     },
     {
-      "id": "place3",
-      "name": "Hospital Fatima Zahra",
-      "description": "Hospital Fatima Zahra is a leading healthcare facility in Jaghori district, committed to providing comprehensive medical services to the community. Equipped with modern technology, dedicated staff, and specialized departments, the hospital ensures quality care for patients. Services include emergency care, inpatient and outpatient treatment, maternity support, and community health programs, making it a trusted choice for local residents.",
+      "id": "pl4",
+      "name": "Mountain View Cafe",
+      "description": "Cafe with scenery.",
+      "address": "Upper Jaghori",
+      "services": ["Coffee"],
+      "price": 15,
+      "city_id": "jaghori1",
+      "category_id": "ce5f",
+      "user_id": "aba4",
+      "distance": 4,
+      "rate": 3.4,
+      "lat": 34.314,
+      "lng": 68.351
+    },
+    {
+      "id": "pl5",
+      "name": "Fatima Zahra Hospital",
+      "description": "Healthcare services.",
       "address": "Health Avenue, Jaghori",
-      "services": [
-        "Emergency care",
-        "Inpatient treatment",
-        "Outpatient services",
-        "Maternity care"
-      ],
+      "services": ["Emergency"],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "ce53",
       "user_id": "aba4",
+      "distance": 3,
+      "rate": 4.9,
       "lat": 34.308,
       "lng": 68.354
     },
     {
-      "id": "place4",
-      "name": "Maajiri SuperMarket",
-      "description": "Maajiri SuperMarket is the largest supermarket in Jaghori, offering a wide variety of fresh produce, groceries, household items, and personal care products. Known for its cleanliness, organized layout, and friendly staff, it provides a convenient shopping experience for families and individuals. The store operates 24/7, ensuring accessibility at all times and maintaining high standards of quality and service.",
+      "id": "pl6",
+      "name": "Maajiri Supermarket",
+      "description": "Largest supermarket.",
       "address": "Market Road, Jaghori",
-      "services": [
-        "Fresh produce",
-        "24/7 availability",
-        "Household items",
-        "Clean and organized"
-      ],
+      "services": ["Groceries"],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "ce5d",
       "user_id": "aba4",
+      "distance": 1,
       "lat": 34.31,
       "lng": 68.355
     },
     {
-      "id": "place5",
+      "id": "pl7",
       "name": "Pharmacy 24/7",
-      "description": "Pharmacy 24/7 in Jaghori district offers reliable pharmaceutical services with a wide range of medicines, health supplements, and wellness products. Staffed with licensed pharmacists, the pharmacy ensures accurate prescriptions, health advice, and emergency medical supplies. Open around the clock, it provides critical support to residents and travelers, making it a vital part of the local healthcare infrastructure.",
+      "description": "24/7 pharmacy.",
       "address": "Health Avenue, Jaghori",
-      "services": [
-        "Prescription medicines",
-        "Health supplements",
-        "24/7 service",
-        "Professional pharmacists"
-      ],
+      "services": ["Medicines"],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "c25f",
       "user_id": "aba4",
+      "distance": 2,
+      "rate": 2.5,
       "lat": 34.311,
       "lng": 68.356
+    },
+
+    {
+      "id": "pl8",
+      "name": "Kabul Serena Hotel",
+      "description": "Five-star hotel.",
+      "address": "Kabul",
+      "services": ["Pool"],
+      "price": 250,
+      "city_id": "kabul1",
+      "category_id": "1",
+      "user_id": "aba4",
+      "distance": 1,
+      "rate": 3.7,
+      "lat": 34.555,
+      "lng": 69.208
+    },
+    {
+      "id": "pl9",
+      "name": "Kabul City Restaurant",
+      "description": "Modern restaurant.",
+      "address": "Shahr-e-Naw",
+      "services": ["Dine-in"],
+      "price": 40,
+      "city_id": "kabul1",
+      "category_id": "ce5f",
+      "user_id": "aba4",
+      "distance": 2,
+      "rate": 2.8,
+      "lat": 34.556,
+      "lng": 69.21
+    },
+    {
+      "id": "pl10",
+      "name": "Indira Gandhi Hospital",
+      "description": "Public hospital.",
+      "address": "Kabul",
+      "services": ["Emergency"],
+      "price": 0,
+      "city_id": "kabul1",
+      "category_id": "ce53",
+      "user_id": "aba4",
+      "distance": 3,
+      "rate": 3.9,
+      "lat": 34.558,
+      "lng": 69.215
+    },
+
+    {
+      "id": "pl11",
+      "name": "Ghazni Heritage Hotel",
+      "description": "Hotel near monuments.",
+      "address": "Ghazni",
+      "services": ["Breakfast"],
+      "price": 90,
+      "city_id": "ghazni1",
+      "category_id": "1",
+      "user_id": "aba4",
+      "distance": 1,
+      "rate": 4.4,
+      "lat": 33.545,
+      "lng": 68.418
+    },
+    {
+      "id": "pl12",
+      "name": "Ghazni Restaurant",
+      "description": "Local food.",
+      "address": "Ghazni Bazaar",
+      "services": ["Local food"],
+      "price": 20,
+      "city_id": "ghazni1",
+      "category_id": "ce5f",
+      "user_id": "aba4",
+      "distance": 2,
+      "rate": 3.4,
+      "lat": 33.546,
+      "lng": 68.416
+    },
+    {
+      "id": "pl13",
+      "name": "Ghazni Hospital",
+      "description": "Medical services.",
+      "address": "Hospital Road",
+      "services": ["Emergency"],
+      "price": 0,
+      "city_id": "ghazni1",
+      "category_id": "ce53",
+      "user_id": "aba4",
+      "distance": 3,
+      "rate": 4.3,
+      "lat": 33.547,
+      "lng": 68.419
+    },
+    {
+      "id": "pl14",
+      "name": "City Pharmacy",
+      "description": "Pharmacy.",
+      "address": "Market Road",
+      "services": ["Medicines"],
+      "price": 0,
+      "city_id": "ghazni1",
+      "category_id": "c25f",
+      "user_id": "aba4",
+      "distance": 1,
+      "rate": 4.7,
+      "lat": 33.548,
+      "lng": 68.417
+    },
+    {
+      "id": "pl15",
+      "name": "Fresh Mart",
+      "description": "Groceries.",
+      "address": "Bazaar",
+      "services": ["Groceries"],
+      "price": 0,
+      "city_id": "ghazni1",
+      "category_id": "ce5d",
+      "user_id": "aba4",
+      "distance": 1,
+      "lat": 33.549,
+      "lng": 68.415
+    },
+
+    {
+      "id": "pl16",
+      "name": "Sunrise Cafe",
+      "description": "Breakfast cafe.",
+      "address": "Kabul",
+      "services": ["Tea"],
+      "price": 10,
+      "city_id": "kabul1",
+      "category_id": "ce5f",
+      "user_id": "aba4",
+      "distance": 4,
+      "rate": 4.5,
+      "lat": 34.56,
+      "lng": 69.22
+    },
+    {
+      "id": "pl17",
+      "name": "Family Supermarket",
+      "description": "Affordable market.",
+      "address": "Kabul",
+      "services": ["Groceries"],
+      "price": 0,
+      "city_id": "kabul1",
+      "category_id": "ce5d",
+      "user_id": "aba4",
+      "distance": 5,
+      "rate": 3.3,
+      "lat": 34.561,
+      "lng": 69.225
+    },
+    {
+      "id": "pl18",
+      "name": "Peace Guest House",
+      "description": "Budget stay.",
+      "address": "Kabul",
+      "services": ["Wi-Fi"],
+      "price": 50,
+      "city_id": "kabul1",
+      "category_id": "1",
+      "user_id": "aba4",
+      "distance": 3,
+      "rate": 4.5,
+      "lat": 34.554,
+      "lng": 69.206
+    },
+    {
+      "id": "pl19",
+      "name": "Village Bakery",
+      "description": "Fresh bread.",
+      "address": "Jaghori",
+      "services": ["Bakery"],
+      "price": 5,
+      "city_id": "jaghori1",
+      "category_id": "ce5f",
+      "user_id": "aba4",
+      "distance": 1,
+      "rate": 3.3,
+      "lat": 34.307,
+      "lng": 68.35
+    },
+    {
+      "id": "pl20",
+      "name": "Community Health Clinic",
+      "description": "Basic healthcare.",
+      "address": "Lower Jaghori",
+      "services": ["Checkups"],
+      "price": 0,
+      "city_id": "jaghori1",
+      "category_id": "ce53",
+      "user_id": "aba4",
+      "distance": 6,
+      "lat": 34.305,
+      "lng": 68.348
     }
   ],
-  "place_images": [
-    { "id": "1", "place_id": "place1", "url": "images/places/hotel1.jpg" },
-    { "id": "2", "place_id": "place1", "url": "images/places/hotel2.jpg" },
-    { "id": "3", "place_id": "place2", "url": "images/places/restaurant1.jpg" },
-    { "id": "4", "place_id": "place2", "url": "images/places/restaurant2.jpg" },
-    { "id": "5", "place_id": "place3", "url": "images/places/hospital1.jpg" },
-    {
-      "id": "6",
-      "place_id": "place4",
-      "url": "images/places/supermarket1.jpg"
-    },
-    { "id": "7", "place_id": "place5", "url": "images/places/pharmacy1.jpg" }
-  ],
-  "city_images": [
-    { "id": "1", "city_id": "jaghori1", "url": "images/cities/jaghori1.png" },
-    { "id": "2", "city_id": "jaghori1", "url": "images/cities/jaghori2.png" }
-  ],
+
   "blogs": [
     {
       "id": "7009",
@@ -216,22 +434,22 @@
 
   "bookings": [
     {
-      "id": "booking1",
+      "id": "bk1",
       "user_id": "aba4",
-      "place_id": "place1",
+      "place_id": "pl1",
       "check_in": "2026-01-12",
       "check_out": "2026-01-15",
       "status": "confirmed"
     }
   ],
+
   "reviews": [
     {
-      "id": "review1",
+      "id": "rv1",
       "user_id": "aba4",
-      "place_id": "place1",
-      "date": "2026-01-12",
-      "message": "Very good experience, rooms were clean and staff friendly.",
-      "rate": 4
+      "place_id": "pl1",
+      "rate": 4,
+      "message": "Very good experience."
     }
   ]
 }

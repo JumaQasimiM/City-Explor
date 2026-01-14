@@ -40,7 +40,7 @@ function App() {
         />
 
         <Routes>
-          {/* Website */}
+          {/* 🌐 Website */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/places" element={<PlacesInSite />} />
@@ -53,22 +53,40 @@ function App() {
             <Route path="/resetpassword" element={<ResetPassword />} />
           </Route>
 
-          <Route element={<ProtectedRoutes />}>
-            {/* Dashboard */}
+          {/* 🔐 ADMIN DASHBOARD */}
+          <Route element={<ProtectedRoutes allowedRoles={["admin"]} />}>
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
-
               <Route path="users" element={<Users />} />
               <Route path="cities" element={<Cities />} />
+              <Route path="countries" element={<Country />} />
+              <Route path="categories" element={<Category />} />
 
+              <Route path="places">
+                <Route index element={<Places />} />
+                <Route path=":id" element={<PlaceDetail />} />
+              </Route>
+            </Route>
+          </Route>
+
+          {/* 🏢 BUSINESS USER */}
+          <Route element={<ProtectedRoutes allowedRoles={["business"]} />}>
+            <Route path="/business" element={<DashboardLayout />}>
               <Route path="places">
                 <Route index element={<Places />} />
                 <Route path="add" element={<AddPlace />} />
                 <Route path=":id" element={<PlaceDetail />} />
               </Route>
+            </Route>
+          </Route>
 
-              <Route path="countries" element={<Country />} />
-              <Route path="categories" element={<Category />} />
+          {/* ✍️ WRITER */}
+          <Route element={<ProtectedRoutes allowedRoles={["writer"]} />}>
+            <Route path="/writer" element={<DashboardLayout />}>
+              <Route path="blogs">
+                <Route index element={<Blog />} />
+                <Route path="add" element={<BlogDetail />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

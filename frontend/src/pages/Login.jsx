@@ -10,7 +10,7 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   // from auth context -- useAuth hook
-  const { user, login, loading, error } = useAuth();
+  const { user = [], login, loading, error } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -34,17 +34,17 @@ export const Login = () => {
     }
 
     await login(email, password);
-    navigate("/dashboard");
   };
   useEffect(() => {
+    if (user) {
+      toast.success(`Welcome ${user.firstname}`);
+      navigate("/dashboard", { replace: true });
+    }
+
     if (error) {
       toast.error(error);
     }
-    if (user) {
-      toast.success(`Welcome ${user.firstname}`);
-    }
-  }, [error, user]);
-
+  }, [user, error, navigate]);
   return (
     <section
       style={{ backgroundImage: `url(${avator})` }}
