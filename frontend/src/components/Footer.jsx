@@ -1,6 +1,9 @@
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 
 export const Footer = () => {
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+  };
   return (
     <footer className="bg-gray-100 dark:bg-slate-900 dark:text-slate-300 pt-16">
       <div className="max-w-7xl mx-auto px-5 border-t-2 border-t-gray-500 pt-5">
@@ -55,7 +58,7 @@ export const Footer = () => {
             <p className="text-sm dark:text-slate-400 text-slate-600 mb-4">
               Get travel inspiration & deals directly to your inbox.
             </p>
-            <form className="flex">
+            <form className="flex" onSubmit={handleSubscribe}>
               <input
                 type="email"
                 placeholder="Your email"

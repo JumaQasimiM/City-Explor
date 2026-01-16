@@ -1,0 +1,17 @@
+import restaurant1 from "../assets/restaurant1.jpg";
+import restaurant2 from "../assets/restaurant2.jpg";
+import restaurant3 from "../assets/restaurant3.jpg";
+import restaurant4 from "../assets/restaurant3.jpg";
+import hotel1 from "../assets/Hotel1.jpg";
+import hotel2 from "../assets/Hotel2.jpg";
+import hotel3 from "../assets/Hotel3.jpg";
+import hotel4 from "../assets/Hotel4.jpg";
+import hospital1 from "../assets/hospital1.jpg";
+import hospital2 from "../assets/hospital2.jpg";
+import hospital3 from "../assets/hospital3.jpg";
+import pharmacy1 from "../assets/pharmacy1.jpg";
+import pharmacy2 from "../assets/pharmacy2.webp";
+import supermarket1 from "../assets/supermarket1.jpg";
+import supermarket2 from "../assets/supermarket2.jpg";
+import supermarket3 from "../assets/supermarket3.jpg";
+import jaghori1 from " ../assets/jaghori1.jpg";

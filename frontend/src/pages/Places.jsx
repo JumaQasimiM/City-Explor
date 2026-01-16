@@ -27,6 +27,8 @@ import supermarket1 from "../assets/supermarket1.jpg";
 import supermarket2 from "../assets/supermarket2.jpg";
 import supermarket3 from "../assets/supermarket3.jpg";
 import jaghori1 from "../assets/jaghori1.jpg";
+import { Loader } from "../components/helper/Loading";
+import { ErrorMessage } from "../components/helper/Error";
 
 const restaurantImage = [restaurant1, restaurant2, restaurant3, restaurant4];
 const hotelImage = [hotel1, hotel2, hotel3, hotel4];
@@ -46,11 +48,10 @@ export const PlacesInSite = () => {
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
-  const { places = [], loading } = usePlaces();
+  const { places = [], loading, error } = usePlaces();
   const { categories = [] } = useCategories();
   const { blogs } = useBlogs();
 
-  // فیلتر کردن مکان‌ها بر اساس جستجو و دسته‌بندی
   const filteredPlace = useMemo(() => {
     return places.filter((place) => {
       const categoryObj = categories.find(
@@ -65,11 +66,14 @@ export const PlacesInSite = () => {
     });
   }, [places, categories, activeCategory, query]);
 
-  // گرفتن تصاویر بر اساس دسته‌بندی
+  //  get iamge acurden category
   const getCategoryImages = (categoryName) => {
     return categoryImagesMap[categoryName] || [restaurant1, hospital1];
   };
 
+  // show error and laoding
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
   return (
     <section className="mt-20 mb-10 py-5 bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 md:pb-20">

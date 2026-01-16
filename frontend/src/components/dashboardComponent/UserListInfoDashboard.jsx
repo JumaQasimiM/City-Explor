@@ -6,12 +6,12 @@ export const UserListInfoDashboard = () => {
   return (
     <section className="bg-white dark:bg-slate-800 rounded shadow-lg w-full">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-slate-700">
+      <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-slate-700">
         <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
           Users List
         </h2>
         <span className="text-sm text-gray-500 dark:text-gray-400">
-          Scroll horizontally & vertically
+          Manage all registered users
         </span>
       </div>
 

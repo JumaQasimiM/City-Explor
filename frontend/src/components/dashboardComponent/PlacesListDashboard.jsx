@@ -64,7 +64,7 @@ export const PlacesListDashboard = () => {
   return (
     <section className="bg-white dark:bg-slate-800 rounded shadow-md w-full">
       {/* Header */}
-      <div className="flex items-center justify-between px-6 py-5 border-b border-gray-200 dark:border-slate-700">
+      <div className="flex items-center justify-between px-6 py-5  border-t border-gray-200 dark:border-slate-700">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
           Places
         </h2>
@@ -76,7 +76,7 @@ export const PlacesListDashboard = () => {
       {/* Table */}
       <div className="overflow-x-auto max-h-[480px]">
         <table className="w-full border-collapse">
-          <thead className="sticky top-0 z-10 bg-gray-100 dark:bg-sky-800 dark:text-gray-200">
+          <thead className="sticky top-0 z-10 bg-gray-800 dark:bg-sky-800 dark:text-gray-200">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-semibold text-gray-200 uppercase">
                 #

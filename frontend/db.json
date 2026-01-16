@@ -1,34 +1,55 @@
 {
   "users": [
     {
-      "id": "aba4",
+      "id": "3265",
       "firstname": "Mohammad Juma",
       "lastname": "Qasimi",
       "email": "juma@gmail.com",
       "password": "123456",
+      "role": "writer",
+      "dateOfBirth": "2026-01-18",
       "status": "active",
-      "role": "business",
-      "token": "vdf2$%mdsjfgh3454nds12!%$&000",
-      "dateOfBirth": "2026-01-10",
-      "created_at": "2026-01-11",
-      "avatar": "tailwind.png",
+      "created_at": "2026-01-16",
+      "avator": "og-foto.png",
       "securityQuestions": [
-        { "question": "What is your birth city?", "answer": "Jaghori" },
-        { "question": "What is your birth day?", "answer": "12" }
+        {
+          "question": "What is your birth city?",
+          "answer": "jaghori"
+        },
+        {
+          "question": "What is your birth day?",
+          "answer": "12"
+        }
       ]
     }
   ],
-
   "categories": [
-    { "id": "1", "name": "Hotel" },
-    { "id": "ce5f", "name": "Restaurant" },
-    { "id": "ce53", "name": "Hospital" },
-    { "id": "ce5d", "name": "Supermarket" },
-    { "id": "c25f", "name": "Pharmacy" }
+    {
+      "id": "ce5f",
+      "name": "Restaurant"
+    },
+    {
+      "id": "ce53",
+      "name": "Hospital"
+    },
+    {
+      "id": "ce5d",
+      "name": "Supermarket"
+    },
+    {
+      "id": "c25f",
+      "name": "Pharmacy"
+    },
+    {
+      "id": "d367",
+      "name": "Hotel"
+    },
+    {
+      "id": "7376",
+      "name": "Home"
+    }
   ],
-
-  "countries": [{ "id": "afg1", "name": "Afghanistan" }],
-
+  "countries": [],
   "cities": [
     {
       "id": "jaghori1",
@@ -53,241 +74,22 @@
       "description": "Historic city with rich Islamic heritage.",
       "lat": 33.5451,
       "lng": 68.4174
+    },
+    {
+      "id": "6e80",
+      "name": "dknfl",
+      "country_id": "4360"
     }
   ],
-
   "places": [
-    {
-      "id": "pl1",
-      "name": "Jaghori Grand Hotel",
-      "description": "Luxury hotel.",
-      "address": "Main Street, Jaghori",
-      "services": ["Wi-Fi", "Meals"],
-      "price": 120,
-      "city_id": "jaghori1",
-      "category_id": "1",
-      "user_id": "aba4",
-      "distance": 2,
-      "rate": 4.5,
-      "lat": 34.309,
-      "lng": 68.352
-    },
-    {
-      "id": "pl2",
-      "name": "Green Valley Hotel",
-      "description": "Affordable hotel.",
-      "address": "Hill Road, Jaghori",
-      "services": ["Breakfast"],
-      "price": 80,
-      "city_id": "jaghori1",
-      "category_id": "1",
-      "user_id": "aba4",
-      "distance": 5,
-      "rate": 4.5,
-      "lat": 34.312,
-      "lng": 68.349
-    },
-    {
-      "id": "pl3",
-      "name": "Jaghori Restaurant",
-      "description": "Traditional Afghan food.",
-      "address": "Bazaar Road, Jaghori",
-      "services": ["Local food"],
-      "price": 25,
-      "city_id": "jaghori1",
-      "category_id": "ce5f",
-      "user_id": "aba4",
-      "distance": 1,
-      "lat": 34.31,
-      "lng": 68.353
-    },
-    {
-      "id": "pl4",
-      "name": "Mountain View Cafe",
-      "description": "Cafe with scenery.",
-      "address": "Upper Jaghori",
-      "services": ["Coffee"],
-      "price": 15,
-      "city_id": "jaghori1",
-      "category_id": "ce5f",
-      "user_id": "aba4",
-      "distance": 4,
-      "rate": 3.4,
-      "lat": 34.314,
-      "lng": 68.351
-    },
-    {
-      "id": "pl5",
-      "name": "Fatima Zahra Hospital",
-      "description": "Healthcare services.",
-      "address": "Health Avenue, Jaghori",
-      "services": ["Emergency"],
-      "price": 0,
-      "city_id": "jaghori1",
-      "category_id": "ce53",
-      "user_id": "aba4",
-      "distance": 3,
-      "rate": 4.9,
-      "lat": 34.308,
-      "lng": 68.354
-    },
-    {
-      "id": "pl6",
-      "name": "Maajiri Supermarket",
-      "description": "Largest supermarket.",
-      "address": "Market Road, Jaghori",
-      "services": ["Groceries"],
-      "price": 0,
-      "city_id": "jaghori1",
-      "category_id": "ce5d",
-      "user_id": "aba4",
-      "distance": 1,
-      "lat": 34.31,
-      "lng": 68.355
-    },
-    {
-      "id": "pl7",
-      "name": "Pharmacy 24/7",
-      "description": "24/7 pharmacy.",
-      "address": "Health Avenue, Jaghori",
-      "services": ["Medicines"],
-      "price": 0,
-      "city_id": "jaghori1",
-      "category_id": "c25f",
-      "user_id": "aba4",
-      "distance": 2,
-      "rate": 2.5,
-      "lat": 34.311,
-      "lng": 68.356
-    },
-
-    {
-      "id": "pl8",
-      "name": "Kabul Serena Hotel",
-      "description": "Five-star hotel.",
-      "address": "Kabul",
-      "services": ["Pool"],
-      "price": 250,
-      "city_id": "kabul1",
-      "category_id": "1",
-      "user_id": "aba4",
-      "distance": 1,
-      "rate": 3.7,
-      "lat": 34.555,
-      "lng": 69.208
-    },
-    {
-      "id": "pl9",
-      "name": "Kabul City Restaurant",
-      "description": "Modern restaurant.",
-      "address": "Shahr-e-Naw",
-      "services": ["Dine-in"],
-      "price": 40,
-      "city_id": "kabul1",
-      "category_id": "ce5f",
-      "user_id": "aba4",
-      "distance": 2,
-      "rate": 2.8,
-      "lat": 34.556,
-      "lng": 69.21
-    },
-    {
-      "id": "pl10",
-      "name": "Indira Gandhi Hospital",
-      "description": "Public hospital.",
-      "address": "Kabul",
-      "services": ["Emergency"],
-      "price": 0,
-      "city_id": "kabul1",
-      "category_id": "ce53",
-      "user_id": "aba4",
-      "distance": 3,
-      "rate": 3.9,
-      "lat": 34.558,
-      "lng": 69.215
-    },
-
-    {
-      "id": "pl11",
-      "name": "Ghazni Heritage Hotel",
-      "description": "Hotel near monuments.",
-      "address": "Ghazni",
-      "services": ["Breakfast"],
-      "price": 90,
-      "city_id": "ghazni1",
-      "category_id": "1",
-      "user_id": "aba4",
-      "distance": 1,
-      "rate": 4.4,
-      "lat": 33.545,
-      "lng": 68.418
-    },
-    {
-      "id": "pl12",
-      "name": "Ghazni Restaurant",
-      "description": "Local food.",
-      "address": "Ghazni Bazaar",
-      "services": ["Local food"],
-      "price": 20,
-      "city_id": "ghazni1",
-      "category_id": "ce5f",
-      "user_id": "aba4",
-      "distance": 2,
-      "rate": 3.4,
-      "lat": 33.546,
-      "lng": 68.416
-    },
-    {
-      "id": "pl13",
-      "name": "Ghazni Hospital",
-      "description": "Medical services.",
-      "address": "Hospital Road",
-      "services": ["Emergency"],
-      "price": 0,
-      "city_id": "ghazni1",
-      "category_id": "ce53",
-      "user_id": "aba4",
-      "distance": 3,
-      "rate": 4.3,
-      "lat": 33.547,
-      "lng": 68.419
-    },
-    {
-      "id": "pl14",
-      "name": "City Pharmacy",
-      "description": "Pharmacy.",
-      "address": "Market Road",
-      "services": ["Medicines"],
-      "price": 0,
-      "city_id": "ghazni1",
-      "category_id": "c25f",
-      "user_id": "aba4",
-      "distance": 1,
-      "rate": 4.7,
-      "lat": 33.548,
-      "lng": 68.417
-    },
-    {
-      "id": "pl15",
-      "name": "Fresh Mart",
-      "description": "Groceries.",
-      "address": "Bazaar",
-      "services": ["Groceries"],
-      "price": 0,
-      "city_id": "ghazni1",
-      "category_id": "ce5d",
-      "user_id": "aba4",
-      "distance": 1,
-      "lat": 33.549,
-      "lng": 68.415
-    },
-
     {
       "id": "pl16",
       "name": "Sunrise Cafe",
       "description": "Breakfast cafe.",
       "address": "Kabul",
-      "services": ["Tea"],
+      "services": [
+        "Tea"
+      ],
       "price": 10,
       "city_id": "kabul1",
       "category_id": "ce5f",
@@ -302,7 +104,9 @@
       "name": "Family Supermarket",
       "description": "Affordable market.",
       "address": "Kabul",
-      "services": ["Groceries"],
+      "services": [
+        "Groceries"
+      ],
       "price": 0,
       "city_id": "kabul1",
       "category_id": "ce5d",
@@ -313,41 +117,13 @@
       "lng": 69.225
     },
     {
-      "id": "pl18",
-      "name": "Peace Guest House",
-      "description": "Budget stay.",
-      "address": "Kabul",
-      "services": ["Wi-Fi"],
-      "price": 50,
-      "city_id": "kabul1",
-      "category_id": "1",
-      "user_id": "aba4",
-      "distance": 3,
-      "rate": 4.5,
-      "lat": 34.554,
-      "lng": 69.206
-    },
-    {
-      "id": "pl19",
-      "name": "Village Bakery",
-      "description": "Fresh bread.",
-      "address": "Jaghori",
-      "services": ["Bakery"],
-      "price": 5,
-      "city_id": "jaghori1",
-      "category_id": "ce5f",
-      "user_id": "aba4",
-      "distance": 1,
-      "rate": 3.3,
-      "lat": 34.307,
-      "lng": 68.35
-    },
-    {
       "id": "pl20",
       "name": "Community Health Clinic",
       "description": "Basic healthcare.",
       "address": "Lower Jaghori",
-      "services": ["Checkups"],
+      "services": [
+        "Checkups"
+      ],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "ce53",
@@ -357,7 +133,6 @@
       "lng": 68.348
     }
   ],
-
   "blogs": [
     {
       "id": "7009",
@@ -392,7 +167,13 @@
       "slug": "exploring-the-beauty-of-jaghori",
       "description": "The natural beauty of Jaghori is one of its greatest treasures. From rolling green hills to wide valleys and seasonal rivers, the landscape changes beautifully throughout the year. Walking through these areas allows visitors to connect with nature and experience a slower, more meaningful way of life.",
       "image": "images/blogs/jaghori1.jpg",
-      "tags": ["Jaghori", "Nature", "Photography", "Adventure", "Travel"],
+      "tags": [
+        "Jaghori",
+        "Nature",
+        "Photography",
+        "Adventure",
+        "Travel"
+      ],
       "category_id": "ce5f",
       "published": true,
       "views": 980,
@@ -408,7 +189,13 @@
       "slug": "top-hotels-and-restaurants-in-jaghori",
       "description": "Jaghori offers a growing number of hotels and restaurants that provide comfort and quality services for both locals and visitors. Local restaurants serve delicious traditional Afghan food, including rice dishes, kebabs, fresh bread, and dairy products made from local farms. Travelers can enjoy authentic flavors and friendly service.",
       "image": "images/blogs/jaghori2.jpg",
-      "tags": ["Jaghori", "Food", "Hotels", "Travel", "Afghanistan"],
+      "tags": [
+        "Jaghori",
+        "Food",
+        "Hotels",
+        "Travel",
+        "Afghanistan"
+      ],
       "category_id": "ce5f",
       "published": true,
       "views": 870,
@@ -424,14 +211,19 @@
       "slug": "cultural-and-historical-sites-in-jaghori",
       "description": "Jaghori has a rich cultural and historical identity shaped by centuries of tradition and community life. Local bazaars, mosques, and gathering places reflect the heritage of the Hazara people. Handicrafts, traditional clothing, and customs are preserved and shared through generations, making Jaghori a meaningful destination for cultural exploration.",
       "image": "images/blogs/jaghori3.jpg",
-      "tags": ["Jaghori", "Culture", "History", "Heritage", "Travel"],
+      "tags": [
+        "Jaghori",
+        "Culture",
+        "History",
+        "Heritage",
+        "Travel"
+      ],
       "category_id": "1",
       "published": true,
       "views": 790,
       "comments_count": 6
     }
   ],
-
   "bookings": [
     {
       "id": "bk1",
@@ -442,7 +234,6 @@
       "status": "confirmed"
     }
   ],
-
   "reviews": [
     {
       "id": "rv1",

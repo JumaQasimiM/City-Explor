@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
+
+// react icons
 import { HiMiniHomeModern } from "react-icons/hi2";
 import {
   FaClipboardList,
@@ -7,27 +9,29 @@ import {
   FaCity,
   FaGlobe,
   FaCog,
+  FaBars,
 } from "react-icons/fa";
-import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-
-import { MdDashboard } from "react-icons/md";
+import {
+  MdOutlineNotifications,
+  MdOutlineKeyboardArrowRight,
+  MdDashboard,
+} from "react-icons/md";
 import { GrLanguage } from "react-icons/gr";
 import { AiOutlineLogout } from "react-icons/ai";
 
 // image
-import avator from "../assets/hero.jpeg";
+import logo from "../assets/logo.png";
 import { useAuth } from "../context/AuthContext";
 
 export const DashboardLayout = () => {
   const [openMenu, setOpenMenu] = useState(null);
-  const { logout } = useAuth();
-  const navigate = useNavigate();
+  const [showLang, setShowLang] = useState(false);
+  const [showSidebar, setShowSidebar] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    navigate("/");
-  };
-  // Sidebar items
+  const { logout, user } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const navItems = [
     { name: "Dashboard", to: "/dashboard", icon: <MdDashboard /> },
     {
@@ -35,50 +39,56 @@ export const DashboardLayout = () => {
       icon: <HiMiniHomeModern />,
       dropdown: [
         { name: "Add place", to: "/dashboard/places/add" },
-        { name: "places List", to: "/dashboard/places" },
+        { name: "Places List", to: "/dashboard/places" },
       ],
     },
-
     {
       name: "Users",
       icon: <FaUsers />,
       dropdown: [
         { name: "Add User", to: "/register" },
-        { name: "User list", to: "/dashboard/users" },
+        { name: "User List", to: "/dashboard/users" },
       ],
     },
-    {
-      name: "Cities",
-      icon: <FaCity />,
-      to: "/dashboard/cities",
-    },
-    {
-      name: "Countries",
-      icon: <FaGlobe />,
-      to: "/dashboard/countries",
-    },
-    {
-      name: "Categories",
-      icon: <FaGlobe />,
-      to: "/dashboard/categories",
-    },
+    { name: "Cities", icon: <FaCity />, to: "/dashboard/cities" },
+    { name: "Countries", icon: <FaGlobe />, to: "/dashboard/countries" },
+    { name: "Categories", icon: <FaGlobe />, to: "/dashboard/categories" },
     { name: "Bookings", to: "/dashboard/bookings", icon: <FaClipboardList /> },
     { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  const toggleSidebar = () => setShowSidebar(!showSidebar);
+  const toggleLanguage = () => setShowLang(!showLang);
+
+  const currentTitle =
+    navItems.find((item) => item.to === location.pathname)?.name ||
+    navItems
+      .flatMap((i) => i.dropdown || [])
+      .find((sub) => sub.to === location.pathname)?.name ||
+    "Dashboard";
+
   return (
-    <section className="min-h-screen flex overflow-hidden dark:bg-slate-900 dark:text-white/80">
-      {/* ================= SIDEBAR ================= */}
-      <div className="md:m-3">
-        {/* Avatar section */}
-        <div className="hidden md:flex bg-slate-700 flex items-center gap-4 py-4 px-3 border-b-2 border-b-gray-600 rounded">
+    <div className="flex min-h-screen bg-gray-200 dark:bg-slate-900 dark:text-white/80">
+      {/* Sidebar */}
+      <aside
+        className={`fixed inset-y-0 left-0 z-50 w-60 bg-teal-900 text-gray-200 transform
+          ${showSidebar ? "translate-x-0" : "-translate-x-full"} 
+          md:translate-x-0 transition-transform duration-300 shadow-lg flex flex-col`}
+      >
+        {/* Logo */}
+        <div className="flex items-center gap-4 px-6 py-4 border-b border-gray-600">
           <img
-            src={avator}
-            alt="Admin Avatar"
-            className="w-16 h-16 rounded-full border-2 border-gray-200"
+            src={logo}
+            alt="Logo"
+            className="w-16 h-16 rounded-full border-2 border-cyan-600"
           />
-          <div className="flex flex-col">
-            <h2 className="text-white text-lg font-semibold">Qasimi</h2>
+          <div>
+            <h2 className="text-lg font-semibold">{user.lastname}</h2>
             <div className="flex items-center gap-2 text-green-500">
               <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
               <span className="text-sm">online</span>
@@ -86,64 +96,59 @@ export const DashboardLayout = () => {
           </div>
         </div>
 
-        {/* Sidebar */}
-        <aside className="hidden md:flex w-60 bg-slate-800 h-screen p-4 flex flex-col rounded">
-          <ul className="flex-1 space-y-2 overflow-y-auto">
+        {/* Navigation */}
+        <nav className="flex-1 px-4 py-6 overflow-y-auto">
+          <ul className="space-y-2">
             {navItems.map((item, index) => (
               <li key={index}>
-                {/* ===== NORMAL LINK ===== */}
                 {!item.dropdown && (
                   <NavLink
                     to={item.to}
                     end={item.to === "/dashboard"}
+                    onClick={() => setShowSidebar(false)}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-4 py-2 rounded-md
-                       text-white/80 hover:bg-slate-700 transition-colors
-                       ${isActive ? "bg-green-500 text-white" : ""}`
+                      `flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors
+                        ${
+                          isActive
+                            ? "bg-teal-700 font-semibold"
+                            : "text-gray-200"
+                        }`
                     }
                   >
                     <span className="text-lg">{item.icon}</span>
-                    <span className="font-medium">{item.name}</span>
+                    <span>{item.name}</span>
                   </NavLink>
                 )}
-
-                {/* ===== DROPDOWN MENU ===== */}
                 {item.dropdown && (
                   <>
                     <button
                       onClick={() =>
                         setOpenMenu(openMenu === index ? null : index)
                       }
-                      className="w-full flex items-center gap-3 px-4 py-2 rounded-md
-                                 text-white/80 hover:bg-slate-700 transition"
+                      className="flex items-center gap-3 px-4 py-2 w-full rounded-lg hover:bg-teal-700 transition-colors text-gray-200"
                     >
                       <span className="text-lg">{item.icon}</span>
-                      <span className="flex-1 text-left font-medium">
-                        {item.name}
-                      </span>
-                      <span
+                      <span className="flex-1 text-left">{item.name}</span>
+                      <MdOutlineKeyboardArrowRight
                         className={`transition-transform ${
                           openMenu === index ? "rotate-90" : ""
                         }`}
-                      >
-                        <MdOutlineKeyboardArrowRight />
-                      </span>
+                      />
                     </button>
-
                     {openMenu === index && (
-                      <ul className="ml-8 mt-1 space-y-1">
+                      <ul className="ml-6 mt-1 space-y-1">
                         {item.dropdown.map((sub) => (
                           <NavLink
                             key={sub.to}
                             to={sub.to}
+                            onClick={() => setShowSidebar(false)}
                             className={({ isActive }) =>
-                              `block px-3 py-2 rounded text-sm
-                               hover:bg-slate-700
-                               ${
-                                 isActive
-                                   ? "bg-green-600 text-white"
-                                   : "text-white/70"
-                               }`
+                              `block px-3 py-2 rounded hover:bg-teal-700 transition-colors
+                                ${
+                                  isActive
+                                    ? "bg-teal-700 font-semibold"
+                                    : "text-gray-200"
+                                }`
                             }
                           >
                             {sub.name}
@@ -156,40 +161,72 @@ export const DashboardLayout = () => {
               </li>
             ))}
           </ul>
-        </aside>
-      </div>
+        </nav>
+      </aside>
 
-      {/* ================= MAIN CONTENT ================= */}
-      <main className="flex-1 flex flex-col overflow-hidden bg-gray-100 dark:bg-slate-900">
+      {/* Overlay for mobile */}
+      {showSidebar && (
+        <div
+          className="fixed inset-0 z-40 bg-black/40 md:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
+
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col md:ml-60 overflow-hidden bg-gray-200  dark:text-gray-200 dark:bg-gray-800">
         {/* Header */}
-        <header
-          className="flex justify-between items-center bg-white dark:bg-slate-800
-               dark:text-white/80 px-6 py-4 border-b border-white/10 
-               mt-3 md:mx-5 rounded"
-        >
-          <Link to="/dashboard">
-            <h1 className="text-md md:text-xl font-bold">Dashboard</h1>
-          </Link>
+        <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-teal-700 text-white shadow-md">
+          <div className="flex items-center gap-4">
+            <button className="md:hidden" onClick={toggleSidebar}>
+              <FaBars size={24} />
+            </button>
+            <img src={logo} alt="Logo" className="w-12 h-12" />
+            <h1 className="text-xl font-semibold hidden md:block">
+              {currentTitle}
+            </h1>
+          </div>
 
-          <div className="flex items-center gap-5 text-lg">
-            <AiOutlineLogout
-              onClick={handleLogout}
-              size={23}
-              className="cursor-pointer hover:text-red-500 transition"
-            />
-
-            <GrLanguage
-              size={23}
+          <div className="flex items-center gap-4">
+            <MdOutlineNotifications
+              size={24}
               className="cursor-pointer hover:text-green-500 transition"
+            />
+            <div className="relative">
+              <button
+                onClick={toggleLanguage}
+                className="p-2 rounded-full hover:bg-teal-600 transition"
+              >
+                <GrLanguage size={20} />
+              </button>
+              {showLang && (
+                <ul className="absolute right-0 mt-2 w-20 bg-teal-800 text-white rounded shadow-lg">
+                  <li className="px-4 py-2 hover:bg-teal-700 cursor-pointer">
+                    EN
+                  </li>
+                  <li className="px-4 py-2 hover:bg-teal-700 cursor-pointer">
+                    DE
+                  </li>
+                </ul>
+              )}
+            </div>
+            <AiOutlineLogout
+              size={24}
+              className="cursor-pointer hover:text-red-500 transition"
+              onClick={handleLogout}
             />
           </div>
         </header>
 
-        {/* Page Content */}
-        <div className="p-5 lg:p-1 flex-1 overflow-hidden">
-          <Outlet />
+        {/* Page Title */}
+        <div className="mt-16 bg-gradient-to-r from-emerald-600 to-emerald-400 py-4 px-6 font-semibold text-2xl text-white">
+          {currentTitle}
         </div>
-      </main>
-    </section>
+
+        {/* Page Content */}
+        <main className="p-3 lg:px-6 lg:py-2 flex-1 overflow-hidden">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 };

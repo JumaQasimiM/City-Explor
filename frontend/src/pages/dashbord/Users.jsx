@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import { useActiveUser, useDeleteUser, useUsers } from "../../hooks/useUsers";
+
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { ErrorMessage } from "../../components/helper/Error";
 import { Loader } from "../../components/helper/Loading";
-import { toast } from "react-toastify";
 
 export const Users = () => {
+  const [searchUser, setSearchUser] = useState("");
+  const [filteredUsers, setFilteredUsers] = useState([]);
+
   const { users, error, loading, refetch } = useUsers();
   const {
     deleteUser,
@@ -14,11 +20,9 @@ export const Users = () => {
   } = useDeleteUser();
   const { activeUser } = useActiveUser();
 
+  // ================= ACTIVATE USER =================
   const handleActivate = async (id) => {
-    setUserLoading((prev) => ({ ...prev, [id]: true }));
     const result = await activeUser(id);
-    setUserLoading((prev) => ({ ...prev, [id]: false }));
-
     if (result) {
       toast.success("User activated successfully");
       refetch();
@@ -27,9 +31,9 @@ export const Users = () => {
     }
   };
 
+  // ================= DELETE USER =================
   const handleDelete = async (id) => {
     const result = await deleteUser(id);
-
     if (result) {
       toast.success("User deleted successfully");
       refetch();
@@ -38,45 +42,74 @@ export const Users = () => {
     }
   };
 
-  if (error) return <ErrorMessage />;
+  // ================= LOAD USERS =================
+  useEffect(() => {
+    setFilteredUsers(users);
+  }, [users]);
+
+  // ================= SEARCH USERS =================
+  useEffect(() => {
+    const query = searchUser.toLowerCase();
+
+    const result = users.filter(
+      (user) =>
+        user.firstname?.toLowerCase().includes(query) ||
+        user.lastname?.toLowerCase().includes(query) ||
+        user.email?.toLowerCase().includes(query) ||
+        user.role?.toLowerCase().includes(query) ||
+        user.created_at?.toLowerCase().includes(query)
+    );
+
+    setFilteredUsers(result);
+  }, [users, searchUser]);
+
   if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900 min-h-screen lg:p-3">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-white">
-        Users
-      </h1>
+    <section className="p-3 md:p-6 bg-white/70 dark:bg-slate-800 rounded">
+      {/* ================= TOP BAR ================= */}
+      <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
+        <Link
+          to="/register"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold text-center rounded"
+        >
+          Add user
+        </Link>
 
-      {/* Table container with horizontal scroll */}
-      <div className="overflow-x-auto w-full rounded-lg shadow">
-        <table className="min-w-[800px] bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-          <thead className="bg-blue-600 text-white">
-            <tr>
-              <th className="px-4 py-3 text-left">#</th>
-              <th className="px-4 py-3 text-left">First Name</th>
-              <th className="px-4 py-3 text-left">Last Name</th>
-              <th className="px-4 py-3 text-left">Email</th>
-              <th className="px-4 py-3 text-left">Role</th>
-              <th className="px-4 py-3 text-left">Created</th>
-              <th className="px-4 py-3 text-left">Security Q1</th>
-              <th className="px-4 py-3 text-left">Security Q2</th>
-              <th className="px-4 py-3 text-center">Actions</th>
-              <th className="px-4 py-3 text-center">Status</th>
-            </tr>
-          </thead>
+        <input
+          type="text"
+          placeholder="Search by name, email, role or date"
+          value={searchUser}
+          onChange={(e) => setSearchUser(e.target.value)}
+          className="w-full md:w-1/2 lg:w-1/3 px-4 py-2 border rounded
+          focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
+      </div>
 
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {users.length === 0 ? (
+      {/* ================= TABLE ================= */}
+      {filteredUsers.length === 0 ? (
+        <NotFoundData text="No users found" />
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-[1100px] w-full text-sm">
+            <thead className="bg-indigo-600 text-white">
               <tr>
-                <td
-                  colSpan="10"
-                  className="text-center py-6 text-gray-500 dark:text-gray-400"
-                >
-                  <NotFoundData text="No users found" />
-                </td>
+                <th className="px-6 py-3 text-left uppercase">#</th>
+                <th className="px-6 py-3 text-left uppercase">First Name</th>
+                <th className="px-6 py-3 text-left uppercase">Last Name</th>
+                <th className="px-6 py-3 text-left uppercase">Email</th>
+                <th className="px-6 py-3 text-left uppercase">Role</th>
+                <th className="px-6 py-3 text-left uppercase">Reg Date</th>
+                <th className="px-6 py-3 text-left uppercase">SQA1</th>
+                <th className="px-6 py-3 text-left uppercase">SQA2</th>
+                <th className="px-6 py-3 text-center uppercase">Actions</th>
+                <th className="px-6 py-3 text-center uppercase">Status</th>
               </tr>
-            ) : (
-              users.map((user, index) => (
+            </thead>
+
+            <tbody className="divide-y dark:divide-slate-700">
+              {filteredUsers.map((user, index) => (
                 <tr
                   key={user.id}
                   className="hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -85,17 +118,13 @@ export const Users = () => {
                   <td className="px-4 py-3">{user.firstname}</td>
                   <td className="px-4 py-3">{user.lastname}</td>
                   <td className="px-4 py-3">{user.email}</td>
+
                   <td className="px-4 py-3">
-                    <span
-                      className={`px-2 py-1 rounded text-sm font-semibold ${
-                        user.role === "admin"
-                          ? "bg-green-500 text-black/80"
-                          : "bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                      }`}
-                    >
+                    <span className="px-2 py-1 rounded text-sm font-semibold bg-teal-600 text-white">
                       {user.role || "-"}
                     </span>
                   </td>
+
                   <td className="px-4 py-3">{user.created_at || "-"}</td>
                   <td className="px-4 py-3">
                     {user.securityQuestions?.[0]?.answer || "-"}
@@ -107,13 +136,8 @@ export const Users = () => {
                   <td className="px-4 py-3 flex justify-center gap-2">
                     <button
                       onClick={() => handleDelete(user.id)}
-                      className="px-3 py-1 rounded text-sm font-semibold bg-sky-600 hover:bg-sky-500 text-white transition"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(user.id)}
-                      className="px-3 py-1 rounded text-sm font-semibold bg-red-600 hover:bg-red-500 text-white transition"
+                      disabled={deleteLoading}
+                      className="px-3 py-1 rounded text-sm font-semibold bg-red-600 hover:bg-red-500 text-white disabled:opacity-50"
                     >
                       {deleteLoading ? "Loading..." : "Delete"}
                     </button>
@@ -126,18 +150,18 @@ export const Users = () => {
                       className={`px-3 py-1 rounded text-sm font-semibold transition ${
                         user.status === "active"
                           ? "bg-gray-500 cursor-not-allowed text-green-200"
-                          : "bg-green-600 hover:bg-green-500 text-white"
+                          : "bg-orange-500 hover:bg-orange-600 text-gray-900"
                       }`}
                     >
-                      {user.status === "active" ? "Active" : "Activate"}
+                      {user.status === "active" ? "Active" : "Pending"}
                     </button>
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </section>
   );
 };

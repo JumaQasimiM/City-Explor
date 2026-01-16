@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 // images
-import avator from "../assets/hero.jpeg";
+import backgroundImage from "../assets/jaghori2.jpg";
 import { useAuth } from "../context/AuthContext";
 
 export const Login = () => {
@@ -33,6 +33,7 @@ export const Login = () => {
       return;
     }
 
+    // login create in authContext
     await login(email, password);
   };
   useEffect(() => {
@@ -47,14 +48,14 @@ export const Login = () => {
   }, [user, error, navigate]);
   return (
     <section
-      style={{ backgroundImage: `url(${avator})` }}
+      style={{ backgroundImage: `url(${backgroundImage})` }}
       className="min-h-screen bg-cover bg-center bg-no-repeat relative flex items-center justify-center px-4"
     >
       {/* Overlay */}
       <div className="absolute inset-0 bg-black/60"></div>
 
       {/* Card */}
-      <div className="relative w-full max-w-md bg-white/90 dark:bg-slate-800/90 backdrop-blur-xl rounded-2xl shadow-2xl p-8 md:p-10">
+      <div className="relative w-full max-w-md bg-gray-200 dark:bg-slate-800/90 backdrop-blur-xl rounded  p-8 md:p-10">
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-xl md:text-4xl font-bold text-gray-900 dark:text-white">
@@ -74,7 +75,7 @@ export const Login = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
-              className="form-input"
+              className="input"
             />
           </div>
 
@@ -85,13 +86,13 @@ export const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              className="form-input"
+              className="input"
             />
           </div>
 
           <button
             type="submit"
-            className="w-full mt-2 py-3 rounded-xl text-lg font-semibold text-white 
+            className="w-full mt-2 py-3 rounded text-lg font-semibold text-white 
             bg-gradient-to-r from-blue-600 to-indigo-600
             hover:from-blue-700 hover:to-indigo-700
             shadow-lg hover:shadow-xl transition-all"
