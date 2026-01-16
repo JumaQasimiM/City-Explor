@@ -32,7 +32,7 @@ export const DashboardLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navItems = [
+  const navItemsAdmin = [
     { name: "Dashboard", to: "/dashboard", icon: <MdDashboard /> },
     {
       name: "Places",
@@ -56,7 +56,17 @@ export const DashboardLayout = () => {
     { name: "Bookings", to: "/dashboard/bookings", icon: <FaClipboardList /> },
     { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];
-
+  const navItemsOwner = [
+    {
+      name: "Places",
+      icon: <HiMiniHomeModern />,
+      dropdown: [
+        { name: "Add place", to: "/dashboard/places/add" },
+        { name: "Places List", to: "/dashboard/places" },
+      ],
+    },
+  ];
+  const navItems = user?.role === "admin" ? navItemsAdmin : navItemsOwner;
   const handleLogout = () => {
     logout();
     navigate("/");

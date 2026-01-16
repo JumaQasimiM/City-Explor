@@ -13,35 +13,50 @@ import {
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
+import { useAuth } from "../../context/AuthContext";
 
 export const Places = () => {
+  const [basePlaces, setBasePlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [searchPlace, setSearchPlace] = useState("");
 
   const { places, error, loading, refetch } = usePlaces();
   const { deletePlace, loading: deleteLoading } = useDeletePlace();
+  const { user } = useAuth();
 
-  // ================= LOAD ALL PLACES =================
+  // ================= LOAD PLACES (ROLE BASED) =================
   useEffect(() => {
-    setFilteredPlaces(places);
-  }, [places]);
+    if (!places || !user) return;
+
+    let data = [];
+
+    if (user.role === "admin") {
+      data = places;
+    } else if (user.role === "owner") {
+      data = places.filter((place) => place.user_id === user.id);
+    }
+
+    setBasePlaces(data);
+    setFilteredPlaces(data);
+  }, [places, user]);
 
   // ================= LIVE SEARCH =================
   useEffect(() => {
     const query = searchPlace.toLowerCase();
 
-    const result = places.filter(
+    const result = basePlaces.filter(
       (place) =>
         place.name?.toLowerCase().includes(query) ||
         place.address?.toLowerCase().includes(query)
     );
 
     setFilteredPlaces(result);
-  }, [searchPlace, places]);
+  }, [searchPlace, basePlaces]);
 
   // ================= DELETE =================
   const handleDelete = async (id) => {
     const ok = await deletePlace(id);
+
     if (ok) {
       toast.success("Place deleted successfully");
       refetch();
@@ -102,20 +117,24 @@ export const Places = () => {
         </td>
 
         <td className="px-6 py-4 flex gap-3 justify-center">
-          <Link
-            to={`edit/${place.id}`}
-            className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold"
-          >
-            Edit
-          </Link>
+          {(user.role === "admin" || place.user_id === user.id) && (
+            <Link
+              to={`edit/${place.id}`}
+              className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold"
+            >
+              Edit
+            </Link>
+          )}
 
-          <button
-            onClick={() => handleDelete(place.id)}
-            disabled={deleteLoading}
-            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold disabled:opacity-50"
-          >
-            {deleteLoading ? "Deleting..." : "Delete"}
-          </button>
+          {user.role === "admin" && (
+            <button
+              onClick={() => handleDelete(place.id)}
+              disabled={deleteLoading}
+              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold disabled:opacity-50"
+            >
+              {deleteLoading ? "Deleting..." : "Delete"}
+            </button>
+          )}
         </td>
       </tr>
     );

@@ -36,12 +36,14 @@ export const Login = () => {
     // login create in authContext
     await login(email, password);
   };
+  // role base access controll
   useEffect(() => {
-    if (user) {
+    if (user?.role === "admin") {
       toast.success(`Welcome ${user.firstname}`);
       navigate("/dashboard", { replace: true });
+    } else if (user?.role === "owner") {
+      navigate("/dashboard/places");
     }
-
     if (error) {
       toast.error(error);
     }

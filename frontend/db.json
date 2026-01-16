@@ -6,7 +6,7 @@
       "lastname": "Qasimi",
       "email": "juma@gmail.com",
       "password": "123456",
-      "role": "writer",
+      "role": "owner",
       "dateOfBirth": "2026-01-18",
       "status": "active",
       "created_at": "2026-01-16",
@@ -19,6 +19,28 @@
         {
           "question": "What is your birth day?",
           "answer": "12"
+        }
+      ]
+    },
+    {
+      "id": "38a4",
+      "firstname": "Razia",
+      "lastname": "Qasimi",
+      "email": "razi@gmail.com",
+      "password": "123456",
+      "role": "admin",
+      "dateOfBirth": "2026-01-25",
+      "status": "active",
+      "created_at": "2026-01-16",
+      "avator": "og-foto.png",
+      "securityQuestions": [
+        {
+          "question": "What is your birth city?",
+          "answer": "kabul"
+        },
+        {
+          "question": "What is your birth day?",
+          "answer": "21"
         }
       ]
     }
@@ -87,9 +109,7 @@
       "name": "Sunrise Cafe",
       "description": "Breakfast cafe.",
       "address": "Kabul",
-      "services": [
-        "Tea"
-      ],
+      "services": ["Tea"],
       "price": 10,
       "city_id": "kabul1",
       "category_id": "ce5f",
@@ -104,9 +124,7 @@
       "name": "Family Supermarket",
       "description": "Affordable market.",
       "address": "Kabul",
-      "services": [
-        "Groceries"
-      ],
+      "services": ["Groceries"],
       "price": 0,
       "city_id": "kabul1",
       "category_id": "ce5d",
@@ -121,9 +139,7 @@
       "name": "Community Health Clinic",
       "description": "Basic healthcare.",
       "address": "Lower Jaghori",
-      "services": [
-        "Checkups"
-      ],
+      "services": ["Checkups"],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "ce53",
@@ -131,6 +147,17 @@
       "distance": 6,
       "lat": 34.305,
       "lng": 68.348
+    },
+    {
+      "id": "95f6",
+      "name": "Hotel",
+      "address": "kabul",
+      "price": 234,
+      "description": "hotel dfkgsädkfäsdfngksdfgnsdkfgsdfgsdkfgsdfngäksdfgksdfgbsdfgbsdkfgsdfbgsdfkgbsdjfkbgsdäfgkjsdbkjgsdg",
+      "services": ["3 time food", "Free wifi", "clean room", "24/7"],
+      "city_id": "kabul1",
+      "category_id": "d367",
+      "user_id": "3265"
     }
   ],
   "blogs": [
@@ -167,13 +194,7 @@
       "slug": "exploring-the-beauty-of-jaghori",
       "description": "The natural beauty of Jaghori is one of its greatest treasures. From rolling green hills to wide valleys and seasonal rivers, the landscape changes beautifully throughout the year. Walking through these areas allows visitors to connect with nature and experience a slower, more meaningful way of life.",
       "image": "images/blogs/jaghori1.jpg",
-      "tags": [
-        "Jaghori",
-        "Nature",
-        "Photography",
-        "Adventure",
-        "Travel"
-      ],
+      "tags": ["Jaghori", "Nature", "Photography", "Adventure", "Travel"],
       "category_id": "ce5f",
       "published": true,
       "views": 980,
@@ -189,13 +210,7 @@
       "slug": "top-hotels-and-restaurants-in-jaghori",
       "description": "Jaghori offers a growing number of hotels and restaurants that provide comfort and quality services for both locals and visitors. Local restaurants serve delicious traditional Afghan food, including rice dishes, kebabs, fresh bread, and dairy products made from local farms. Travelers can enjoy authentic flavors and friendly service.",
       "image": "images/blogs/jaghori2.jpg",
-      "tags": [
-        "Jaghori",
-        "Food",
-        "Hotels",
-        "Travel",
-        "Afghanistan"
-      ],
+      "tags": ["Jaghori", "Food", "Hotels", "Travel", "Afghanistan"],
       "category_id": "ce5f",
       "published": true,
       "views": 870,
@@ -211,13 +226,7 @@
       "slug": "cultural-and-historical-sites-in-jaghori",
       "description": "Jaghori has a rich cultural and historical identity shaped by centuries of tradition and community life. Local bazaars, mosques, and gathering places reflect the heritage of the Hazara people. Handicrafts, traditional clothing, and customs are preserved and shared through generations, making Jaghori a meaningful destination for cultural exploration.",
       "image": "images/blogs/jaghori3.jpg",
-      "tags": [
-        "Jaghori",
-        "Culture",
-        "History",
-        "Heritage",
-        "Travel"
-      ],
+      "tags": ["Jaghori", "Culture", "History", "Heritage", "Travel"],
       "category_id": "1",
       "published": true,
       "views": 790,

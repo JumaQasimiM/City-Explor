@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-export const ProtectedRoutes = () => {
+export const ProtectedRoutes = ({ allowRole }) => {
   const { user, loading } = useAuth();
 
   if (loading) {
@@ -15,18 +15,15 @@ export const ProtectedRoutes = () => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }
+  // if role is exist and the exist role inlude the user role
+
+  if (allowRole && !allowRole.includes(user.role)) {
+    if (allowRole === "owner") {
+      return <Navigate to="/dashboard/places" replace />;
+    }
+    return <Navigate to="/" replace />;
+    // return <Navigate to="/403" replace />;
+  }
 
   return <Outlet />;
-
-  // if (!user) {
-  //   return <Navigate to="/login" replace />;
-  // }
-
-  // if (!allowRoles && allowRoles.includes(user.role)) {
-  //   // go to admin but just can see the relatet page like, add place and see his places and setting to change his profile
-  //   // return <Navigate to="/unauthorized" replace />;
-  //   return <Navigate to="/home" replace />;
-  // }
-
-  // return <Outlet />;
 };

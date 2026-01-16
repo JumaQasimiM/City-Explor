@@ -120,7 +120,11 @@ export const Users = () => {
                   <td className="px-4 py-3">{user.email}</td>
 
                   <td className="px-4 py-3">
-                    <span className="px-2 py-1 rounded text-sm font-semibold bg-teal-600 text-white">
+                    <span
+                      className={`${
+                        user.role === "admin" ? "bg-teal-600" : "bg-purple-600"
+                      } px-2 py-1 rounded text-sm font-semibold  text-white`}
+                    >
                       {user.role || "-"}
                     </span>
                   </td>

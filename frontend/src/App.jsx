@@ -52,25 +52,34 @@ function App() {
             <Route path="/register" element={<RegisterUser />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
           </Route>
+          {/* =========================================================================== */}
+          {/* protected Routes and role base access  */}
 
-          <Route element={<ProtectedRoutes />}>
+          <Route element={<ProtectedRoutes allowRole={["admin"]} />}>
             {/* Dashboard */}
+
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
 
               <Route path="users" element={<Users />} />
               <Route path="cities" element={<Cities />} />
 
+              <Route path="countries" element={<Country />} />
+              <Route path="categories" element={<Category />} />
+            </Route>
+          </Route>
+
+          {/* admin + owner */}
+          <Route element={<ProtectedRoutes allowRole={["admin", "owner"]} />}>
+            <Route path="/dashboard" element={<DashboardLayout />}>
               <Route path="places">
                 <Route index element={<Places />} />
                 <Route path="add" element={<AddPlace />} />
                 <Route path=":id" element={<PlaceDetail />} />
               </Route>
-
-              <Route path="countries" element={<Country />} />
-              <Route path="categories" element={<Category />} />
             </Route>
           </Route>
+          {/* ======================================================================= */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>
