@@ -9,6 +9,7 @@ import restaurant3 from "../assets/restaurant3.jpg";
 import hotel1 from "../assets/hotel1.jpg";
 import jaghori1 from "../assets/jaghori1.jpg";
 import jaghori2 from "../assets/jaghori2.jpg";
+import { BlogComments } from "../components/BlogComments";
 
 export const BlogDetail = () => {
   const { id } = useParams();
@@ -117,6 +118,10 @@ export const BlogDetail = () => {
             Back to Blogs
           </Link>
         </aside>
+      </div>
+      {/* comments */}
+      <div className="max-w-7xl mx-auto border-t-2 border-t-gray-200 ">
+        <BlogComments blog_id={blog?.id} />
       </div>
     </section>
   );

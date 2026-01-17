@@ -31,6 +31,7 @@ import supermarket2 from "../assets/supermarket2.jpg";
 import supermarket3 from "../assets/supermarket3.jpg";
 import jaghori1 from "../assets/jaghori1.jpg";
 import avatorImage from "../assets/Hotel1.jpg";
+import { PlaceComments } from "../components/PlaceComment";
 
 const restaurantImage = [restaurant1, restaurant2, restaurant3, restaurant4];
 const hotelImage = [hotel1, hotel2, hotel3, hotel4];
@@ -213,6 +214,10 @@ export const PlaceDetailOnSite = () => {
             Back to places
           </Link>
         </aside>
+      </div>
+      {/* comments */}
+      <div className="max-w-7xl mx-auto border-t-2 border-t-gray-200 my-5">
+        <PlaceComments place_id={place?.id} />
       </div>
     </section>
   );
