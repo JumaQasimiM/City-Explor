@@ -109,7 +109,9 @@
       "name": "Sunrise Cafe",
       "description": "Breakfast cafe.",
       "address": "Kabul",
-      "services": ["Tea"],
+      "services": [
+        "Tea"
+      ],
       "price": 10,
       "city_id": "kabul1",
       "category_id": "ce5f",
@@ -124,7 +126,9 @@
       "name": "Family Supermarket",
       "description": "Affordable market.",
       "address": "Kabul",
-      "services": ["Groceries"],
+      "services": [
+        "Groceries"
+      ],
       "price": 0,
       "city_id": "kabul1",
       "category_id": "ce5d",
@@ -139,7 +143,9 @@
       "name": "Community Health Clinic",
       "description": "Basic healthcare.",
       "address": "Lower Jaghori",
-      "services": ["Checkups"],
+      "services": [
+        "Checkups"
+      ],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "ce53",
@@ -154,10 +160,59 @@
       "address": "kabul",
       "price": 234,
       "description": "hotel dfkgsädkfäsdfngksdfgnsdkfgsdfgsdkfgsdfngäksdfgksdfgbsdfgbsdkfgsdfbgsdfkgbsdjfkbgsdäfgkjsdbkjgsdg",
-      "services": ["3 time food", "Free wifi", "clean room", "24/7"],
+      "services": [
+        "3 time food",
+        "Free wifi",
+        "clean room",
+        "24/7"
+      ],
       "city_id": "kabul1",
       "category_id": "d367",
       "user_id": "3265"
+    }
+  ],
+  "placecomments": [
+    {
+      "id": "bcc6",
+      "user_id": "38a4",
+      "place_id": "pl16",
+      "body": "Sunrise Cafe",
+      "created_at": "2026-01-17T15:09:59.336Z"
+    },
+    {
+      "id": "9041",
+      "user_id": "38a4",
+      "place_id": "pl17",
+      "body": "Family Supermarket",
+      "created_at": "2026-01-17T15:10:22.451Z"
+    },
+    {
+      "id": "5a99",
+      "user_id": "38a4",
+      "place_id": "pl20",
+      "body": "Community Health Clinic",
+      "created_at": "2026-01-17T15:10:41.002Z"
+    },
+    {
+      "id": "4f51",
+      "user_id": "38a4",
+      "place_id": "pl20",
+      "body": "Community Health Clinic 2",
+      "created_at": "2026-01-17T15:10:45.618Z"
+    },
+    {
+      "id": "cc40",
+      "user_id": "38a4",
+      "place_id": "pl20",
+      "body": "Community Health Clinic 3",
+      "created_at": "2026-01-17T15:10:52.873Z"
+    },
+    {
+      "id": "1c50",
+      "user_id": "38a4",
+      "place_id": "pl20",
+      "body": "Community Health Clinic 4",
+      "created_at": "2026-01-17T15:10:57.060Z"
     }
   ],
   "blogs": [
@@ -194,7 +249,13 @@
       "slug": "exploring-the-beauty-of-jaghori",
       "description": "The natural beauty of Jaghori is one of its greatest treasures. From rolling green hills to wide valleys and seasonal rivers, the landscape changes beautifully throughout the year. Walking through these areas allows visitors to connect with nature and experience a slower, more meaningful way of life.",
       "image": "images/blogs/jaghori1.jpg",
-      "tags": ["Jaghori", "Nature", "Photography", "Adventure", "Travel"],
+      "tags": [
+        "Jaghori",
+        "Nature",
+        "Photography",
+        "Adventure",
+        "Travel"
+      ],
       "category_id": "ce5f",
       "published": true,
       "views": 980,
@@ -210,7 +271,13 @@
       "slug": "top-hotels-and-restaurants-in-jaghori",
       "description": "Jaghori offers a growing number of hotels and restaurants that provide comfort and quality services for both locals and visitors. Local restaurants serve delicious traditional Afghan food, including rice dishes, kebabs, fresh bread, and dairy products made from local farms. Travelers can enjoy authentic flavors and friendly service.",
       "image": "images/blogs/jaghori2.jpg",
-      "tags": ["Jaghori", "Food", "Hotels", "Travel", "Afghanistan"],
+      "tags": [
+        "Jaghori",
+        "Food",
+        "Hotels",
+        "Travel",
+        "Afghanistan"
+      ],
       "category_id": "ce5f",
       "published": true,
       "views": 870,
@@ -226,11 +293,33 @@
       "slug": "cultural-and-historical-sites-in-jaghori",
       "description": "Jaghori has a rich cultural and historical identity shaped by centuries of tradition and community life. Local bazaars, mosques, and gathering places reflect the heritage of the Hazara people. Handicrafts, traditional clothing, and customs are preserved and shared through generations, making Jaghori a meaningful destination for cultural exploration.",
       "image": "images/blogs/jaghori3.jpg",
-      "tags": ["Jaghori", "Culture", "History", "Heritage", "Travel"],
+      "tags": [
+        "Jaghori",
+        "Culture",
+        "History",
+        "Heritage",
+        "Travel"
+      ],
       "category_id": "1",
       "published": true,
       "views": 790,
       "comments_count": 6
+    }
+  ],
+  "blogscomments": [
+    {
+      "id": "459f",
+      "user_id": "3265",
+      "blog_id": "789",
+      "body": "Exploring the Beauty of Jaghori",
+      "created_at": "2026-01-17T14:40:26.403Z"
+    },
+    {
+      "id": "64d9",
+      "user_id": "3265",
+      "blog_id": "565",
+      "body": "Top Hotels and Restaurants in Jaghori",
+      "created_at": "2026-01-17T14:46:53.760Z"
     }
   ],
   "bookings": [

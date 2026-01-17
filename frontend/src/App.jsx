@@ -27,6 +27,7 @@ import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { ProtectedRoutes } from "./routes/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
+import { Contact } from "./pages/Contact";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path="/blogs" element={<Blog />} />
             <Route path="/blogs/:id" element={<BlogDetail />} />
             <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterUser />} />
             <Route path="/resetpassword" element={<ResetPassword />} />

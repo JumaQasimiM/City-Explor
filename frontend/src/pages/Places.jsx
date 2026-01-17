@@ -72,8 +72,18 @@ export const PlacesInSite = () => {
   };
 
   // show error and laoding
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage />;
+  if (loading)
+    return (
+      <div className="mt-17">
+        <Loader />
+      </div>
+    );
+  if (error)
+    return (
+      <div className="mt-17 ">
+        <ErrorMessage />
+      </div>
+    );
   return (
     <section className="mt-20 mb-10 py-5 bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 md:pb-20">
@@ -169,7 +179,7 @@ export const PlacesInSite = () => {
           {/* بلاگ‌های محبوب */}
           <div className="px-4 py-2">
             <div className="text-center mb-8">
-              <h1 className="text-xl md:text-3xl font-semibold text-gray-900 dark:text-orange-700 mb-2">
+              <h1 className="text-xl md:text-3xl font-milonga font-semibold text-gray-900 dark:text-orange-700 mb-2 border-b-2 border-b-gray-300 pb-3">
                 popular blogs
               </h1>
             </div>

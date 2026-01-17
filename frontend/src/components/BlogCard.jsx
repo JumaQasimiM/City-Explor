@@ -61,7 +61,7 @@ export const BlogCard = ({ blog, index }) => {
         </p>
 
         <Link
-          to={`/blogs/${blog.slug}`}
+          to={`/blogs/${blog.id}`}
           className="inline-flex items-center gap-2 bg-sky-700 hover:bg-sky-800 text-white px-5 py-2 rounded-lg transition"
         >
           Learn more

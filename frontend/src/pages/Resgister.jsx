@@ -135,7 +135,7 @@ export const RegisterUser = () => {
                 <option value="">Select role</option>
                 <option value="guest">Guest / Trip</option>
                 <option value="writer">Writer</option>
-                <option value="business">Business</option>
+                <option value="owner">Business</option>
               </select>
             </div>
           </div>

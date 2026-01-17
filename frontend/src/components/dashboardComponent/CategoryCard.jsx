@@ -3,15 +3,21 @@ import {
   FaMountainCity,
   FaArrowTrendUp,
   FaArrowTrendDown,
+  FaCommentDots,
 } from "react-icons/fa6";
 import { RiHotelFill } from "react-icons/ri";
-import { LuNotepadTextDashed } from "react-icons/lu";
+import { useUsers } from "../../hooks/useUsers";
+import { usePlaces } from "../../hooks/usePlaces";
+import { useCities } from "../../hooks/useCities";
 
 export const CategoryCard = () => {
+  const { users } = useUsers();
+  const { places } = usePlaces();
+  const { cities } = useCities();
   const categories = [
     {
-      label: "Bookings",
-      icon: <LuNotepadTextDashed />,
+      label: "Comments",
+      icon: <FaCommentDots />,
       count: 13,
       color: "from-orange-400 to-orange-600",
       monthly: 23,
@@ -21,7 +27,7 @@ export const CategoryCard = () => {
     {
       label: "Users",
       icon: <FaUsers />,
-      count: 134,
+      count: users.length,
       color: "from-sky-400 to-sky-600",
       monthly: 45,
       trend: "down",
@@ -30,7 +36,7 @@ export const CategoryCard = () => {
     {
       label: "Places",
       icon: <RiHotelFill />,
-      count: 134,
+      count: places.length,
       color: "from-emerald-400 to-emerald-600",
       monthly: 12,
       trend: "up",
@@ -39,7 +45,7 @@ export const CategoryCard = () => {
     {
       label: "Cities",
       icon: <FaMountainCity />,
-      count: 13,
+      count: cities.length,
       color: "from-purple-400 to-purple-600",
       monthly: 5,
       trend: "down",

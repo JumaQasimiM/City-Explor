@@ -2,8 +2,6 @@
 
 # dashboard
 
-1. auth
-2. role base protect
 3. setting and booking
 4. Edite
 
