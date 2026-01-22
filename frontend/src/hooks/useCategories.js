@@ -32,6 +32,10 @@ export const useCategories = () => {
   };
 };
 
+// get category by id
+export const useCategoryById = (id) => {
+  return useFetch(`${ApiUrl}/categories/${id}`);
+};
 // create new category
 
 export const useCreateCategory = () => {
@@ -94,4 +98,39 @@ export const useDeleteCategory = () => {
     }
   };
   return { deleteCategory, error, loading };
+};
+// edite category
+export const useEditCategory = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const updateCategory = async (category_id, payload) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/categories/${category_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to update category");
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateCategory, error, loading };
 };
