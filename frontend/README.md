@@ -8,14 +8,11 @@
 # website
 
 1. theme context
-2. contact page
-3. update about page
-4. add comment section in blogs and place detail page
-5. add swiper in blog page after hero
-6. testumenal in landing page
-7. add advertisment post in blogs and places page
-8. update footer
-9. add newsltter in landing page
+2. add swiper in blog page after hero
+3. testumenal in landing page
+4. add advertisment post in blogs and places page
+5. update footer
+6. add newsltter in landing page
 
 https://weblium.com/templates/demo/city-guide-website-design-227
 

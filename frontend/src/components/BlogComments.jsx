@@ -52,7 +52,7 @@ export const BlogComments = ({ blog_id }) => {
 
       {/* Comment input */}
       <div className="bg-white dark:bg-slate-800 shadow rounded-lg p-4 mb-6">
-        <div className="flex gap-3">
+        <div className="flex flex-col md:flex-row gap-3">
           <input
             type="text"
             placeholder="Write your comment..."
