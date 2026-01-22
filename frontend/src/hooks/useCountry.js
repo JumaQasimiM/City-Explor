@@ -21,6 +21,10 @@ export const useCountries = () => {
     refetch,
   };
 };
+// get by id
+export const useCountryById = (id) => {
+  return useFetch(`${ApiUrl}/countries/${id}`);
+};
 
 // =======================
 // CREATE COUNTRY
@@ -88,4 +92,40 @@ export const useDeleteCountry = () => {
   };
 
   return { deleteCountry, error, loading };
+};
+
+// edite category
+export const useEditCountry = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const updateCountry = async (country_id, payload) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/countries/${country_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errData = await res.json();
+        throw new Error(errData.message || "Failed to update country");
+      }
+
+      const data = await res.json();
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateCountry, error, loading };
 };

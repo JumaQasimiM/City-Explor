@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import {
   useCountries,
   useCreateCountry,
@@ -10,17 +11,19 @@ import {
 import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { NotFoundData } from "../../components/helper/NotFoundData";
+import { EditCountry } from "./EditModals/Editcountry";
 
 export const Country = () => {
   // ================= STATE =================
   const [countryName, setCountryName] = useState("");
+  const [editCountryId, setEditCountryId] = useState(null);
 
   // ================= DATA =================
   const { countries, error, loading, hasCountry, refetch } = useCountries();
   const { createCountry, loading: createLoading } = useCreateCountry();
   const { deleteCountry, loading: deleteLoading } = useDeleteCountry();
 
-  // ================= ADD COUNTRY =================
+  // ================= ADD =================
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,7 +43,7 @@ export const Country = () => {
     }
   };
 
-  // ================= DELETE COUNTRY =================
+  // ================= DELETE =================
   const handleDelete = async (id) => {
     const success = await deleteCountry(id);
 
@@ -52,80 +55,90 @@ export const Country = () => {
     }
   };
 
-  // ================= LOADING / ERROR =================
+  // ================= EDIT =================
+  const handleEdit = (id) => {
+    setEditCountryId(id);
+  };
+
+  const handleCloseModal = () => {
+    setEditCountryId(null);
+    refetch();
+  };
+
+  // ================= UI STATES =================
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
   return (
-    <section className="p-3 md:p-6 bg-white/70 dark:bg-slate-800 rounded">
-      {/* ================= ADD FORM ================= */}
-      <div className="mb-6 p-4 bg-teal-800 rounded-lg shadow">
+    <>
+      <section className="md:p-6 bg-white/70 dark:bg-slate-800 rounded">
+        {/* ADD FORM */}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col md:flex-row gap-3"
+          className="mb-6 flex flex-col gap-3 bg-teal-800 p-4 rounded"
         >
           <input
             type="text"
-            placeholder="Country name (e.g. Afghanistan)"
+            placeholder="Country name"
             value={countryName}
             onChange={(e) => setCountryName(e.target.value)}
-            className="flex-1 px-4 py-2 rounded
-            border border-gray-400 text-gray-100
-            focus:ring-2 focus:ring-green-400 outline-none"
+            className="flex-1 px-4 py-2 rounded outline-none border border-gray-400"
           />
 
           <button
             type="submit"
             disabled={createLoading || !countryName.trim()}
-            className="px-6 py-2 rounded-md
-            bg-green-600 hover:bg-green-700
-            text-white font-semibold
-            transition disabled:opacity-50"
+            className="bg-green-600 px-5 py-2 rounded text-white disabled:opacity-50 w-full md:w-1/4"
           >
-            {createLoading ? "Adding..." : "Add Country"}
+            {createLoading ? "Adding..." : "Add"}
           </button>
         </form>
-      </div>
 
-      {/* ================= COUNTRY LIST ================= */}
-      {!hasCountry ? (
-        <NotFoundData text="No countries found" />
-      ) : (
-        <ul className="space-y-2">
-          {countries.map((country, index) => (
-            <li
-              key={country.id}
-              className="flex justify-between items-center
-              px-4 py-3 rounded bg-teal-700 dark:bg-slate-900"
-            >
-              {/* LEFT */}
-              <div className="flex items-center gap-4">
-                <span>{index + 1}</span>
+        {/* LIST */}
+        {!hasCountry ? (
+          <NotFoundData text="No countries found" />
+        ) : (
+          <ul className="space-y-2">
+            {countries.map((country, index) => (
+              <li
+                key={country.id}
+                className="flex justify-between items-center bg-teal-700 px-4 py-3 rounded"
+              >
+                <div className="flex gap-4 text-white">
+                  <span>{index + 1}</span>
+                  <span>{country.name}</span>
+                </div>
 
-                <span className="text-gray-100 font-medium">
-                  {country.name}
-                </span>
-              </div>
+                <div className="flex gap-1">
+                  <button
+                    onClick={() => handleEdit(country.id)}
+                    className="px-3 py-1 rounded text-black cursor-pointer hover:scale-109 hover:text-blue-200"
+                  >
+                    <FaEdit size={23} className="" />
+                  </button>
 
-              {/* RIGHT */}
+                  <button
+                    onClick={() => handleDelete(country.id)}
+                    disabled={deleteLoading}
+                    className="px-3 py-1 rounded text-red-400 disabled:opacity-50 cursor-pointer hover:scale-109 hover:text-red-900"
+                  >
+                    {deleteLoading ? (
+                      "Deleting..."
+                    ) : (
+                      <MdDeleteForever size={23} className="" />
+                    )}
+                  </button>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
 
-              <div className="flex gap-3 text-sm">
-                <button className=" bg-sky-500 hover:bg-sky-600 text-black py-1 px-2 rounded cursor-pointer">
-                  Edit
-                </button>
-
-                <button
-                  onClick={() => handleDelete(country.id)}
-                  disabled={deleteLoading}
-                  className="disabled:opacity-50 bg-red-500 hover:bg-red-600 text-black py-1 px-2 rounded cursor-pointer"
-                >
-                  {deleteLoading ? "Deleting..." : "Delete"}
-                </button>
-              </div>
-            </li>
-          ))}
-        </ul>
+      {/* EDIT MODAL */}
+      {editCountryId && (
+        <EditCountry id={editCountryId} onClose={handleCloseModal} />
       )}
-    </section>
+    </>
   );
 };
