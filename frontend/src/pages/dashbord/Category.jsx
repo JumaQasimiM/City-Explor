@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { IoMdAdd } from "react-icons/io";
+import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 import {
   useCategories,
   useCreateCategory,
@@ -66,26 +67,25 @@ export const Category = () => {
 
   return (
     <>
-      <section className="p-6 bg-white/70 dark:bg-slate-800 rounded-lg">
+      <section className="md:p-6 bg-white/70 dark:bg-slate-800 rounded-lg">
         {/* ADD CATEGORY */}
         <form
           onSubmit={handleSubmit}
-          className="flex gap-3 mb-6 bg-teal-800 p-4 rounded"
+          className="flex flex-col gap-3 mb-6 bg-teal-800 p-4 rounded"
         >
           <input
             type="text"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
             placeholder="Enter category name"
-            className="flex-1 px-4 py-2 rounded outline-none border border-teal-500"
+            className="flex-1 px-4 py-2 rounded outline-none border border-gray-400"
           />
 
           <button
             type="submit"
-            disabled={createLoading}
-            className="flex items-center gap-2 bg-green-600 px-4 py-2 rounded text-white"
+            disabled={createLoading || !categoryName.trim()}
+            className="bg-green-600 px-5 py-2 rounded text-white disabled:opacity-50 w-full md:w-1/4"
           >
-            <IoMdAdd />
             {createLoading ? "Adding..." : "Add"}
           </button>
         </form>
@@ -98,27 +98,31 @@ export const Category = () => {
             {categories.map((category, index) => (
               <li
                 key={category.id}
-                className="flex justify-between items-center bg-teal-700 px-4 py-3 rounded"
+                className="flex justify-between items-center bg-teal-700 px-2 md:px-4 py-3 rounded"
               >
                 <div className="flex gap-4 text-white">
                   <span>{index + 1}</span>
                   <span>{category.name}</span>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex md:gap-2">
                   <button
                     onClick={() => handleEdit(category.id)}
-                    className="bg-sky-500 px-3 py-1 rounded text-white"
+                    className="px-3 py-1 rounded text-black cursor-pointer hover:scale-109 hover:text-blue-200"
                   >
-                    Edit
+                    <FaEdit size={23} />
                   </button>
 
                   <button
                     onClick={() => handleDelete(category.id)}
                     disabled={deleteLoading}
-                    className="bg-red-500 px-3 py-1 rounded text-white disabled:opacity-50"
+                    className="px-3 py-1 rounded text-red-400 disabled:opacity-50 cursor-pointer hover:scale-109 hover:text-red-900"
                   >
-                    {deleteLoading ? "Deleting..." : "Delete"}
+                    {deleteLoading ? (
+                      "Deleting..."
+                    ) : (
+                      <MdDeleteForever size={23} className="" />
+                    )}
                   </button>
                 </div>
               </li>
