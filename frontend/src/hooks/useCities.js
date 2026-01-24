@@ -1,6 +1,6 @@
 import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 /**
  * Custom hook to fetch cities from API
  *
@@ -23,6 +23,23 @@ export const useCities = () => {
   };
 };
 
+//  get city by id
+/**
+ * fetch city by id from api
+ *
+ * src/hooks/useCitirs.js
+ *
+ * Usage:
+ *
+ * const {data} = useCityById(city_id)
+ *
+ *
+ * @param {Number} {city_id}
+ *
+ * */
+export const useCityById = (city_id) => {
+  return useFetch(`${ApiUrl}/cities/${city_id}`);
+};
 /**
  * Custom hook to delete a city
  *
@@ -95,4 +112,35 @@ export const useCreateCity = () => {
   };
 
   return { error, loading, createCity };
+};
+
+// update cits
+
+export const useEditCity = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const updateCity = async (city_id, payload) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${ApiUrl}/cities/${city_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to update category");
+      }
+
+      return data;
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { updateCity, error, loading };
 };

@@ -81,7 +81,7 @@
     {
       "id": "jaghori1",
       "name": "Jaghori",
-      "country_id": "afg1",
+      "country_id": "3f00",
       "description": "A peaceful and green district in Ghazni Province.",
       "lat": 34.309,
       "lng": 68.352
@@ -89,7 +89,7 @@
     {
       "id": "kabul1",
       "name": "Kabul",
-      "country_id": "afg1",
+      "country_id": "3f00",
       "description": "Capital city of Afghanistan.",
       "lat": 34.5553,
       "lng": 69.2075
@@ -97,15 +97,15 @@
     {
       "id": "ghazni1",
       "name": "Ghazni",
-      "country_id": "afg1",
+      "country_id": "3f00",
       "description": "Historic city with rich Islamic heritage.",
       "lat": 33.5451,
       "lng": 68.4174
     },
     {
-      "id": "6e80",
-      "name": "dknfl",
-      "country_id": "4360"
+      "id": "7812",
+      "name": "Öhringen",
+      "country_id": "d089"
     }
   ],
   "places": [
