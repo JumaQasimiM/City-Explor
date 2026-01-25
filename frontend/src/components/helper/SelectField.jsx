@@ -3,7 +3,7 @@ export const SelectField = ({
   name,
   value,
   onChange,
-  options,
+  options = [],
   placeholder,
   optionLabel,
 }) => (

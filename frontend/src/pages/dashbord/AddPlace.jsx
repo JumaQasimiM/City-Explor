@@ -1,14 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUsers } from "../../hooks/useUsers";
+import { useGetUserById } from "../../hooks/useUsers";
 import { useCities } from "../../hooks/useCities";
 import { useCategories } from "../../hooks/useCategories";
 import { toast } from "react-toastify";
 import { InputField } from "../../components/helper/Input";
 import { SelectField } from "../../components/helper/SelectField";
+import { useAuth } from "../../context/AuthContext";
 
 export const AddPlace = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { user: loggedInUser } = useGetUserById(user?.id);
+
+  const { cities } = useCities();
+  const { categories } = useCategories();
 
   const [form, setForm] = useState({
     name: "",
@@ -21,27 +27,34 @@ export const AddPlace = () => {
     user_id: "",
   });
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+  /* ================= OWNER ================= */
+  useEffect(() => {
+    if (loggedInUser) {
+      setForm((prev) => ({ ...prev, user_id: loggedInUser.id }));
+    }
+  }, [loggedInUser]);
+
+  /* ================= HANDLERS ================= */
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleServiceChange = (index, value) => {
-    const updated = [...form.services];
-    updated[index] = value;
-    setForm({ ...form, services: updated });
+    setForm((prev) => {
+      const services = [...prev.services];
+      services[index] = value;
+      return { ...prev, services };
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
-      name: form.name,
-      address: form.address,
+      ...form,
       price: Number(form.price),
-      description: form.description,
       services: form.services.filter(Boolean),
-      city_id: form.city_id,
-      category_id: form.category_id,
-      user_id: form.user_id,
     };
 
     try {
@@ -51,149 +64,177 @@ export const AddPlace = () => {
         body: JSON.stringify(payload),
       });
 
-      toast.success("Place added successfully!");
+      toast.success("Place created successfully");
       navigate("/dashboard/places");
-    } catch (error) {
-      console.error(error);
-      toast.error("Failed to add place");
+    } catch {
+      toast.error("Failed to create place");
     }
   };
 
-  const { users } = useUsers();
-  const { cities } = useCities();
-  const { categories } = useCategories();
+  if (!user) return null;
 
   return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6
-                     p-6 mb-10 border-b-3 border-b-gray-400"
-      >
-        {/* Place Name */}
-        <InputField
-          label="Place Name"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Enter place name"
-          required
-        />
+    <section className="max-w-7xl mx-auto px-2 ld:px-6 md:py-10">
+      {/* ================= HEADER ================= */}
+      <header className="mb-10">
+        <h1 className="text-xl md:text-3xl font-semibold text-gray-900 dark:text-white">
+          Add New Place
+        </h1>
+        <p className="text-gray-500 mt-2 text-sm">
+          Create and manage places visible on the platform
+        </p>
+      </header>
 
-        {/* Address */}
-        <InputField
-          label="Address"
-          name="address"
-          value={form.address}
-          onChange={handleChange}
-          placeholder="Enter address"
-        />
-
-        {/* Price */}
-        <InputField
-          label="Price"
-          name="price"
-          type="number"
-          value={form.price}
-          onChange={handleChange}
-          placeholder="Enter price"
-        />
-
-        {/* Category */}
-        <SelectField
-          label="Category"
-          name="category_id"
-          value={form.category_id}
-          onChange={handleChange}
-          options={categories}
-          placeholder="Select category"
-          optionLabel="name"
-        />
-
-        {/* City */}
-        <SelectField
-          label="City"
-          name="city_id"
-          value={form.city_id}
-          onChange={handleChange}
-          options={cities}
-          placeholder="Select city"
-          optionLabel="name"
-        />
-
-        {/* Owner */}
-        <SelectField
-          label="Owner"
-          name="user_id"
-          value={form.user_id}
-          onChange={handleChange}
-          options={users}
-          placeholder="Select user"
-          optionLabel={(u) => `${u.firstname} ${u.lastname}`}
-        />
-
-        {/* Services */}
-        <div className="flex flex-col lg:col-span-1">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Services
-          </label>
-          {form.services.map((s, i) => (
-            <input
-              key={i}
-              value={s}
-              onChange={(e) => handleServiceChange(i, e.target.value)}
-              placeholder={`Service ${i + 1}`}
-              className="mb-2 px-3 py-2 rounded border w-full
-                           focus:ring-2 focus:ring-blue-500
-                           dark:bg-slate-700 dark:text-white"
+      <form onSubmit={handleSubmit} className="space-y-10">
+        {/* ================= GENERAL INFO ================= */}
+        <Card title="General Information">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <InputField
+              label="Place Name"
+              placeholder="Place Name"
+              name="name"
+              value={form.name}
+              onChange={handleChange}
+              required
             />
-          ))}
-        </div>
 
-        {/* Description */}
-        <div className="flex flex-col md:col-span-2 lg:col-span-3">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Description
-          </label>
+            <SelectField
+              label="Category"
+              name="category_id"
+              value={form.category_id}
+              onChange={handleChange}
+              options={categories}
+              placeholder="Select category"
+              optionLabel="name"
+            />
+
+            <InputField
+              label="Average Price"
+              placeholder="Average Price"
+              name="price"
+              type="number"
+              value={form.price}
+              onChange={handleChange}
+            />
+          </div>
+        </Card>
+
+        {/* ================= LOCATION ================= */}
+        <Card title="Location & Ownership">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <InputField
+              label="Address"
+              name="address"
+              placeholder="Address"
+              value={form.address}
+              onChange={handleChange}
+            />
+
+            <SelectField
+              label="City"
+              name="city_id"
+              value={form.city_id}
+              onChange={handleChange}
+              options={cities}
+              placeholder="Select city"
+              optionLabel="name"
+            />
+
+            <InputField
+              label="Owner"
+              value={
+                loggedInUser
+                  ? `${loggedInUser.firstname} ${loggedInUser.lastname}`
+                  : ""
+              }
+              disabled
+            />
+
+            {/* hidden owner id */}
+            <input type="hidden" name="user_id" value={form.user_id} />
+          </div>
+        </Card>
+
+        {/* ================= SERVICES ================= */}
+        <Card title="Services">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {form.services.map((service, i) => (
+              <input
+                key={i}
+                value={service}
+                onChange={(e) => handleServiceChange(i, e.target.value)}
+                placeholder={`Service ${i + 1}`}
+                className="px-3 py-2 rounded-md border transition
+                focus:ring-2 focus:ring-blue-500
+                dark:bg-slate-700 dark:text-white"
+              />
+            ))}
+          </div>
+        </Card>
+
+        {/* ================= DESCRIPTION ================= */}
+        <Card title="Description">
           <textarea
             name="description"
             value={form.description}
             onChange={handleChange}
             rows={4}
-            placeholder="Short description about the place"
-            className="px-3 py-2 rounded border w-full
-                         focus:ring-2 focus:ring-blue-500
-                         dark:bg-slate-700 dark:text-white"
+            placeholder="Short description about this place"
+            className="w-full px-4 py-2 rounded-md border transition
+            focus:ring-2 focus:ring-blue-500
+            dark:bg-slate-700 dark:text-white"
           />
-        </div>
+        </Card>
 
-        {/* Images */}
-        <div className="flex flex-col md:col-span-2 lg:col-span-3">
-          <label className="mb-2 font-semibold text-gray-700 dark:text-gray-200">
-            Images
-          </label>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[1, 2, 3].map((i) => (
-              <input
+        {/* ================= MEDIA ================= */}
+        <Card title="Upload images for this place" span={false}>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {[1, 2, 3].map((_, i) => (
+              <label
                 key={i}
-                type="file"
-                className="border rounded p-2 dark:bg-slate-700 w-full"
-              />
+                className="flex items-center justify-center h-32 border-2 border-dashed
+                  rounded-lg cursor-pointer text-gray-400
+                  hover:border-blue-500 hover:text-blue-500 transition
+                  dark:border-slate-600 dark:hover:border-blue-400"
+              >
+                Upload Image
+                <input type="file" className="hidden" />
+              </label>
             ))}
           </div>
-        </div>
+        </Card>
 
-        {/* Submit Button */}
-        <div className="md:col-span-2 lg:col-span-3 flex justify-end mt-2">
+        {/* ================= ACTIONS ================= */}
+        <div className="flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={() => navigate(-1)}
+            className="px-6 py-3 rounded-md border
+            hover:bg-gray-100 dark:hover:bg-slate-700 transition"
+          >
+            Cancel
+          </button>
+
           <button
             type="submit"
-            className="bg-blue-600 hover:bg-blue-700
-                         text-white px-6 py-3 rounded-lg font-semibold transition w-full md:w-auto"
+            className="px-8 py-3 rounded-md bg-blue-600
+            hover:bg-blue-700 text-white font-semibold transition"
           >
-            Save Place
+            Create Place
           </button>
         </div>
       </form>
-    </>
+    </section>
   );
 };
+
+/* ================= REUSABLE CARD ================= */
+const Card = ({ title, span = true, children }) => (
+  <div className="bg-white dark:bg-slate-700 rounded shadow-sm p-2 md:p-6">
+    <h2 className="text-lg font-semibold mb-6 border-b pb-2">
+      {title}
+      {span === true && <span className="text-red-400">*</span>}
+    </h2>
+    {children}
+  </div>
+);

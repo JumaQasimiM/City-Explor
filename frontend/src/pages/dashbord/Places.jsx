@@ -15,11 +15,14 @@ import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { useAuth } from "../../context/AuthContext";
 
+import { EditPlace } from "../dashbord/EditModals/EditPlace";
 export const Places = () => {
   const [basePlaces, setBasePlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [searchPlace, setSearchPlace] = useState("");
 
+  // edit id state
+  const [placeEditId, setPlaceEditId] = useState(null);
   const { places, error, loading, refetch } = usePlaces();
   const { deletePlace, loading: deleteLoading } = useDeletePlace();
   const { user } = useAuth();
@@ -47,7 +50,7 @@ export const Places = () => {
     const result = basePlaces.filter(
       (place) =>
         place.name?.toLowerCase().includes(query) ||
-        place.address?.toLowerCase().includes(query)
+        place.address?.toLowerCase().includes(query),
     );
 
     setFilteredPlaces(result);
@@ -65,6 +68,11 @@ export const Places = () => {
     }
   };
 
+  // ============ Edite place ========
+
+  const handleEditPlace = (place_id) => {
+    setPlaceEditId(place_id);
+  };
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
@@ -118,19 +126,19 @@ export const Places = () => {
 
         <td className="px-6 py-4 flex gap-3 justify-center">
           {(user.role === "admin" || place.user_id === user.id) && (
-            <Link
-              to={`edit/${place.id}`}
-              className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold"
+            <button
+              onClick={() => handleEditPlace(place.id)}
+              className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold cursor-pointer "
             >
               Edit
-            </Link>
+            </button>
           )}
 
-          {user.role === "admin" && (
+          {(user.role === "admin" || place.user_id === user.id) && (
             <button
               onClick={() => handleDelete(place.id)}
               disabled={deleteLoading}
-              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs font-semibold disabled:opacity-50"
+              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1  cursor-pointer rounded text-xs font-semibold disabled:opacity-50"
             >
               {deleteLoading ? "Deleting..." : "Delete"}
             </button>
@@ -141,53 +149,58 @@ export const Places = () => {
   };
 
   return (
-    <div className="p-3 md:p-6 bg-white/70 dark:bg-slate-800 rounded">
-      {/* ================= TOP BAR ================= */}
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
-        <Link
-          to="add"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold rounded"
-        >
-          Add Place
-        </Link>
+    <>
+      <div className="p-3 md:p-6 bg-white/70 dark:bg-slate-800 rounded">
+        {/* ================= TOP BAR ================= */}
+        <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
+          <Link
+            to="add"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold rounded"
+          >
+            Add Place
+          </Link>
 
-        <input
-          type="text"
-          placeholder="Search by name or address..."
-          value={searchPlace}
-          onChange={(e) => setSearchPlace(e.target.value)}
-          className="w-full md:w-1/2 lg:w-1/3 px-4 py-2 border rounded
+          <input
+            type="text"
+            placeholder="Search by name or address..."
+            value={searchPlace}
+            onChange={(e) => setSearchPlace(e.target.value)}
+            className="w-full md:w-1/2 lg:w-1/3 px-4 py-2 border rounded
           focus:ring-2 focus:ring-indigo-500 outline-none"
-        />
-      </div>
-
-      {/* ================= TABLE ================= */}
-      {filteredPlaces.length === 0 ? (
-        <NotFoundData text="No places found" />
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-[1100px] w-full text-sm">
-            <thead className="bg-indigo-600 text-white">
-              <tr>
-                <th className="px-6 py-3 text-left uppercase">#</th>
-                <th className="px-6 py-3 text-left uppercase">Name</th>
-                <th className="px-6 py-3 text-left uppercase">Owner</th>
-                <th className="px-6 py-3 text-left uppercase">City</th>
-                <th className="px-6 py-3 text-left uppercase">Category</th>
-                <th className="px-6 py-3 text-left uppercase">Address</th>
-                <th className="px-6 py-3 text-left uppercase">Price</th>
-                <th className="px-6 py-3 text-center uppercase">Actions</th>
-              </tr>
-            </thead>
-
-            <tbody className="divide-y dark:divide-slate-700">
-              {filteredPlaces.map((place, index) => (
-                <PlaceRow key={place.id} place={place} index={index} />
-              ))}
-            </tbody>
-          </table>
+          />
         </div>
-      )}
-    </div>
+
+        {/* ================= TABLE ================= */}
+        {filteredPlaces.length === 0 ? (
+          <NotFoundData text="No places found" />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-[1100px] w-full text-sm">
+              <thead className="bg-indigo-600 text-white">
+                <tr>
+                  <th className="px-6 py-3 text-left uppercase">#</th>
+                  <th className="px-6 py-3 text-left uppercase">Name</th>
+                  <th className="px-6 py-3 text-left uppercase">Owner</th>
+                  <th className="px-6 py-3 text-left uppercase">City</th>
+                  <th className="px-6 py-3 text-left uppercase">Category</th>
+                  <th className="px-6 py-3 text-left uppercase">Address</th>
+                  <th className="px-6 py-3 text-left uppercase">Price</th>
+                  <th className="px-6 py-3 text-center uppercase">Actions</th>
+                </tr>
+              </thead>
+
+              <tbody className="divide-y dark:divide-slate-700">
+                {filteredPlaces.map((place, index) => (
+                  <PlaceRow key={place.id} place={place} index={index} />
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+      {/* edit modal */}
+
+      {placeEditId && <EditPlace />}
+    </>
   );
 };

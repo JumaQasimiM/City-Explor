@@ -88,7 +88,7 @@ export const Country = () => {
           <button
             type="submit"
             disabled={createLoading || !countryName.trim()}
-            className="bg-green-600 px-5 py-2 rounded text-white disabled:opacity-50 w-full md:w-1/4"
+            className="bg-green-600 px-5 py-2 rounded text-white disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-1/4"
           >
             {createLoading ? "Adding..." : "Add"}
           </button>

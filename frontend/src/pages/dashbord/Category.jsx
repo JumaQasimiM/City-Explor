@@ -116,7 +116,7 @@ export const Category = () => {
                   <button
                     onClick={() => handleDelete(category.id)}
                     disabled={deleteLoading}
-                    className="px-3 py-1 rounded text-red-400 disabled:opacity-50 cursor-pointer hover:scale-109 hover:text-red-900"
+                    className="px-3 py-1 rounded text-red-400 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:scale-109 hover:text-red-900"
                   >
                     {deleteLoading ? (
                       "Deleting..."

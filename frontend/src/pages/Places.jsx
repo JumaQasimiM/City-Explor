@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { MdOutlineSearch } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -29,6 +29,7 @@ import supermarket3 from "../assets/supermarket3.jpg";
 import jaghori1 from "../assets/jaghori1.jpg";
 import { Loader } from "../components/helper/Loading";
 import { ErrorMessage } from "../components/helper/Error";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa6";
 
 const restaurantImage = [restaurant1, restaurant2, restaurant3, restaurant4];
 const hotelImage = [hotel1, hotel2, hotel3, hotel4];
@@ -55,7 +56,7 @@ export const PlacesInSite = () => {
   const filteredPlace = useMemo(() => {
     return places.filter((place) => {
       const categoryObj = categories.find(
-        (cate) => cate.id === place.category_id
+        (cate) => cate.id === place.category_id,
       );
       const matchCategory =
         activeCategory === "All" || categoryObj?.name === activeCategory;
@@ -71,6 +72,7 @@ export const PlacesInSite = () => {
     return categoryImagesMap[categoryName] || [restaurant1, hospital1];
   };
 
+  const categoryRef = useRef(null);
   // show error and laoding
   if (loading)
     return (
@@ -87,50 +89,52 @@ export const PlacesInSite = () => {
   return (
     <section className="mt-20 mb-10 py-5 bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 md:pb-20">
-        {/* کنترل‌ها: دسته‌بندی و جستجو */}
-        <div className="flex flex-col lg:flex-row lg:justify-between gap-6 mb-10">
-          {/* دسته‌بندی‌ها */}
-          <ul className="flex gap-4 overflow-x-auto scrollbar-hide py-2">
-            <li
-              onClick={() => setActiveCategory("All")}
-              className={`px-4 py-2 rounded cursor-pointer font-semibold ${
-                activeCategory === "All"
-                  ? "bg-green-500 text-white"
-                  : "bg-white dark:bg-slate-300 hover:bg-green-500 hover:text-white"
-              }`}
+        {/* ================= TOP CONTROLS ================= */}
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 pt-10">
+          {/* ===== Categories ===== */}
+          <div className="relative flex items-center w-2/3">
+            <ul
+              ref={categoryRef}
+              className="flex items-center gap-3
+                overflow-x-auto whitespace-nowrap
+                px-2 py-3 scrollbar-none scroll-smooth"
             >
-              All
-            </li>
+              <CategoryItem
+                active={activeCategory === "All"}
+                onClick={() => setActiveCategory("All")}
+                label="All"
+              />
 
-            {categories.map((cate) => (
-              <li
-                key={cate.id}
-                onClick={() => setActiveCategory(cate.name)}
-                className={`px-4 py-2 rounded cursor-pointer font-semibold ${
-                  activeCategory === cate.name
-                    ? "bg-green-500 text-white"
-                    : "bg-white dark:bg-slate-300 hover:bg-green-500 hover:text-white"
-                }`}
-              >
-                {cate.name}
-              </li>
-            ))}
-          </ul>
-          {/* search */}
+              {categories.map((cate) => (
+                <CategoryItem
+                  key={cate.id}
+                  label={cate.name}
+                  active={activeCategory === cate.name}
+                  onClick={() => setActiveCategory(cate.name)}
+                />
+              ))}
+            </ul>
+          </div>
+
+          {/* ===== Search ===== */}
           <div className="relative w-full sm:max-w-md">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="search places"
-              className="w-full py-3 pl-5 pr-12 dark:bg-slate-700 dark:rounded dark:text-white/90 border-b focus:border-b-green-500 focus:outline-none"
+              placeholder="Search places..."
+              className="w-full h-12 rounded
+                bg-white dark:bg-slate-700 dark:text-white
+                pl-5 pr-12 text-sm
+                border border-gray-200 dark:border-slate-600
+                focus:border-green-500 focus:ring-2 focus:ring-green-500/20
+                outline-none"
             />
             <MdOutlineSearch
-              size={30}
-              className="absolute right-4 top-1/2 -translate-y-1/2"
+              size={22}
+              className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
             />
           </div>
         </div>
-
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
           {/* search reault */}
           <div className="lg:col-span-3">
@@ -152,7 +156,7 @@ export const PlacesInSite = () => {
                 >
                   {filteredPlace.map((place, index) => {
                     const categoryName = categories.find(
-                      (c) => c.id === place.category_id
+                      (c) => c.id === place.category_id,
                     )?.name;
                     const images = getCategoryImages(categoryName);
                     return (
@@ -178,8 +182,8 @@ export const PlacesInSite = () => {
 
           {/* بلاگ‌های محبوب */}
           <div className="px-4 py-2">
-            <div className="text-center mb-8">
-              <h1 className="text-xl md:text-3xl font-milonga font-semibold text-gray-900 dark:text-orange-700 mb-2 border-b-2 border-b-gray-300 pb-3">
+            <div className="text-left mb-8">
+              <h1 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-300 mb-2 border-b-2 border-b-gray-300 pb-3">
                 popular blogs
               </h1>
             </div>
@@ -195,3 +199,19 @@ export const PlacesInSite = () => {
     </section>
   );
 };
+
+/* ================= CATEGORY ITEM ================= */
+const CategoryItem = ({ label, active, onClick }) => (
+  <li
+    onClick={onClick}
+    className={`px-6 py-2.5 rounded cursor-pointer
+      text-sm font-medium transition-all
+      ${
+        active
+          ? "bg-green-600 text-white shadow-lg shadow-green-500/30"
+          : "bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-slate-600  hover:text-green-600"
+      }`}
+  >
+    {label}
+  </li>
+);

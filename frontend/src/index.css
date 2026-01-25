@@ -121,3 +121,13 @@
 .form-label {
   @apply text-sm font-semibold text-gray-700 dark:text-gray-300;
 }
+
+/* hide scrolll bar in place ... in category */
+/* hide scrollbar for all browsers */
+/* .scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+} */

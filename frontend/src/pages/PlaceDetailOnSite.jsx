@@ -102,14 +102,14 @@ export const PlaceDetailOnSite = () => {
               category?.name === "Hotel"
                 ? hotel2
                 : category?.name === "Restaurant"
-                ? restaurant2
-                : category?.name === "Hospital"
-                ? hospital1
-                : category?.name === "Supermarket"
-                ? supermarket1
-                : category?.name === "Pharmacy"
-                ? pharmacy1
-                : supermarket2
+                  ? restaurant2
+                  : category?.name === "Hospital"
+                    ? hospital1
+                    : category?.name === "Supermarket"
+                      ? supermarket1
+                      : category?.name === "Pharmacy"
+                        ? pharmacy1
+                        : supermarket2
             }
             alt={place.name}
             className="w-full h-[260px] md:h-[420px] object-cover rounded"
@@ -148,7 +148,6 @@ export const PlaceDetailOnSite = () => {
           {/* Description */}
           <div>
             <h2 className="text-xl font-semibold mb-3">
-              About{" "}
               <span className="dark:text-green-500 text-blue-500">
                 {place.name}
               </span>
