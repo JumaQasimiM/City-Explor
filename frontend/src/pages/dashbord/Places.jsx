@@ -200,7 +200,15 @@ export const Places = () => {
       </div>
       {/* edit modal */}
 
-      {placeEditId && <EditPlace />}
+      {placeEditId && (
+        <EditPlace
+          id={placeEditId}
+          onClose={() => {
+            setPlaceEditId(null);
+            refetch();
+          }}
+        />
+      )}
     </>
   );
 };
