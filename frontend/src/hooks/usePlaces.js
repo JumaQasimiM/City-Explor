@@ -63,7 +63,7 @@ export const usePopularPlace = (category_id) => {
     error,
     loading,
   } = useFetch(
-    category_id ? `${ApiUrl}/places?category_id = ${category_id}` : null
+    category_id ? `${ApiUrl}/places?category_id = ${category_id}` : null,
   );
   return {
     popularPlace: popularPlace ? popularPlace.slice(0, 4) : [],
@@ -80,4 +80,37 @@ export const useSearchByCategory = (category_id) => {
     error,
     loading,
   } = useFetch(`${ApiUrl}/places?category_id = ${category_id}`);
+};
+
+// edit place
+
+export const useEditPlace = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const updatePlace = async (id, payload) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`${ApiUrl}/places/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to update place");
+      }
+      return data;
+    } catch (err) {
+      setError(err.message);
+      throw err;
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { updatePlace, error, loading };
 };
