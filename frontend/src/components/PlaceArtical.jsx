@@ -1,6 +1,7 @@
 import jaghori1 from "../assets/jaghori1.jpg";
 import { useBlogAuthor, useBlogs } from "../hooks/useBlogs";
 import { Link } from "react-router-dom";
+import { CityWeather } from "./CityWeather";
 export const PlaceArtical = () => {
   const { blogs } = useBlogs();
 
@@ -28,9 +29,18 @@ export const PlaceArtical = () => {
               {blog.description.slice(0, 159)} ...
             </p>
           </div>
-
+          {/* Image */}
+          <div className="relative group">
+            <div className="overflow-hidden">
+              <img
+                src={jaghori1}
+                alt="Jaghori Afghanistan"
+                className="w-full h-[420px] object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700"
+              />
+            </div>
+          </div>
           {/* Content */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mt-2 items-center">
             {/* Text Content */}
             <div className="space-y-6">
               <span className="uppercase tracking-widest text-sm text-green-600 font-semibold">
@@ -61,16 +71,9 @@ export const PlaceArtical = () => {
                 <span className="text-lg">→</span>
               </Link>
             </div>
-
-            {/* Image */}
-            <div className="relative group">
-              <div className="overflow-hidden">
-                <img
-                  src={jaghori1}
-                  alt="Jaghori Afghanistan"
-                  className="w-full h-[420px] object-cover transform scale-105 group-hover:scale-100 transition-transform duration-700"
-                />
-              </div>
+            {/* city weather */}
+            <div className="">
+              <CityWeather city_name={"jaghori"} />
             </div>
           </div>
         </div>
