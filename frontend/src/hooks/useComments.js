@@ -65,6 +65,8 @@ export const useComments = () => {
   return {
     createBlogComment,
     createPlaceComment,
+    blogscomments,
+    placecomments,
     error,
     loading,
   };
