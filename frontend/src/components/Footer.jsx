@@ -5,7 +5,7 @@ export const Footer = () => {
     e.preventDefault();
   };
   return (
-    <footer className="bg-gray-100 dark:bg-slate-900 dark:text-slate-300 pt-16">
+    <footer className="bg-gray-100 dark:bg-slate-700 dark:text-slate-200 pt-16">
       <div className="max-w-7xl mx-auto px-5 border-t-2 border-t-gray-500 pt-5">
         {/* Top section */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b dark:border-white/10 border-slate-500">
@@ -14,7 +14,7 @@ export const Footer = () => {
             <h2 className="text-2xl font-bold text-green-400 mb-4 font-caveat">
               City Explor
             </h2>
-            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-400">
+            <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-200 ">
               Discover cities, hotels, and hidden gems. Your trusted guide for
               budget-friendly and unforgettable travel experiences.
             </p>
@@ -55,7 +55,7 @@ export const Footer = () => {
             <h3 className="text-lg font-semibold dark:text-white text-slate-800 mb-4">
               Newsletter
             </h3>
-            <p className="text-sm dark:text-slate-400 text-slate-600 mb-4">
+            <p className="text-sm dark:text-slate-300 text-slate-600 mb-4">
               Get travel inspiration & deals directly to your inbox.
             </p>
             <form className="flex" onSubmit={handleSubscribe}>
@@ -77,7 +77,7 @@ export const Footer = () => {
         {/* Bottom section */}
         <div className="flex flex-col md:flex-row justify-between items-center py-6 gap-4">
           {/* Copyright */}
-          <p className="text-xs text-slate-700 dark:text-slate-500">
+          <p className="text-xs text-slate-700 dark:text-slate-300">
             © {new Date().getFullYear()} City Explor. All rights reserved.
           </p>
 
