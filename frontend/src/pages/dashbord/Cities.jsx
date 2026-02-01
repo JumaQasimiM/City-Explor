@@ -6,32 +6,34 @@ import { ErrorMessage } from "../../components/helper/Error";
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { toast } from "react-toastify";
 import { EditCity } from "./EditModals/EditCity";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export const Cities = () => {
-  // ================= STATE =================
+  /* ================= STATE ================= */
   const [cityName, setCityName] = useState("");
   const [countryId, setCountryId] = useState("");
   const [formError, setFormError] = useState("");
   const [cityEditId, setCityEditId] = useState(null);
 
-  // ================= DATA =================
+  /* ================= DATA ================= */
   const { cities, loading, error, hasCity, refetch } = useCities();
   const { countries } = useCountries();
   const { createCity, loading: creating } = useCreateCity();
   const { deleteCity, loading: deleting } = useDeleteCity();
 
-  // ================= COUNTRY MAP =================
-  const countryMap = useMemo(() => {
-    return Object.fromEntries((countries || []).map((c) => [c.id, c.name]));
-  }, [countries]);
+  /* ================= COUNTRY MAP ================= */
+  const countryMap = useMemo(
+    () => Object.fromEntries((countries || []).map((c) => [c.id, c.name])),
+    [countries],
+  );
 
-  // ================= HANDLERS =================
+  /* ================= HANDLERS ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!cityName.trim()) return setFormError("City name is required");
     if (cityName.length > 15) return setFormError("Max 15 characters allowed");
-    if (!countryId) return setFormError("Select a country");
+    if (!countryId) return setFormError("Please select a country");
 
     setFormError("");
 
@@ -41,7 +43,7 @@ export const Cities = () => {
     });
 
     if (success) {
-      toast.success("City added");
+      toast.success("City added successfully");
       setCityName("");
       setCountryId("");
       refetch();
@@ -51,112 +53,132 @@ export const Cities = () => {
   };
 
   const handleDelete = async (id) => {
-    if (!confirm("Delete this city?")) return;
+    if (!confirm("Are you sure you want to delete this city?")) return;
 
     const success = await deleteCity(id);
     success ? toast.success("City deleted") : toast.error("Delete failed");
     success && refetch();
   };
 
-  // ================= LOADING / ERROR =================
+  /* ================= LOADING / ERROR ================= */
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
 
   return (
     <>
-      <section className="bg-white/70 dark:bg-slate-800 rounded lg:p-6 space-y-6">
-        {/* ===== ADD CITY FORM ===== */}
+      <section className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 space-y-8">
+        {/* ================= HEADER ================= */}
+        <div>
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
+            City Management
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Manage cities and assign them to countries
+          </p>
+        </div>
+
+        {/* ================= ADD CITY ================= */}
         <form
           onSubmit={handleSubmit}
-          className="bg-teal-800 p-4 rounded flex flex-col gap-3"
+          className="bg-slate-100 dark:bg-slate-700/40 p-5 rounded-lg grid grid-cols-1 md:grid-cols-3 gap-4"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 ">
-            <input
-              type="text"
-              placeholder="City name"
-              value={cityName}
-              onChange={(e) => setCityName(e.target.value)}
-              className="px-3 py-2 rounded border border-gray-400
-            focus:ring-2 focus:ring-green-400 outline-none bg-transparent text-white"
-            />
-            <select
-              value={countryId}
-              onChange={(e) => setCountryId(e.target.value)}
-              className="px-3 py-2 rounded bg-teal-700 border border-teal-600
-            focus:ring-2 focus:ring-green-500"
-            >
-              <option value="">Select country</option>
-              {countries.map((c) => (
-                <option key={c.id} value={c.id}>
-                  {c.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <input
+            type="text"
+            placeholder="City name"
+            value={cityName}
+            onChange={(e) => setCityName(e.target.value)}
+            className="px-4 py-2 rounded-md border border-slate-300 dark:border-slate-600
+              bg-white dark:bg-slate-800 text-slate-800 dark:text-white
+              focus:ring-2 focus:ring-teal-500 outline-none"
+          />
+
+          <select
+            value={countryId}
+            onChange={(e) => setCountryId(e.target.value)}
+            className="px-4 py-2 rounded-md border border-slate-300 dark:border-slate-600
+              bg-white dark:bg-slate-800 text-slate-800 dark:text-white
+              focus:ring-2 focus:ring-teal-500"
+          >
+            <option value="">Select country</option>
+            {countries.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
 
           <button
             disabled={creating || !cityName || !countryId}
-            className="bg-green-600 w-full md:w-1/4
-            disabled:opacity-50 disabled:cursor-not-allowed rounded text-white font-medium px-5 py-2"
+            className="bg-teal-600 hover:bg-teal-700 text-white font-medium
+              rounded-md px-6 py-2 transition disabled:opacity-50"
           >
             {creating ? "Adding..." : "Add City"}
           </button>
 
           {formError && (
-            <p className="md:col-span-3 text-sm text-red-300">{formError}</p>
+            <p className="md:col-span-3 text-sm text-red-500">{formError}</p>
           )}
         </form>
 
-        {/* ===== CITY LIST ===== */}
+        {/* ================= CITY LIST ================= */}
         {!hasCity ? (
           <NotFoundData text="No cities found" />
         ) : (
-          <ul className="grid gap-3">
-            {cities.map((city, index) => (
-              <li
-                key={city.id}
-                className="flex justify-between items-center
-                bg-teal-700 p-4 rounded"
-              >
-                <div className="flex items-center gap-4">
-                  <span
-                    className="w-8 h-8 flex items-center justify-center
-                    rounded-full bg-green-400 text-sm font-semibold"
-                  >
-                    {index + 1}
-                  </span>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="text-left text-sm text-slate-500 dark:text-slate-400 border-b dark:border-slate-700">
+                  <th className="py-3 px-2">#</th>
+                  <th className="py-3 px-2">City</th>
+                  <th className="py-3 px-2">Country</th>
+                  <th className="py-3 px-2 text-right">Actions</th>
+                </tr>
+              </thead>
 
-                  <div>
-                    <p className="font-medium">{city.name}</p>
-                    <p className="text-xs text-gray-300">
+              <tbody>
+                {cities.map((city, index) => (
+                  <tr
+                    key={city.id}
+                    className="border-b dark:border-slate-700
+                      hover:bg-slate-50 dark:hover:bg-slate-700/40 transition"
+                  >
+                    <td className="py-3 px-2">{index + 1}</td>
+
+                    <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
+                      {city.name}
+                    </td>
+
+                    <td className="py-3 px-2 text-slate-500 dark:text-slate-300">
                       {countryMap[city.country_id] || "Unknown"}
-                    </p>
-                  </div>
-                </div>
+                    </td>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => setCityEditId(city.id)}
-                    className="px-3 py-1 rounded bg-sky-500 hover:bg-sky-600 text-black"
-                  >
-                    Edit
-                  </button>
+                    <td className="py-3 px-2">
+                      <div className="flex justify-end gap-3">
+                        <button
+                          onClick={() => setCityEditId(city.id)}
+                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition"
+                        >
+                          <FaEdit size={16} />
+                        </button>
 
-                  <button
-                    onClick={() => handleDelete(city.id)}
-                    disabled={deleting}
-                    className="px-3 py-1 rounded bg-red-500 hover:bg-red-600
-                    disabled:opacity-50 text-black"
-                  >
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+                        <button
+                          onClick={() => handleDelete(city.id)}
+                          disabled={deleting}
+                          className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
 
+      {/* ================= EDIT MODAL ================= */}
       {cityEditId && (
         <EditCity
           id={cityEditId}

@@ -20,7 +20,7 @@ export const Category = () => {
   const { createCategory, loading: createLoading } = useCreateCategory();
   const { deleteCategory, loading: deleteLoading } = useDeleteCategory();
 
-  // ADD CATEGORY
+  /* ================= ADD ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -40,22 +40,20 @@ export const Category = () => {
     }
   };
 
-  // DELETE CATEGORY
+  /* ================= DELETE ================= */
   const handleDelete = async (id) => {
     const success = await deleteCategory(id);
 
     if (success) {
-      toast.success("Category deleted successfully");
+      toast.success("Category deleted");
       refetch();
     } else {
       toast.error("Failed to delete category");
     }
   };
 
-  // EDIT CATEGORY
-  const handleEdit = (id) => {
-    setEditCategoryId(id);
-  };
+  /* ================= EDIT ================= */
+  const handleEdit = (id) => setEditCategoryId(id);
 
   const closeEditModal = () => {
     setEditCategoryId(null);
@@ -67,71 +65,98 @@ export const Category = () => {
 
   return (
     <>
-      <section className="md:p-6 bg-white/70 dark:bg-slate-800 rounded-lg">
-        {/* ADD CATEGORY */}
+      <section className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6">
+        {/* ================= HEADER ================= */}
+        <div className="mb-6">
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
+            Category Management
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Create, edit, and manage place categories
+          </p>
+        </div>
+
+        {/* ================= ADD CATEGORY ================= */}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-3 mb-6 bg-teal-800 p-4 rounded"
+          className="flex flex-col md:flex-row gap-4 mb-8 bg-slate-100 dark:bg-slate-700/40 p-4 rounded-lg"
         >
           <input
             type="text"
             value={categoryName}
             onChange={(e) => setCategoryName(e.target.value)}
-            placeholder="Enter category name"
-            className="flex-1 px-4 py-2 rounded outline-none border border-gray-400"
+            placeholder="Category name"
+            className="flex-1 px-4 py-2 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500"
           />
 
           <button
             type="submit"
             disabled={createLoading || !categoryName.trim()}
-            className="bg-green-600 px-5 py-2 rounded text-white disabled:opacity-50 w-full md:w-1/4"
+            className="px-6 py-2 rounded-md bg-teal-600 text-white font-medium hover:bg-teal-700 transition disabled:opacity-50"
           >
-            {createLoading ? "Adding..." : "Add"}
+            {createLoading ? "Adding..." : "Add Category"}
           </button>
         </form>
 
-        {/* CATEGORY LIST */}
+        {/* ================= LIST ================= */}
         {!categories.length ? (
-          <NotFoundData text="No category found" />
+          <NotFoundData text="No categories found" />
         ) : (
-          <ul className="space-y-2">
-            {categories.map((category, index) => (
-              <li
-                key={category.id}
-                className="flex justify-between items-center bg-teal-700 px-2 md:px-4 py-3 rounded"
-              >
-                <div className="flex gap-4 text-white">
-                  <span>{index + 1}</span>
-                  <span>{category.name}</span>
-                </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="text-left text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                  <th className="py-3 px-2">#</th>
+                  <th className="py-3 px-2">Category Name</th>
+                  <th className="py-3 px-2 text-right">Actions</th>
+                </tr>
+              </thead>
 
-                <div className="flex md:gap-2">
-                  <button
-                    onClick={() => handleEdit(category.id)}
-                    className="px-3 py-1 rounded text-black cursor-pointer hover:scale-109 hover:text-blue-200"
+              <tbody>
+                {categories.map((category, index) => (
+                  <tr
+                    key={category.id}
+                    className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition"
                   >
-                    <FaEdit size={23} />
-                  </button>
+                    <td className="py-3 px-2 text-slate-600 dark:text-slate-300">
+                      {index + 1}
+                    </td>
 
-                  <button
-                    onClick={() => handleDelete(category.id)}
-                    disabled={deleteLoading}
-                    className="px-3 py-1 rounded text-red-400 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer hover:scale-109 hover:text-red-900"
-                  >
-                    {deleteLoading ? (
-                      "Deleting..."
-                    ) : (
-                      <MdDeleteForever size={23} className="" />
-                    )}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+                    <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
+                      {category.name}
+                    </td>
+
+                    <td className="py-3 px-2">
+                      <div className="flex justify-end gap-3">
+                        <button
+                          onClick={() => handleEdit(category.id)}
+                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition"
+                        >
+                          <FaEdit size={18} />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(category.id)}
+                          disabled={deleteLoading}
+                          className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
+                        >
+                          {deleteLoading ? (
+                            "..."
+                          ) : (
+                            <MdDeleteForever size={18} />
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
 
-      {/* EDIT MODAL */}
+      {/* ================= EDIT MODAL ================= */}
       {editCategoryId && (
         <EditCategory id={editCategoryId} onClose={closeEditModal} />
       )}

@@ -87,12 +87,12 @@ export const PlacesInSite = () => {
       </div>
     );
   return (
-    <section className="mt-20 mb-10 py-5 bg-gray-100 dark:bg-slate-800">
+    <section className="mt-20 mb-10 py-5 bg-gray-100 dark:bg-slate-600">
       <div className="max-w-7xl mx-auto px-4 md:px-8 md:pb-20">
         {/* ================= TOP CONTROLS ================= */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 pt-10">
           {/* ===== Categories ===== */}
-          <div className="relative flex items-center w-2/3">
+          <div className="relative flex items-center lg:w-2/3">
             <ul
               ref={categoryRef}
               className="flex items-center gap-3
@@ -117,7 +117,7 @@ export const PlacesInSite = () => {
           </div>
 
           {/* ===== Search ===== */}
-          <div className="relative w-full sm:max-w-md">
+          <div className="relative w-full max-w-md">
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
@@ -208,7 +208,7 @@ const CategoryItem = ({ label, active, onClick }) => (
       text-sm font-medium transition-all
       ${
         active
-          ? "bg-green-600 text-white shadow-lg shadow-green-500/30"
+          ? "bg-green-600 text-white shadow shadow-green-500/30"
           : "bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 hover:bg-green-50 dark:hover:bg-slate-600  hover:text-green-600"
       }`}
   >

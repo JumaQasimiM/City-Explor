@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { FaEdit } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
+import { FaEdit, FaTrash } from "react-icons/fa";
 import {
   useCountries,
   useCreateCountry,
@@ -14,16 +13,16 @@ import { NotFoundData } from "../../components/helper/NotFoundData";
 import { EditCountry } from "./EditModals/Editcountry";
 
 export const Country = () => {
-  // ================= STATE =================
+  /* ================= STATE ================= */
   const [countryName, setCountryName] = useState("");
   const [editCountryId, setEditCountryId] = useState(null);
 
-  // ================= DATA =================
+  /* ================= DATA ================= */
   const { countries, error, loading, hasCountry, refetch } = useCountries();
-  const { createCountry, loading: createLoading } = useCreateCountry();
-  const { deleteCountry, loading: deleteLoading } = useDeleteCountry();
+  const { createCountry, loading: creating } = useCreateCountry();
+  const { deleteCountry, loading: deleting } = useDeleteCountry();
 
-  // ================= ADD =================
+  /* ================= ADD ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,109 +34,128 @@ export const Country = () => {
     const success = await createCountry({ name: countryName.trim() });
 
     if (success) {
-      toast.success("Country created successfully");
+      toast.success("Country added successfully");
       setCountryName("");
       refetch();
     } else {
-      toast.error("Failed to create country");
+      toast.error("Failed to add country");
     }
   };
 
-  // ================= DELETE =================
+  /* ================= DELETE ================= */
   const handleDelete = async (id) => {
+    if (!confirm("Are you sure you want to delete this country?")) return;
+
     const success = await deleteCountry(id);
-
-    if (success) {
-      toast.success("Country deleted successfully");
-      refetch();
-    } else {
-      toast.error("Failed to delete country");
-    }
+    success ? toast.success("Country deleted") : toast.error("Delete failed");
+    success && refetch();
   };
 
-  // ================= EDIT =================
-  const handleEdit = (id) => {
-    setEditCountryId(id);
-  };
-
-  const handleCloseModal = () => {
-    setEditCountryId(null);
-    refetch();
-  };
-
-  // ================= UI STATES =================
+  /* ================= UI STATES ================= */
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
   return (
     <>
-      <section className="md:p-6 bg-white/70 dark:bg-slate-800 rounded">
-        {/* ADD FORM */}
+      <section className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 space-y-8">
+        {/* ================= HEADER ================= */}
+        <div>
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
+            Country Management
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Manage available countries for cities and places
+          </p>
+        </div>
+
+        {/* ================= ADD COUNTRY ================= */}
         <form
           onSubmit={handleSubmit}
-          className="mb-6 flex flex-col gap-3 bg-teal-800 p-4 rounded"
+          className="bg-slate-100 dark:bg-slate-700/40 p-5 rounded-lg flex flex-col md:flex-row gap-4"
         >
           <input
             type="text"
             placeholder="Country name"
             value={countryName}
             onChange={(e) => setCountryName(e.target.value)}
-            className="flex-1 px-4 py-2 rounded outline-none border border-gray-400"
+            className="flex-1 px-4 py-2 rounded-md border border-slate-300
+              dark:border-slate-600 bg-white dark:bg-slate-800
+              text-slate-800 dark:text-white
+              focus:ring-2 focus:ring-teal-500 outline-none"
           />
 
           <button
             type="submit"
-            disabled={createLoading || !countryName.trim()}
-            className="bg-green-600 px-5 py-2 rounded text-white disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-1/4"
+            disabled={creating || !countryName.trim()}
+            className="bg-teal-600 hover:bg-teal-700 text-white font-medium
+              rounded-md px-6 py-2 transition disabled:opacity-50"
           >
-            {createLoading ? "Adding..." : "Add"}
+            {creating ? "Adding..." : "Add Country"}
           </button>
         </form>
 
-        {/* LIST */}
+        {/* ================= COUNTRY LIST ================= */}
         {!hasCountry ? (
           <NotFoundData text="No countries found" />
         ) : (
-          <ul className="space-y-2">
-            {countries.map((country, index) => (
-              <li
-                key={country.id}
-                className="flex justify-between items-center bg-teal-700 px-4 py-3 rounded"
-              >
-                <div className="flex gap-4 text-white">
-                  <span>{index + 1}</span>
-                  <span>{country.name}</span>
-                </div>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="text-left text-sm text-slate-500 dark:text-slate-400 border-b dark:border-slate-700">
+                  <th className="py-3 px-2">#</th>
+                  <th className="py-3 px-2">Country Name</th>
+                  <th className="py-3 px-2 text-right">Actions</th>
+                </tr>
+              </thead>
 
-                <div className="flex gap-1">
-                  <button
-                    onClick={() => handleEdit(country.id)}
-                    className="px-3 py-1 rounded text-black cursor-pointer hover:scale-109 hover:text-blue-200"
+              <tbody>
+                {countries.map((country, index) => (
+                  <tr
+                    key={country.id}
+                    className="border-b dark:border-slate-700
+                      hover:bg-slate-50 dark:hover:bg-slate-700/40 transition"
                   >
-                    <FaEdit size={23} className="" />
-                  </button>
+                    <td className="py-3 px-2">{index + 1}</td>
 
-                  <button
-                    onClick={() => handleDelete(country.id)}
-                    disabled={deleteLoading}
-                    className="px-3 py-1 rounded text-red-400 disabled:opacity-50 cursor-pointer hover:scale-109 hover:text-red-900"
-                  >
-                    {deleteLoading ? (
-                      "Deleting..."
-                    ) : (
-                      <MdDeleteForever size={23} className="" />
-                    )}
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
+                    <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
+                      {country.name}
+                    </td>
+
+                    <td className="py-3 px-2">
+                      <div className="flex justify-end gap-3">
+                        <button
+                          onClick={() => setEditCountryId(country.id)}
+                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition"
+                        >
+                          <FaEdit size={16} />
+                        </button>
+
+                        <button
+                          onClick={() => handleDelete(country.id)}
+                          disabled={deleting}
+                          className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
 
-      {/* EDIT MODAL */}
+      {/* ================= EDIT MODAL ================= */}
       {editCountryId && (
-        <EditCountry id={editCountryId} onClose={handleCloseModal} />
+        <EditCountry
+          id={editCountryId}
+          onClose={() => {
+            setEditCountryId(null);
+            refetch();
+          }}
+        />
       )}
     </>
   );

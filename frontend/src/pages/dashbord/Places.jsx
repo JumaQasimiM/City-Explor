@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 import {
   useDeletePlace,
@@ -14,79 +15,70 @@ import { NotFoundData } from "../../components/helper/NotFoundData";
 import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { useAuth } from "../../context/AuthContext";
-
 import { EditPlace } from "../dashbord/EditModals/EditPlace";
+
 export const Places = () => {
+  /* ================= STATE ================= */
   const [basePlaces, setBasePlaces] = useState([]);
   const [filteredPlaces, setFilteredPlaces] = useState([]);
   const [searchPlace, setSearchPlace] = useState("");
-
-  // edit id state
   const [placeEditId, setPlaceEditId] = useState(null);
+
+  /* ================= DATA ================= */
   const { places, error, loading, refetch } = usePlaces();
-  const { deletePlace, loading: deleteLoading } = useDeletePlace();
+  const { deletePlace, loading: deleting } = useDeletePlace();
   const { user } = useAuth();
 
-  // ================= LOAD PLACES (ROLE BASED) =================
+  /* ================= ROLE FILTER ================= */
   useEffect(() => {
     if (!places || !user) return;
 
-    let data = [];
-
-    if (user.role === "admin") {
-      data = places;
-    } else if (user.role === "owner") {
-      data = places.filter((place) => place.user_id === user.id);
-    }
+    const data =
+      user.role === "admin"
+        ? places
+        : places.filter((p) => p.user_id === user.id);
 
     setBasePlaces(data);
     setFilteredPlaces(data);
   }, [places, user]);
 
-  // ================= LIVE SEARCH =================
+  /* ================= SEARCH ================= */
   useEffect(() => {
     const query = searchPlace.toLowerCase();
-
-    const result = basePlaces.filter(
-      (place) =>
-        place.name?.toLowerCase().includes(query) ||
-        place.address?.toLowerCase().includes(query),
+    setFilteredPlaces(
+      basePlaces.filter(
+        (p) =>
+          p.name?.toLowerCase().includes(query) ||
+          p.address?.toLowerCase().includes(query),
+      ),
     );
-
-    setFilteredPlaces(result);
   }, [searchPlace, basePlaces]);
 
-  // ================= DELETE =================
+  /* ================= DELETE ================= */
   const handleDelete = async (id) => {
-    const ok = await deletePlace(id);
+    if (!confirm("Delete this place?")) return;
 
-    if (ok) {
-      toast.success("Place deleted successfully");
-      refetch();
-    } else {
-      toast.error("Failed to delete place");
-    }
+    const success = await deletePlace(id);
+    success ? toast.success("Place deleted") : toast.error("Delete failed");
+    success && refetch();
   };
 
-  // ============ Edite place ========
-
-  const handleEditPlace = (place_id) => {
-    setPlaceEditId(place_id);
-  };
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
-  // ================= ROW =================
+  /* ================= ROW ================= */
   const PlaceRow = ({ place, index }) => {
     const { data: category } = usePlaceCategory(place.category_id);
     const { data: owner } = usePlaceOwner(place.user_id);
     const { data: city } = usePlaceCity(place.city_id);
 
-    return (
-      <tr className="hover:bg-indigo-50 dark:hover:bg-slate-900 transition">
-        <td className="px-6 py-4">{index + 1}</td>
+    const canManage = user.role === "admin" || place.user_id === user.id;
 
-        <td className="px-6 py-4">
+    return (
+      <tr className="hover:bg-slate-100 dark:hover:bg-slate-700/40 transition">
+        <td className="px-4 py-3">{index + 1}</td>
+
+        <td className="px-4 py-3">
           <Link
             to={`/dashboard/places/${place.id}`}
             className="font-semibold text-indigo-600 hover:underline"
@@ -95,53 +87,52 @@ export const Places = () => {
           </Link>
         </td>
 
-        <td className="px-6 py-4 text-slate-500">
+        <td className="px-4 py-3 text-slate-500">
           {owner ? `${owner.firstname} ${owner.lastname}` : "Loading..."}
         </td>
 
-        <td className="px-6 py-4 text-slate-500">
-          {city?.name || "Loading..."}
-        </td>
+        <td className="px-4 py-3">{city?.name || "Loading..."}</td>
 
-        <td className="px-6 py-4">
+        <td className="px-4 py-3">
           <span
-            className={`inline-flex items-center px-3 py-1 rounded text-xs font-semibold
-              ${
-                category?.name === "Hospital"
-                  ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"
-                  : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
-              }`}
+            className={`px-3 py-1 rounded-full text-xs font-semibold
+            ${
+              category?.name === "Hospital"
+                ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"
+                : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
+            }`}
           >
             {category?.name || "Loading..."}
           </span>
         </td>
 
-        <td className="px-6 py-4 text-slate-500 max-w-xs truncate">
+        <td className="px-4 py-3 max-w-xs truncate text-slate-500">
           {place.address}
         </td>
 
-        <td className="px-6 py-4 font-semibold text-emerald-600">
+        <td className="px-4 py-3 font-semibold text-emerald-600">
           ${place.price}
         </td>
 
-        <td className="px-6 py-4 flex gap-3 justify-center">
-          {(user.role === "admin" || place.user_id === user.id) && (
-            <button
-              onClick={() => handleEditPlace(place.id)}
-              className="bg-sky-600 hover:bg-sky-700 text-white px-3 py-1 rounded text-xs font-semibold cursor-pointer "
-            >
-              Edit
-            </button>
-          )}
+        <td className="px-4 py-3">
+          {canManage && (
+            <div className="flex justify-center gap-3">
+              <button
+                onClick={() => setPlaceEditId(place.id)}
+                className="p-2 rounded-md text-sky-600 hover:bg-sky-600/10 transition"
+              >
+                <FaEdit />
+              </button>
 
-          {(user.role === "admin" || place.user_id === user.id) && (
-            <button
-              onClick={() => handleDelete(place.id)}
-              disabled={deleteLoading}
-              className="bg-red-600 hover:bg-red-700 text-white px-3 py-1  cursor-pointer rounded text-xs font-semibold disabled:opacity-50"
-            >
-              {deleteLoading ? "Deleting..." : "Delete"}
-            </button>
+              <button
+                onClick={() => handleDelete(place.id)}
+                disabled={deleting}
+                className="p-2 rounded-md text-red-600 hover:bg-red-600/10 transition
+                disabled:opacity-50"
+              >
+                <FaTrash />
+              </button>
+            </div>
           )}
         </td>
       </tr>
@@ -150,25 +141,37 @@ export const Places = () => {
 
   return (
     <>
-      <div className="p-3 md:p-6 bg-white/70 dark:bg-slate-800 rounded">
-        {/* ================= TOP BAR ================= */}
-        <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
+      <section className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 space-y-6">
+        {/* ================= HEADER ================= */}
+        <div className="flex flex-col md:flex-row justify-between gap-4">
+          <div>
+            <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
+              Places Management
+            </h1>
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              Manage all registered places
+            </p>
+          </div>
+
           <Link
             to="add"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold rounded"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white
+            px-6 py-2 rounded-md font-medium transition"
           >
-            Add Place
+            + Add Place
           </Link>
-
-          <input
-            type="text"
-            placeholder="Search by name or address..."
-            value={searchPlace}
-            onChange={(e) => setSearchPlace(e.target.value)}
-            className="w-full md:w-1/2 lg:w-1/3 px-4 py-2 border rounded
-          focus:ring-2 focus:ring-indigo-500 outline-none"
-          />
         </div>
+
+        {/* ================= SEARCH ================= */}
+        <input
+          type="text"
+          placeholder="Search by name or address..."
+          value={searchPlace}
+          onChange={(e) => setSearchPlace(e.target.value)}
+          className="w-full md:w-1/2 px-4 py-2 rounded-md border
+          dark:border-slate-600 bg-white dark:bg-slate-700
+          focus:ring-2 focus:ring-indigo-500 outline-none"
+        />
 
         {/* ================= TABLE ================= */}
         {filteredPlaces.length === 0 ? (
@@ -178,14 +181,14 @@ export const Places = () => {
             <table className="min-w-[1100px] w-full text-sm">
               <thead className="bg-indigo-600 text-white">
                 <tr>
-                  <th className="px-6 py-3 text-left uppercase">#</th>
-                  <th className="px-6 py-3 text-left uppercase">Name</th>
-                  <th className="px-6 py-3 text-left uppercase">Owner</th>
-                  <th className="px-6 py-3 text-left uppercase">City</th>
-                  <th className="px-6 py-3 text-left uppercase">Category</th>
-                  <th className="px-6 py-3 text-left uppercase">Address</th>
-                  <th className="px-6 py-3 text-left uppercase">Price</th>
-                  <th className="px-6 py-3 text-center uppercase">Actions</th>
+                  <th className="px-4 py-3 text-left">#</th>
+                  <th className="px-4 py-3 text-left">Name</th>
+                  <th className="px-4 py-3 text-left">Owner</th>
+                  <th className="px-4 py-3 text-left">City</th>
+                  <th className="px-4 py-3 text-left">Category</th>
+                  <th className="px-4 py-3 text-left">Address</th>
+                  <th className="px-4 py-3 text-left">Price</th>
+                  <th className="px-4 py-3 text-center">Actions</th>
                 </tr>
               </thead>
 
@@ -197,9 +200,9 @@ export const Places = () => {
             </table>
           </div>
         )}
-      </div>
-      {/* edit modal */}
+      </section>
 
+      {/* ================= EDIT MODAL ================= */}
       {placeEditId && (
         <EditPlace
           id={placeEditId}

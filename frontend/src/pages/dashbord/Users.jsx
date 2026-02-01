@@ -1,91 +1,92 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { FaTrash, FaUserCheck } from "react-icons/fa";
 
 import { useActiveUser, useDeleteUser, useUsers } from "../../hooks/useUsers";
-
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { ErrorMessage } from "../../components/helper/Error";
 import { Loader } from "../../components/helper/Loading";
 
 export const Users = () => {
+  /* ================= STATE ================= */
   const [searchUser, setSearchUser] = useState("");
   const [filteredUsers, setFilteredUsers] = useState([]);
 
+  /* ================= DATA ================= */
   const { users, error, loading, refetch } = useUsers();
-  const {
-    deleteUser,
-    error: deleteError,
-    loading: deleteLoading,
-  } = useDeleteUser();
+  const { deleteUser, loading: deleting } = useDeleteUser();
   const { activeUser } = useActiveUser();
 
-  // ================= ACTIVATE USER =================
+  /* ================= ACTIVATE ================= */
   const handleActivate = async (id) => {
-    const result = await activeUser(id);
-    if (result) {
-      toast.success("User activated successfully");
-      refetch();
-    } else {
-      toast.error("Failed to activate user");
-    }
+    const success = await activeUser(id);
+    success
+      ? toast.success("User activated successfully")
+      : toast.error("Activation failed");
+    success && refetch();
   };
 
-  // ================= DELETE USER =================
+  /* ================= DELETE ================= */
   const handleDelete = async (id) => {
-    const result = await deleteUser(id);
-    if (result) {
-      toast.success("User deleted successfully");
-      refetch();
-    } else {
-      toast.error(deleteError || "Failed to delete user");
-    }
+    if (!confirm("Are you sure you want to delete this user?")) return;
+
+    const success = await deleteUser(id);
+    success ? toast.success("User deleted") : toast.error("Delete failed");
+    success && refetch();
   };
 
-  // ================= LOAD USERS =================
-  useEffect(() => {
-    setFilteredUsers(users);
-  }, [users]);
-
-  // ================= SEARCH USERS =================
+  /* ================= FILTER ================= */
   useEffect(() => {
     const query = searchUser.toLowerCase();
 
-    const result = users.filter(
-      (user) =>
-        user.firstname?.toLowerCase().includes(query) ||
-        user.lastname?.toLowerCase().includes(query) ||
-        user.email?.toLowerCase().includes(query) ||
-        user.role?.toLowerCase().includes(query) ||
-        user.created_at?.toLowerCase().includes(query)
+    setFilteredUsers(
+      users.filter(
+        (u) =>
+          u.firstname?.toLowerCase().includes(query) ||
+          u.lastname?.toLowerCase().includes(query) ||
+          u.email?.toLowerCase().includes(query) ||
+          u.role?.toLowerCase().includes(query) ||
+          u.created_at?.toLowerCase().includes(query),
+      ),
     );
-
-    setFilteredUsers(result);
   }, [users, searchUser]);
 
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
   return (
-    <section className="p-3 md:p-6 bg-white/70 dark:bg-slate-800 rounded">
-      {/* ================= TOP BAR ================= */}
-      <div className="flex flex-col md:flex-row justify-between gap-4 mb-4">
+    <section className="bg-white dark:bg-slate-800 rounded-xl shadow-md p-6 space-y-6">
+      {/* ================= HEADER ================= */}
+      <div className="flex flex-col md:flex-row justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
+            User Management
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Manage registered users and account status
+          </p>
+        </div>
+
         <Link
           to="/register"
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 font-semibold text-center rounded"
+          className="bg-indigo-600 hover:bg-indigo-700 text-white
+          px-6 py-2 rounded-md font-medium text-center transition"
         >
-          Add user
+          + Add User
         </Link>
-
-        <input
-          type="text"
-          placeholder="Search by name, email, role or date"
-          value={searchUser}
-          onChange={(e) => setSearchUser(e.target.value)}
-          className="w-full md:w-1/2 lg:w-1/3 px-4 py-2 border rounded
-          focus:ring-2 focus:ring-indigo-500 outline-none"
-        />
       </div>
+
+      {/* ================= SEARCH ================= */}
+      <input
+        type="text"
+        placeholder="Search by name, email, role or date"
+        value={searchUser}
+        onChange={(e) => setSearchUser(e.target.value)}
+        className="w-full md:w-1/2 px-4 py-2 rounded-md border
+        dark:border-slate-600 bg-white dark:bg-slate-700
+        focus:ring-2 focus:ring-indigo-500 outline-none"
+      />
 
       {/* ================= TABLE ================= */}
       {filteredUsers.length === 0 ? (
@@ -95,16 +96,16 @@ export const Users = () => {
           <table className="min-w-[1100px] w-full text-sm">
             <thead className="bg-indigo-600 text-white">
               <tr>
-                <th className="px-6 py-3 text-left uppercase">#</th>
-                <th className="px-6 py-3 text-left uppercase">First Name</th>
-                <th className="px-6 py-3 text-left uppercase">Last Name</th>
-                <th className="px-6 py-3 text-left uppercase">Email</th>
-                <th className="px-6 py-3 text-left uppercase">Role</th>
-                <th className="px-6 py-3 text-left uppercase">Reg Date</th>
-                <th className="px-6 py-3 text-left uppercase">SQA1</th>
-                <th className="px-6 py-3 text-left uppercase">SQA2</th>
-                <th className="px-6 py-3 text-center uppercase">Actions</th>
-                <th className="px-6 py-3 text-center uppercase">Status</th>
+                <th className="px-4 py-3 text-left">#</th>
+                <th className="px-4 py-3 text-left">First Name</th>
+                <th className="px-4 py-3 text-left">Last Name</th>
+                <th className="px-4 py-3 text-left">Email</th>
+                <th className="px-4 py-3 text-left">Role</th>
+                <th className="px-4 py-3 text-left">Reg Date</th>
+                <th className="px-4 py-3 text-left">SQA1</th>
+                <th className="px-4 py-3 text-left">SQA2</th>
+                <th className="px-4 py-3 text-center">Status</th>
+                <th className="px-4 py-3 text-center">Actions</th>
               </tr>
             </thead>
 
@@ -112,7 +113,7 @@ export const Users = () => {
               {filteredUsers.map((user, index) => (
                 <tr
                   key={user.id}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="hover:bg-slate-100 dark:hover:bg-slate-700/40 transition"
                 >
                   <td className="px-4 py-3">{index + 1}</td>
                   <td className="px-4 py-3">{user.firstname}</td>
@@ -121,11 +122,12 @@ export const Users = () => {
 
                   <td className="px-4 py-3">
                     <span
-                      className={`${
+                      className={`px-2 py-1 rounded text-xs font-semibold text-white
+                      ${
                         user.role === "admin" ? "bg-teal-600" : "bg-purple-600"
-                      } px-2 py-1 rounded text-sm font-semibold  text-white`}
+                      }`}
                     >
-                      {user.role || "-"}
+                      {user.role}
                     </span>
                   </td>
 
@@ -137,28 +139,44 @@ export const Users = () => {
                     {user.securityQuestions?.[1]?.answer || "-"}
                   </td>
 
-                  <td className="px-4 py-3 flex justify-center gap-2">
-                    <button
-                      onClick={() => handleDelete(user.id)}
-                      disabled={deleteLoading}
-                      className="px-3 py-1 rounded text-sm font-semibold bg-red-600 hover:bg-red-500 text-white disabled:opacity-50"
-                    >
-                      {deleteLoading ? "Loading..." : "Delete"}
-                    </button>
-                  </td>
-
-                  <td className="text-center">
+                  {/* STATUS */}
+                  <td className="px-4 py-3 text-center">
                     <button
                       onClick={() => handleActivate(user.id)}
                       disabled={user.status === "active"}
-                      className={`px-3 py-1 rounded text-sm font-semibold transition ${
+                      className={`px-3 py-1 rounded-md text-xs font-semibold
+                      ${
                         user.status === "active"
-                          ? "bg-gray-500 cursor-not-allowed text-green-200"
-                          : "bg-orange-500 hover:bg-orange-600 text-gray-900"
+                          ? "bg-gray-400 text-green-900 cursor-not-allowed"
+                          : "bg-orange-500 hover:bg-orange-600 text-black"
                       }`}
                     >
                       {user.status === "active" ? "Active" : "Pending"}
                     </button>
+                  </td>
+
+                  {/* ACTIONS */}
+                  <td className="px-4 py-3">
+                    <div className="flex justify-center gap-3">
+                      <button
+                        onClick={() => handleDelete(user.id)}
+                        disabled={deleting}
+                        className="p-2 rounded-md text-red-500
+                        hover:bg-red-500/10 transition disabled:opacity-50"
+                      >
+                        <FaTrash size={16} />
+                      </button>
+
+                      {user.status !== "active" && (
+                        <button
+                          onClick={() => handleActivate(user.id)}
+                          className="p-2 rounded-md text-green-600
+                          hover:bg-green-600/10 transition"
+                        >
+                          <FaUserCheck size={16} />
+                        </button>
+                      )}
+                    </div>
                   </td>
                 </tr>
               ))}

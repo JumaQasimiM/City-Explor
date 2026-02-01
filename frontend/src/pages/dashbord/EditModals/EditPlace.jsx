@@ -17,38 +17,52 @@ export const EditPlace = ({ id, onClose }) => {
   const { data: place } = usePlaceById(id);
   const { data: owner } = usePlaceOwner(place?.user_id);
 
-  const { updatePlace, error, loading } = useEditPlace();
+  const { updatePlace, loading } = useEditPlace();
   const { cities = [] } = useCities();
   const { categories = [] } = useCategories();
 
   /* ================= STATE ================= */
-  const [newName, setNewName] = useState("");
-  const [newAddress, setNewAddress] = useState("");
-  const [newPrice, setNewPrice] = useState("");
-  const [newDescription, setNewDescription] = useState("");
-  const [newServices, setNewServices] = useState(["", "", "", ""]);
-  const [newCityId, setNewCityId] = useState("");
-  const [newCategoryId, setNewCategoryId] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    address: "",
+    price: "",
+    description: "",
+    services: ["", "", "", ""],
+    city_id: "",
+    category_id: "",
+  });
 
   /* ================= INIT ================= */
   useEffect(() => {
     if (!place) return;
 
-    setNewName(place.name || "");
-    setNewAddress(place.address || "");
-    setNewPrice(place.price || "");
-    setNewDescription(place.description || "");
-    setNewServices(place.services?.length ? place.services : ["", "", "", ""]);
-    setNewCityId(place.city_id || "");
-    setNewCategoryId(place.category_id || "");
+    setForm({
+      name: place.name || "",
+      address: place.address || "",
+      price: place.price || "",
+      description: place.description || "",
+      services: place.services?.length ? place.services : ["", "", "", ""],
+      city_id: place.city_id || "",
+      category_id: place.category_id || "",
+    });
   }, [place]);
 
-  /* ================= SERVICES ================= */
-  const handleServiceChange = (index, value) => {
-    setNewServices((prev) => {
-      const updated = [...prev];
-      updated[index] = value;
-      return updated;
+  /* ================= ESC CLOSE ================= */
+  useEffect(() => {
+    const handleEsc = (e) => e.key === "Escape" && onClose();
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [onClose]);
+
+  /* ================= HANDLERS ================= */
+  const updateField = (key, value) =>
+    setForm((prev) => ({ ...prev, [key]: value }));
+
+  const updateService = (i, value) => {
+    setForm((prev) => {
+      const updated = [...prev.services];
+      updated[i] = value;
+      return { ...prev, services: updated };
     });
   };
 
@@ -57,63 +71,61 @@ export const EditPlace = ({ id, onClose }) => {
     e.preventDefault();
 
     const payload = {
-      name: newName,
-      address: newAddress,
-      price: Number(newPrice),
-      description: newDescription,
-      services: newServices.filter(Boolean),
-      city_id: newCityId,
-      category_id: newCategoryId,
+      ...form,
+      price: Number(form.price),
+      services: form.services.filter(Boolean),
     };
 
     const success = await updatePlace(id, payload);
 
-    if (success) {
-      toast.success("Place updated successfully");
-      onClose();
-    } else {
-      toast.error(error || "Update failed");
-    }
+    success
+      ? toast.success("Place updated successfully")
+      : toast.error("Update failed");
+
+    success && onClose();
   };
 
-  if (loading) return null;
+  if (!place) return null;
 
   return (
-    <section className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center md:p-4 overflow-y-auto">
-      <div className="relative w-full max-w-7xl bg-white dark:bg-slate-900 rounded mt-200 md:mt-100">
+    <section className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div className="relative w-full max-w-6xl bg-white dark:bg-slate-700 rounded-xl shadow-xl flex flex-col max-h-[90vh]">
         {/* ================= HEADER ================= */}
-        <div className="flex items-center justify-between p-6 border-b dark:border-slate-700">
+        <header className="flex justify-between items-center px-6 py-4 border-b dark:border-slate-700">
           <div>
-            <h1 className="text-2xl font-bold">Edit Place</h1>
-            <p className="text-sm text-gray-500">
-              Update place information and settings
+            <h2 className="text-xl font-bold">Edit Place</h2>
+            <p className="text-sm text-slate-800 dark:text-slate-300">
+              Modify place information
             </p>
           </div>
 
           <button
             onClick={onClose}
-            className="hover:text-red-500 absolute top-4 right-4 cursor-pointer"
+            className="p-2 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-500"
           >
-            <FaXmark size={22} />
+            <FaXmark size={20} />
           </button>
-        </div>
+        </header>
 
-        {/* ================= FORM ================= */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-10">
+        {/* ================= BODY ================= */}
+        <form
+          onSubmit={handleSubmit}
+          className="flex-1 overflow-y-auto px-6 py-6 space-y-8"
+        >
           <Card title="General Information">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-3 gap-6">
               <InputField
                 label="Place Name"
-                value={newName}
-                onChange={(e) => setNewName(e.target.value)}
+                value={form.name}
+                onChange={(e) => updateField("name", e.target.value)}
                 required
               />
 
               <InputField
                 label="Average Price"
                 type="number"
-                value={newPrice}
-                onChange={(e) => setNewPrice(e.target.value)}
+                value={form.price}
+                onChange={(e) => updateField("price", e.target.value)}
                 required
               />
 
@@ -121,19 +133,19 @@ export const EditPlace = ({ id, onClose }) => {
                 label="Category"
                 options={categories}
                 optionLabel="name"
-                value={newCategoryId}
-                onChange={(e) => setNewCategoryId(e.target.value)}
+                value={form.category_id}
+                onChange={(e) => updateField("category_id", e.target.value)}
                 required
               />
             </div>
           </Card>
 
-          <Card title="Location & Ownership">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <Card title="Location & Owner">
+            <div className="grid md:grid-cols-3 gap-6">
               <InputField
                 label="Address"
-                value={newAddress}
-                onChange={(e) => setNewAddress(e.target.value)}
+                value={form.address}
+                onChange={(e) => updateField("address", e.target.value)}
                 required
               />
 
@@ -141,8 +153,8 @@ export const EditPlace = ({ id, onClose }) => {
                 label="City"
                 options={cities}
                 optionLabel="name"
-                value={newCityId}
-                onChange={(e) => setNewCityId(e.target.value)}
+                value={form.city_id}
+                onChange={(e) => updateField("city_id", e.target.value)}
                 required
               />
 
@@ -157,16 +169,16 @@ export const EditPlace = ({ id, onClose }) => {
           </Card>
 
           <Card title="Services">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {newServices.map((service, i) => (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {form.services.map((s, i) => (
                 <input
                   key={i}
-                  value={service}
-                  onChange={(e) => handleServiceChange(i, e.target.value)}
+                  value={s}
+                  onChange={(e) => updateService(i, e.target.value)}
                   placeholder={`Service ${i + 1}`}
-                  className="px-4 py-2 rounded border
-                  focus:ring-2 focus:ring-blue-500
-                  dark:bg-slate-800 dark:text-white"
+                  className="px-4 py-2 rounded-md border
+                  focus:ring-2 focus:ring-indigo-500
+                  dark:bg-slate-800"
                 />
               ))}
             </div>
@@ -175,31 +187,33 @@ export const EditPlace = ({ id, onClose }) => {
           <Card title="Description">
             <textarea
               rows={4}
-              value={newDescription}
-              onChange={(e) => setNewDescription(e.target.value)}
-              className="w-full px-4 py-3 rounded border
-              focus:ring-2 focus:ring-blue-500
-              dark:bg-slate-800 dark:text-white"
+              value={form.description}
+              onChange={(e) => updateField("description", e.target.value)}
+              className="w-full px-4 py-3 rounded-md border
+              focus:ring-2 focus:ring-indigo-500
+              dark:bg-slate-800"
             />
           </Card>
-
-          {/* ================= ACTIONS ================= */}
-          <div className="flex flex-col sm:flex-row justify-end gap-4 pt-4 border-t">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-6 py-3 border rounded-lg"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-            >
-              Save Changes
-            </button>
-          </div>
         </form>
+
+        {/* ================= FOOTER ================= */}
+        <footer className="px-6 py-4 border-t dark:border-slate-700 flex justify-end gap-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="px-6 py-2 border rounded-md"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleSubmit}
+            disabled={loading}
+            className="px-8 py-2 bg-indigo-600 hover:bg-indigo-700
+            text-white rounded-md disabled:opacity-50"
+          >
+            {loading ? "Saving..." : "Save Changes"}
+          </button>
+        </footer>
       </div>
     </section>
   );
@@ -207,8 +221,8 @@ export const EditPlace = ({ id, onClose }) => {
 
 /* ================= CARD ================= */
 const Card = ({ title, children }) => (
-  <div className="bg-gray-50 dark:bg-slate-800 rounded p-3 md:p-6 space-y-6">
-    <h2 className="text-lg font-semibold">{title}</h2>
+  <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-5 space-y-5">
+    <h3 className="font-semibold text-lg">{title}</h3>
     {children}
   </div>
 );
