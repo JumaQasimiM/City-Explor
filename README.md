@@ -1,10 +1,38 @@
 # CITY EXPLOR
 
-City Explor is a modern frontend-focused web application built with React.js that allows users to explore cities, places, and blogs through a clean, responsive interface and a feature-rich admin dashboard.
+City Explor is a modern, frontend-focused web application built with React.js that allows users to explore cities, places, and related content through a clean, responsive UI and a powerful role-based dashboard.
 
-This project uses JSON Server as a mock backend, simulating real-world API behavior for development and learning purposes.
+The project uses JSON Server as a mock backend, simulating real-world REST APIs for learning, development, and frontend architecture practice.
+
+    ⚠️ Note: This project does not include a real backend. All data operations are handled via JSON Server.
+
+# 🌍 CITY EXPLOR
+
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC?logo=tailwindcss)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![JSON Server](https://img.shields.io/badge/JSON%20Server-Mock%20API-orange)
+![Status](https://img.shields.io/badge/Status-Completed-success)
+
+## 🚀 Live Overview
+
+🌐 Explore places, cities, and blogs
+
+🔐 Role-based dashboard (Admin / Owner / User)
+
+📊 Full CRUD operations
+
+📱 Responsive & mobile-first design
+
+⚡ Smooth UI interactions
 
 ## Technologies Used
+
+![React](https://img.shields.io/badge/React.js-%2361DAFB.svg?style=for-the-badge&logo=react&logoColor=black)
+![Tailwind](https://img.shields.io/badge/TailwindCSS-%2338B2AC.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![JSON Server](https://img.shields.io/badge/JSON--Server-Mock%20API-orange?style=for-the-badge)
+![Project Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 
 React.js
 
@@ -14,15 +42,19 @@ JavaScript (ES6+)
 
 JSON Server (Mock Backend)
 
-RESTful API Simulation
+REST API Simulation
 
-React Router
+React Router DOM
 
 React Icons
 
 Framer Motion
 
 React Toastify
+
+Context API
+
+Custom Hooks
 
 # Pages & Features
 
@@ -62,7 +94,33 @@ Countries Management
 
 Settings
 
-    🔐 Dashboard access is controlled using role-based authorization (Admin / Owner / User), simulated via JSON Server.
+### 🔐 Access Control:
+
+    Dashboard access is controlled using role-based authorization, simulated through JSON Server.
+
+    Admin: Full access
+
+    Owner: Manage own places
+
+    User: Limited access
+
+### Project Folder Structure
+
+    src/
+
+    │
+    ├── components/ # Reusable UI components
+    ├── pages/ # Application pages
+    ├── hooks/ # Custom React hooks (API & logic)
+    ├── context/ # Global state (Auth, Theme)
+    ├── services/ # JSON Server API handlers
+    ├── routes/ # Public & protected routes
+    ├── assets/ # Images & icons
+    ├── utils/ # Helper functions
+    ├── api/ # API base configuration
+    │
+    ├── App.jsx
+    └── main.jsx
 
 ## Project Timeline
 
@@ -88,7 +146,7 @@ src/
 
 Context API (Authentication & Theme)
 
-Custom Hooks for API interaction
+Custom Hooks for API abstraction
 
 JSON Server as a mock REST API
 
@@ -96,39 +154,64 @@ Component-based architecture
 
 Role-based authentication (simulated)
 
-Search, filter & pagination
-
 Protected routes
 
-Responsive & mobile-first design
+Search & filtering
+
+Responsive UI (mobile-first)
 
 CRUD operations (Create, Read, Update, Delete)
 
-## Challenges Faced
+Loading & error state handling
 
-Simulating authentication and authorization without a real backend
+### Custom Hooks Example
+
+The project heavily relies on custom hooks to keep components clean and reusable:
+
+    export const usePlaces = () => {
+    const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/places`);
+    return {
+        places: data,
+        hasPlace: data.length > 0,
+        error,
+        loading,
+        refetch,
+    };
+    };
+
+✔️ Centralized API logic
+✔️ Clean UI components
+✔️ Scalable architecture
+
+## 🧩 Challenges Faced
+
+Simulating authentication without a real backend
+
+Role-based authorization using mock data
 
 Managing shared state across the dashboard
 
-Designing scalable reusable components
+Designing reusable, scalable components
 
-Handling async loading & error states
+Handling async API states (loading, errors)
 
 Structuring a large React project cleanly
 
-## Learning Outcomes
+## 📚 Learning Outcomes
 
 Building real-world dashboards with React
 
 Working with mock APIs (JSON Server)
 
-Advanced state management with Context
+Advanced state management using Context API
 
-Clean UI/UX with Tailwind CSS
+Writing clean and reusable custom hooks
+
+Creating responsive UIs with Tailwind CSS
+
+Structuring scalable frontend applications
 
 Writing scalable and maintainable frontend code
-
-## Getting Started
 
 ## Install dependencies
 
@@ -136,7 +219,7 @@ Writing scalable and maintainable frontend code
 
 ## Run JSON Server
 
-    npx json-server --watch db.json --port 3000
+    npm run jsonserver
 
 ## Start React app
 
@@ -144,86 +227,11 @@ Writing scalable and maintainable frontend code
 
 # Author
 
-    Mohammad Juma Qasimi
-    Frontend Developer | React.js
+Mohammad Juma Qasimi
+Frontend Developer | React.js
 
-## TECHNOLOGIES
+Passionate about clean UI/UX
 
-1. REACTJS
-2. TAILWINDCSS
-3. JSONSERVER
-4. API
-5. JAVASCRIPT
-6. REACT ICONS
-7. REACT ROUTER
-8.
+Focused on scalable frontend architecture
 
-## PAGES
-
-1. HOME
-2. PALACES
-3. BLOG
-4. ABOUT
-5. CONTACT
-6. LOGIN
-7. REGISTER
-8. RESET PASSWROD
-9. DASHBOARD
-10. DASHBOARD / USERS, PLACES, CITIES, CATEGORIES, COUNTRIES
-11. AETTING
-12. NOT FOUNT PAGE
-
-## TIME
-
-start: 10.2025
-end: 25.01.2026
-
-## PROJECT FOLDER STRUCTURE
-
-## CHALANGIES
-
-## TECHNIKS
-
-1. CONTECT
-2. CUSTOM HOOK
-3. API INTEGRATION
-4. component-based architecture
-5. user experience design
-6. ROLE BASE AUTH
-7. FILTER AND SEARCH
-8.
-9.
-10.
-11.
-12.
-
-<!-- to do -->
-
-# dashboard
-
-3. setting and booking
-
-# website
-
-1. theme context
-2. add swiper in blog page after hero
-3. testumenal in landing page
-4. add advertisment post in blogs and places page
-5. update footer
-6. add newsltter in landing page
-
-https://weblium.com/templates/demo/city-guide-website-design-227
-
-https://preview.themeforest.net/item/panagea-travel-and-tours-listings-template/full_screen_preview/21957086?afsrc=1&clickid=XauWiLVxdxycT4UwHiX-s3KeUkpVNKSCxRkcws0&iradid=275988&iradtype=ONLINE_TRACKING_LINK&irgwc=1&irmptype=mediapartner&irpid=1297116&mp_value1=&utm_campaign=af_impact_radius_1297116&utm_medium=affiliate&utm_source=impact_radius
-
-https://themewagon.github.io/pluto/dashboard.html
-
-https://themewagon.com/themes/pluto-free-bootstrap-4-html5-admin-dashboard-template/
-
-<!-- not compltet -->
-
-1. place detail in dashboard --- services --refactur
-
-blog page
-
-https://themewagon.github.io/sensive/
+Always learning & improving 🚀
