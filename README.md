@@ -37,17 +37,65 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?logo=framer)
 ![Custom Hooks](https://img.shields.io/badge/React-Custom_Hooks-lightblue)
 
-<p align="left"> <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" /> <img alt="Tailwind CSS" src="https://img.shields.io/badge/TailwindCSS-4-38B2AC?logo=tailwindcss&logoColor=white" /> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black" /> <img alt="JSON Server" src="https://img.shields.io/badge/JSON_Server-Mock_Backend-lightgrey" /> <img alt="REST API" src="https://img.shields.io/badge/API-RESTful-blue" /> <img alt="React Router" src="https://img.shields.io/badge/React_Router_DOM-7-CA4245?logo=reactrouter&logoColor=white" /> <img alt="React Icons" src="https://img.shields.io/badge/React_Icons-Icons-purple" /> <img alt="Framer Motion" src="https://img.shields.io/badge/Framer_Motion-Animations-0055FF?logo=framer" /> <img alt="React Toastify" src="https://img.shields.io/badge/Toast-React--Toastify-orange" /> <img alt="Context API" src="https://img.shields.io/badge/Context_API-State-lightblue" /> <img alt="Custom Hooks" src="https://img.shields.io/badge/Custom_Hooks-React-lightblue" /> </p>
+- React.js
+
+- Tailwind CSS
+
+- JavaScript (ES6+)
+
+- JSON Server (Mock Backend)
+
+- REST API Simulation
+
+- React Router DOM
+
+- React Icons
+
+- Framer Motion
+
+- React Toastify
+
+- Context API
+
+- Custom Hooks
 
 # Pages & Features
 
 ## Public Pages
 
-<p align="left"> <img alt="Home" src="https://img.shields.io/badge/Home-Page-blue?style=for-the-badge" /> <img alt="Places" src="https://img.shields.io/badge/Places-Page-teal?style=for-the-badge" /> <img alt="Blog" src="https://img.shields.io/badge/Blog-Page-purple?style=for-the-badge" /> <img alt="About" src="https://img.shields.io/badge/About-Page-orange?style=for-the-badge" /> <img alt="Contact" src="https://img.shields.io/badge/Contact-Page-red?style=for-the-badge" /> <img alt="Login" src="https://img.shields.io/badge/Login-Page-green?style=for-the-badge" /> <img alt="Register" src="https://img.shields.io/badge/Register-Page-pink?style=for-the-badge" /> <img alt="Reset Password" src="https://img.shields.io/badge/Reset_Password-Page-lightgrey?style=for-the-badge" /> <img alt="404 Not Found" src="https://img.shields.io/badge/404-Not_Found-red?style=for-the-badge" /> </p>
+- Home
+
+- Places
+
+- Blog
+
+- About
+
+- Contact
+
+- Login
+
+- Register
+
+- Reset Password
+
+- 404 – Not Found
 
 ## Dashboard (Role-Based Access)
 
-<p align="left"> <img alt="Dashboard Overview" src="https://img.shields.io/badge/Dashboard-Overview-blue?style=for-the-badge" /> <img alt="Users Management" src="https://img.shields.io/badge/Users-Management-teal?style=for-the-badge" /> <img alt="Places Management" src="https://img.shields.io/badge/Places-Management-purple?style=for-the-badge" /> <img alt="Cities Management" src="https://img.shields.io/badge/Cities-Management-orange?style=for-the-badge" /> <img alt="Categories Management" src="https://img.shields.io/badge/Categories-Management-red?style=for-the-badge" /> <img alt="Countries Management" src="https://img.shields.io/badge/Countries-Management-green?style=for-the-badge" /> <img alt="Settings" src="https://img.shields.io/badge/Settings-Page-lightgrey?style=for-the-badge" /> </p>
+- Dashboard Overview
+
+- Users Management
+
+- Places Management
+
+- Cities Management
+
+- Categories Management
+
+- Countries Management
+
+- Settings
 
 ### 🔐 Access Control:
 
@@ -79,31 +127,31 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 ## Project Timeline
 
-Start Date: October 2025
+- Start Date: October 2025
 
-End Date: January 25, 2026
+- End Date: January 25, 2026
 
 ## Core Concepts & Techniques
 
-Context API (Authentication & Theme)
+- Context API (Authentication & Theme)
 
-Custom Hooks for API abstraction
+- Custom Hooks for API abstraction
 
-JSON Server as a mock REST API
+- JSON Server as a mock REST API
 
-Component-based architecture
+- Component-based architecture
 
-Role-based authentication (simulated)
+- Role-based authentication (simulated)
 
-Protected routes
+- Protected routes
 
-Search & filtering
+- Search & filtering
 
-Responsive UI (mobile-first)
+- Responsive UI (mobile-first)
 
-CRUD operations (Create, Read, Update, Delete)
+- CRUD operations (Create, Read, Update, Delete)
 
-Loading & error state handling
+- Loading & error state handling
 
 ### Custom Hooks Example
 
@@ -126,33 +174,33 @@ The project heavily relies on custom hooks to keep components clean and reusable
 
 ## 🧩 Challenges Faced
 
-Simulating authentication without a real backend
+- Simulating authentication without a real backend
 
-Role-based authorization using mock data
+- Role-based authorization using mock data
 
-Managing shared state across the dashboard
+- Managing shared state across the dashboard
 
-Designing reusable, scalable components
+- Designing reusable, scalable components
 
-Handling async API states (loading, errors)
+- Handling async API states (loading, errors)
 
-Structuring a large React project cleanly
+- Structuring a large React project cleanly
 
 ## 📚 Learning Outcomes
 
-Building real-world dashboards with React
+- Building real-world dashboards with React
 
-Working with mock APIs (JSON Server)
+- Working with mock APIs (JSON Server)
 
-Advanced state management using Context API
+- Advanced state management using Context API
 
-Writing clean and reusable custom hooks
+- Writing clean and reusable custom hooks
 
-Creating responsive UIs with Tailwind CSS
+- Creating responsive UIs with Tailwind CSS
 
-Structuring scalable frontend applications
+- Structuring scalable frontend applications
 
-Writing scalable and maintainable frontend code
+- Writing scalable and maintainable frontend code
 
 ## Install dependencies
 
@@ -169,7 +217,7 @@ Writing scalable and maintainable frontend code
 ## Author
 
 **Mohammad Juma Qasimi**  
-Frontend Developer | React.js
+**_Frontend Developer | React.js_**
 
 > Building modern, scalable, and user-friendly web interfaces.
 
