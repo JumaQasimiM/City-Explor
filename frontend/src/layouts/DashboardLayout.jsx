@@ -15,12 +15,14 @@ import {
   MdOutlineNotifications,
   MdOutlineKeyboardArrowRight,
   MdDashboard,
+  MdOutlineMapsHomeWork,
 } from "react-icons/md";
 import { GrLanguage } from "react-icons/gr";
 import { AiOutlineLogout } from "react-icons/ai";
 
-// image
+// images
 import logo from "../assets/logo.png";
+
 import { useAuth } from "../context/AuthContext";
 
 export const DashboardLayout = () => {
@@ -185,17 +187,17 @@ export const DashboardLayout = () => {
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:ml-60 overflow-hidden bg-gray-200  dark:text-gray-200 dark:bg-gray-800">
         {/* Header */}
-        <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-teal-700 text-white shadow-md">
-          <div className="flex items-center gap-4">
+        {/* <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-gradient-to-l from-teal-600 to-teal-700 text-white shadow-md">
+          <div className="flex items-center gap-4 md:ml-55">
             <button className="md:hidden" onClick={toggleSidebar}>
               <FaBars size={24} />
             </button>
             <img src={logo} alt="Logo" className="w-12 h-12" />
             <h1 className="text-xl font-semibold hidden md:block">
-              {currentTitle}
+              City Explor Admin panel
             </h1>
           </div>
-
+          <MdOutlineMapsHomeWork />
           <div className="flex items-center gap-4">
             <MdOutlineNotifications
               size={24}
@@ -225,17 +227,105 @@ export const DashboardLayout = () => {
               onClick={handleLogout}
             />
           </div>
+        </header> */}
+        <header className="fixed top-0 left-0 right-0 z-40 h-16 bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900 shadow-lg">
+          <div className="h-full max-w-full px-5 flex items-center justify-between text-white">
+            {/* ================= LEFT ================= */}
+            <div className="flex items-center gap-4 md:ml-57">
+              {/* Mobile Sidebar Toggle */}
+              <button
+                onClick={toggleSidebar}
+                className="md:hidden p-2 rounded hover:bg-white/10 transition"
+              >
+                <FaBars size={22} />
+              </button>
+
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <img
+                  src={logo}
+                  alt="City Explor"
+                  className="w-10 h-10 rounded bg-white/10 p-1"
+                />
+                <h1 className="hidden md:block text-lg font-semibold tracking-wide">
+                  City Explor
+                  <span className="block text-xs text-white/60">
+                    Admin Dashboard
+                  </span>
+                </h1>
+              </div>
+            </div>
+
+            {/* ================= RIGHT ================= */}
+            <div className="flex items-center gap-4">
+              {/* Notifications */}
+              <button className="relative p-2 rounded hover:bg-white/10 transition">
+                <MdOutlineNotifications size={22} />
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+              </button>
+
+              {/* Language */}
+              <div className="relative">
+                <button
+                  onClick={toggleLanguage}
+                  className="p-2 rounded hover:bg-white/10 transition"
+                >
+                  <GrLanguage size={18} />
+                </button>
+
+                {showLang && (
+                  <ul className="absolute right-0 mt-2 w-24 bg-slate-800 border border-white/10 rounded-lg shadow-xl overflow-hidden">
+                    <li className="px-4 py-2 hover:bg-teal-700 cursor-pointer text-sm">
+                      EN
+                    </li>
+                    <li className="px-4 py-2 hover:bg-teal-700 cursor-pointer text-sm">
+                      DE
+                    </li>
+                  </ul>
+                )}
+              </div>
+
+              {/* Logout */}
+              <button
+                onClick={handleLogout}
+                className="p-2 rounded hover:bg-red-500/20 text-red-300 hover:text-red-400 transition"
+              >
+                <AiOutlineLogout size={22} />
+              </button>
+            </div>
+          </div>
         </header>
 
         {/* Page Title */}
         <div className="mt-16 bg-gradient-to-r from-emerald-600 to-emerald-400 py-4 px-6 font-semibold text-2xl text-white">
-          {currentTitle}
+          {currentTitle === "Dashboard" ? (
+            <span className="block text-xs text-white/60">Admin Dashboard</span>
+          ) : (
+            <span className="block text-xs text-white/60">{currentTitle}</span>
+          )}
         </div>
-
         {/* Page Content */}
         <main className="p-3 lg:px-6 lg:py-2 flex-1 overflow-hidden">
           <Outlet />
         </main>
+        {/* footer */}
+        <footer className="bg-gradient-to-r from-teal-600 to-teal-700 text-white px-6 py-4">
+          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+            {/* Left */}
+            <p className="opacity-80">
+              © {new Date().getFullYear()} City Explor. All rights reserved.
+            </p>
+
+            {/* Center */}
+            <p className="font-medium tracking-wide">Dashboard Panel</p>
+
+            {/* Right */}
+            <p className="opacity-80">
+              Created by{" "}
+              <span className="font-semibold">Mohammad Juma Qasimi</span>
+            </p>
+          </div>
+        </footer>
       </div>
     </div>
   );
