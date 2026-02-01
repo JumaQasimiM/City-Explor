@@ -131,3 +131,8 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 } */
+
+/* icon in header component */
+.icon {
+  @apply cursor-pointer text-gray-700 dark:text-white/80 hover:text-emerald-500 transition;
+}

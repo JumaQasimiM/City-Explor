@@ -2,54 +2,80 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 
 export const ThemeContext = createContext(null);
 
-// use reducer ---
-// because theme is a global state with predictable transitions
-// , and useReducer helps keep the logic centralized and scalable
-export function themeReducer(state, action) {
+/* ================= REDUCER ================= */
+const themeReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE_THEME":
+    case "SET_THEME":
       return {
-        ...state, // color = "light"
-        color: action.payload,
+        ...state,
+        theme: action.payload,
       };
 
     default:
       return state;
   }
-}
+};
 
+/* ================= GET INITIAL THEME ================= */
+const getInitialTheme = () => {
+  if (typeof window === "undefined") return "light";
+
+  const savedTheme = localStorage.getItem("CEXtheme");
+  return savedTheme ? savedTheme : "light";
+};
+
+/* ================= PROVIDER ================= */
 export const ThemeProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(themeReducer, { color: "light" });
+  const [state, dispatch] = useReducer(themeReducer, {
+    theme: getInitialTheme(), //  load from localStorage
+  });
 
-  //
+  /* ================= SYNC WITH DOM & STORAGE ================= */
   useEffect(() => {
-    if (state.color === "light") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [state.color]);
+    const root = document.documentElement;
 
-  //   change the theme
+    if (state.theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+
+    // ✅ persist theme
+    localStorage.setItem("CEXtheme", state.theme);
+  }, [state.theme]);
+
+  /* ================= ACTIONS ================= */
   const changeTheme = (theme) => {
-    // theme get from user / change use the theme
-    dispatch({ type: "CHANGE_THEME", payload: theme });
+    dispatch({ type: "SET_THEME", payload: theme });
+  };
+
+  const toggleTheme = () => {
+    dispatch({
+      type: "SET_THEME",
+      payload: state.theme === "dark" ? "light" : "dark",
+    });
   };
 
   return (
-    <ThemeContext.Provider value={{ ...state, changeTheme }}>
+    <ThemeContext.Provider
+      value={{
+        theme: state.theme,
+        changeTheme,
+        toggleTheme,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
 };
 
-// custom hook
+/* ================= CUSTOM HOOK ================= */
 export const useTheme = () => {
-  const theme = useContext(ThemeContext);
+  const context = useContext(ThemeContext);
 
-  if (!theme) {
-    throw new Error("useTheme must be used inside a ThemeProvider");
+  if (!context) {
+    throw new Error("useTheme must be used inside ThemeProvider");
   }
 
-  return theme;
+  return context;
 };
