@@ -37,91 +37,17 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?logo=framer)
 ![Custom Hooks](https://img.shields.io/badge/React-Custom_Hooks-lightblue)
 
-<!-- lllll -->
-
-![React](https://img.shields.io/badge/React.js-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![REST API](https://img.shields.io/badge/REST_API-Integration-blue?style=for-the-badge)
-![React Router](https://img.shields.io/badge/React_Router_DOM-7-CA4245?style=for-the-badge&logo=reactrouter)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?style=for-the-badge&logo=tailwindcss)
-![React Icons](https://img.shields.io/badge/React_Icons-UI-purple?style=for-the-badge)
-![React Toastify](https://img.shields.io/badge/Toastify-Notifications-orange?style=for-the-badge)
-![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?style=for-the-badge&logo=framer)
-![Custom Hooks](https://img.shields.io/badge/Custom_Hooks-React-lightblue?style=for-the-badge)
-
-<!-- dslml -->
-
-![Hooks](https://img.shields.io/badge/React-Hooks-success)
-![Routing](https://img.shields.io/badge/Routing-React_Router_DOM-blue)
-![UI](https://img.shields.io/badge/UI-TailwindCSS-informational)
-![UX](https://img.shields.io/badge/UX-Animations-orange)
-![State](https://img.shields.io/badge/State-Context_API-yellow)
-
-<!--  -->
-
-## 🛠️ Technologies Used
-
-<badges here>
-
-React.js
-
-Tailwind CSS
-
-JavaScript (ES6+)
-
-JSON Server (Mock Backend)
-
-REST API Simulation
-
-React Router DOM
-
-React Icons
-
-Framer Motion
-
-React Toastify
-
-Context API
-
-Custom Hooks
+<p align="left"> <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black" /> <img alt="Tailwind CSS" src="https://img.shields.io/badge/TailwindCSS-4-38B2AC?logo=tailwindcss&logoColor=white" /> <img alt="JavaScript" src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black" /> <img alt="JSON Server" src="https://img.shields.io/badge/JSON_Server-Mock_Backend-lightgrey" /> <img alt="REST API" src="https://img.shields.io/badge/API-RESTful-blue" /> <img alt="React Router" src="https://img.shields.io/badge/React_Router_DOM-7-CA4245?logo=reactrouter&logoColor=white" /> <img alt="React Icons" src="https://img.shields.io/badge/React_Icons-Icons-purple" /> <img alt="Framer Motion" src="https://img.shields.io/badge/Framer_Motion-Animations-0055FF?logo=framer" /> <img alt="React Toastify" src="https://img.shields.io/badge/Toast-React--Toastify-orange" /> <img alt="Context API" src="https://img.shields.io/badge/Context_API-State-lightblue" /> <img alt="Custom Hooks" src="https://img.shields.io/badge/Custom_Hooks-React-lightblue" /> </p>
 
 # Pages & Features
 
 ## Public Pages
 
-Home
-
-Places
-
-Blog
-
-About
-
-Contact
-
-Login
-
-Register
-
-Reset Password
-
-404 – Not Found
+<p align="left"> <img alt="Home" src="https://img.shields.io/badge/Home-Page-blue?style=for-the-badge" /> <img alt="Places" src="https://img.shields.io/badge/Places-Page-teal?style=for-the-badge" /> <img alt="Blog" src="https://img.shields.io/badge/Blog-Page-purple?style=for-the-badge" /> <img alt="About" src="https://img.shields.io/badge/About-Page-orange?style=for-the-badge" /> <img alt="Contact" src="https://img.shields.io/badge/Contact-Page-red?style=for-the-badge" /> <img alt="Login" src="https://img.shields.io/badge/Login-Page-green?style=for-the-badge" /> <img alt="Register" src="https://img.shields.io/badge/Register-Page-pink?style=for-the-badge" /> <img alt="Reset Password" src="https://img.shields.io/badge/Reset_Password-Page-lightgrey?style=for-the-badge" /> <img alt="404 Not Found" src="https://img.shields.io/badge/404-Not_Found-red?style=for-the-badge" /> </p>
 
 ## Dashboard (Role-Based Access)
 
-Dashboard Overview
-
-Users Management
-
-Places Management
-
-Cities Management
-
-Categories Management
-
-Countries Management
-
-Settings
+<p align="left"> <img alt="Dashboard Overview" src="https://img.shields.io/badge/Dashboard-Overview-blue?style=for-the-badge" /> <img alt="Users Management" src="https://img.shields.io/badge/Users-Management-teal?style=for-the-badge" /> <img alt="Places Management" src="https://img.shields.io/badge/Places-Management-purple?style=for-the-badge" /> <img alt="Cities Management" src="https://img.shields.io/badge/Cities-Management-orange?style=for-the-badge" /> <img alt="Categories Management" src="https://img.shields.io/badge/Categories-Management-red?style=for-the-badge" /> <img alt="Countries Management" src="https://img.shields.io/badge/Countries-Management-green?style=for-the-badge" /> <img alt="Settings" src="https://img.shields.io/badge/Settings-Page-lightgrey?style=for-the-badge" /> </p>
 
 ### 🔐 Access Control:
 
@@ -183,16 +109,16 @@ Loading & error state handling
 
 The project heavily relies on custom hooks to keep components clean and reusable:
 
-    export const usePlaces = () => {
-    const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/places`);
-    return {
-        places: data,
-        hasPlace: data.length > 0,
-        error,
-        loading,
-        refetch,
-    };
-    };
+    > export const usePlaces = () => {
+    > const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/places`);
+    > return {
+    >     places: data,
+    >     hasPlace: data.length > 0,
+    >     error,
+    >     loading,
+    >     refetch,
+    > };
+    > };
 
 ✔️ Centralized API logic
 ✔️ Clean UI components
@@ -240,13 +166,13 @@ Writing scalable and maintainable frontend code
 
     npm run dev
 
-# Author
+## Author
 
-Mohammad Juma Qasimi
+**Mohammad Juma Qasimi**  
 Frontend Developer | React.js
 
-Passionate about clean UI/UX
+> Building modern, scalable, and user-friendly web interfaces.
 
-Focused on scalable frontend architecture
-
-Always learning & improving 🚀
+- Clean UI / UX
+- Scalable frontend architecture
+- Continuous learning mindset
