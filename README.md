@@ -4,7 +4,7 @@ City Explor is a modern, frontend-focused web application built with React.js th
 
 The project uses JSON Server as a mock backend, simulating real-world REST APIs for learning, development, and frontend architecture practice.
 
-    ⚠️ Note: This project does not include a real backend. All data operations are handled via JSON Server.
+> ⚠️ Note: This project does not include a real backend. All data operations are handled via JSON Server.
 
 ![React](https://img.shields.io/badge/React-19-%2361DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-7-%646CFF?logo=vite&logoColor=white)
@@ -27,11 +27,41 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 ## Technologies Used
 
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
+![JavaScript ES6](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
+![REST API](https://img.shields.io/badge/API-RESTful-blue)
+![React Router](https://img.shields.io/badge/React_Router_DOM-7-CA4245?logo=reactrouter&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?logo=tailwindcss&logoColor=white)
+![React Icons](https://img.shields.io/badge/React_Icons-Icons-purple)
+![React Toastify](https://img.shields.io/badge/Toast-React--Toastify-orange)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?logo=framer)
+![Custom Hooks](https://img.shields.io/badge/React-Custom_Hooks-lightblue)
+
+<!-- lllll -->
+
 ![React](https://img.shields.io/badge/React.js-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?style=for-the-badge&logo=tailwindcss)
-![JSON Server](https://img.shields.io/badge/JSON--Server-Mock%20Backend-orange?style=for-the-badge)
-![Frontend](https://img.shields.io/badge/Frontend-Only-blueviolet?style=for-the-badge)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![REST API](https://img.shields.io/badge/REST_API-Integration-blue?style=for-the-badge)
+![React Router](https://img.shields.io/badge/React_Router_DOM-7-CA4245?style=for-the-badge&logo=reactrouter)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?style=for-the-badge&logo=tailwindcss)
+![React Icons](https://img.shields.io/badge/React_Icons-UI-purple?style=for-the-badge)
+![React Toastify](https://img.shields.io/badge/Toastify-Notifications-orange?style=for-the-badge)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?style=for-the-badge&logo=framer)
+![Custom Hooks](https://img.shields.io/badge/Custom_Hooks-React-lightblue?style=for-the-badge)
+
+<!-- dslml -->
+
+![Hooks](https://img.shields.io/badge/React-Hooks-success)
+![Routing](https://img.shields.io/badge/Routing-React_Router_DOM-blue)
+![UI](https://img.shields.io/badge/UI-TailwindCSS-informational)
+![UX](https://img.shields.io/badge/UX-Animations-orange)
+![State](https://img.shields.io/badge/State-Context_API-yellow)
+
+<!--  -->
+
+## 🛠️ Technologies Used
+
+<badges here>
 
 React.js
 
@@ -56,14 +86,6 @@ Context API
 Custom Hooks
 
 # Pages & Features
-
-![Role Based Auth](https://img.shields.io/badge/Auth-Role%20Based-informational)
-![CRUD](https://img.shields.io/badge/CRUD-Full-success)
-![Custom Hooks](https://img.shields.io/badge/React-Custom%20Hooks-lightblue)
-![Responsive](https://img.shields.io/badge/UI-Responsive-success)
-![Charts](https://img.shields.io/badge/Recharts-Data%20Viz-blue)
-![Maps](https://img.shields.io/badge/Leaflet-Maps-green)
-![Slider](https://img.shields.io/badge/Swiper-Slider-blueviolet)
 
 ## Public Pages
 
@@ -136,12 +158,6 @@ Start Date: October 2025
 End Date: January 25, 2026
 
 ## Core Concepts & Techniques
-
-![React](https://img.shields.io/badge/React.js-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?style=for-the-badge&logo=tailwindcss)
-![JSON Server](https://img.shields.io/badge/JSON--Server-Mock%20Backend-orange?style=for-the-badge)
-![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 
 Context API (Authentication & Theme)
 
