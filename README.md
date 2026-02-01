@@ -6,11 +6,10 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
     ⚠️ Note: This project does not include a real backend. All data operations are handled via JSON Server.
 
-# 🌍 CITY EXPLOR
-
-![React](https://img.shields.io/badge/React-18-blue?logo=react)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.x-38B2AC?logo=tailwindcss)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-yellow?logo=javascript)
+![React](https://img.shields.io/badge/React-19-%2361DAFB?logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7-%646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-%2338B2AC?logo=tailwindcss&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
 ![JSON Server](https://img.shields.io/badge/JSON%20Server-Mock%20API-orange)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
@@ -28,11 +27,11 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 ## Technologies Used
 
-![React](https://img.shields.io/badge/React.js-%2361DAFB.svg?style=for-the-badge&logo=react&logoColor=black)
-![Tailwind](https://img.shields.io/badge/TailwindCSS-%2338B2AC.svg?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![JSON Server](https://img.shields.io/badge/JSON--Server-Mock%20API-orange?style=for-the-badge)
-![Project Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
+![React](https://img.shields.io/badge/React.js-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?style=for-the-badge&logo=tailwindcss)
+![JSON Server](https://img.shields.io/badge/JSON--Server-Mock%20Backend-orange?style=for-the-badge)
+![Frontend](https://img.shields.io/badge/Frontend-Only-blueviolet?style=for-the-badge)
 
 React.js
 
@@ -57,6 +56,14 @@ Context API
 Custom Hooks
 
 # Pages & Features
+
+![Role Based Auth](https://img.shields.io/badge/Auth-Role%20Based-informational)
+![CRUD](https://img.shields.io/badge/CRUD-Full-success)
+![Custom Hooks](https://img.shields.io/badge/React-Custom%20Hooks-lightblue)
+![Responsive](https://img.shields.io/badge/UI-Responsive-success)
+![Charts](https://img.shields.io/badge/Recharts-Data%20Viz-blue)
+![Maps](https://img.shields.io/badge/Leaflet-Maps-green)
+![Slider](https://img.shields.io/badge/Swiper-Slider-blueviolet)
 
 ## Public Pages
 
@@ -128,21 +135,13 @@ Start Date: October 2025
 
 End Date: January 25, 2026
 
-## Project Folder Structure
-
-src/
-│
-├── components/ # Reusable UI components
-├── pages/ # Application pages
-├── hooks/ # Custom React hooks (API logic)
-├── context/ # Global state (Auth, Theme)
-├── services/ # JSON Server API handlers
-├── routes/ # Protected & public routes
-├── assets/ # Images & icons
-├── utils/ # Helper functions
-└── App.jsx
-
 ## Core Concepts & Techniques
+
+![React](https://img.shields.io/badge/React.js-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-38B2AC?style=for-the-badge&logo=tailwindcss)
+![JSON Server](https://img.shields.io/badge/JSON--Server-Mock%20Backend-orange?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Completed-brightgreen?style=for-the-badge)
 
 Context API (Authentication & Theme)
 
