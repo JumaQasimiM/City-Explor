@@ -8,22 +8,21 @@ import {
   FaStar,
 } from "react-icons/fa";
 
+import { useCities } from "../hooks/useCities";
+import { usePlaces } from "../hooks/usePlaces";
+import { useUsers } from "../hooks/useUsers";
+
 export const About = () => {
+  const { cities = [] } = useCities();
+  const { places = [] } = usePlaces();
+  const { users = [] } = useUsers();
+
   return (
-    <section className="relative w-full min-h-screen bg-gray-100 dark:bg-slate-900 dark:text-white pt-28">
+    <section className="relative w-full min-h-screen bg-gray-100 dark:bg-slate-900 dark:text-white pb-10 pt-28">
       <div className="max-w-7xl mx-auto px-5">
         {/* ---------------- Hero ---------------- */}
         <div className="text-center mb-20">
-          <span
-            className="inline-block mb-4 px-4 py-1 text-sm font-semibold
-                           bg-green-100 text-green-600
-                           dark:bg-green-900 dark:text-green-300
-                           rounded-full"
-          >
-            About City Explor
-          </span>
-
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 dark:text-white">
+          <h1 className="font-caveat text-4xl md:text-6xl font-bold text-gray-900 dark:text-white">
             Explore Cities <span className="text-green-500">Smarter</span>
           </h1>
 
@@ -35,7 +34,7 @@ export const About = () => {
 
         {/* ---------------- Main Content ---------------- */}
         <div className="grid md:grid-cols-2 gap-14 items-center">
-          {/* Left */}
+          {/* Left Content */}
           <div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">
               Explore Cities Like Never Before
@@ -52,24 +51,15 @@ export const About = () => {
             </p>
 
             <div className="flex gap-4 flex-wrap">
-              <span
-                className="flex items-center gap-2 px-4 py-2 text-sm
-                               rounded-lg bg-green-500 text-white"
-              >
+              <span className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-green-500 text-white">
                 <FaGlobeAmericas />
                 Travel
               </span>
-              <span
-                className="flex items-center gap-2 px-4 py-2 text-sm
-                               rounded-lg bg-indigo-500 text-white"
-              >
+              <span className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-indigo-500 text-white">
                 <FaMapMarkedAlt />
                 Discover
               </span>
-              <span
-                className="flex items-center gap-2 px-4 py-2 text-sm
-                               rounded-lg bg-pink-500 text-white"
-              >
+              <span className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg bg-pink-500 text-white">
                 <FaHeart />
                 Save
               </span>
@@ -108,15 +98,31 @@ export const About = () => {
         {/* ---------------- Stats ---------------- */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-24">
           {[
-            { value: "500+", label: "Places", icon: FaMapMarkedAlt },
-            { value: "120+", label: "Cities", icon: FaCity },
-            { value: "10k+", label: "Users", icon: FaUsers },
-            { value: "4.9", label: "Rating", icon: FaStar },
+            {
+              value: `${places.length}+`,
+              label: "Places",
+              icon: FaMapMarkedAlt,
+            },
+            {
+              value: `${cities.length}+`,
+              label: "Cities",
+              icon: FaCity,
+            },
+            {
+              value: `${users.length}k+`,
+              label: "Users",
+              icon: FaUsers,
+            },
+            {
+              value: "4.9",
+              label: "Rating",
+              icon: FaStar,
+            },
           ].map((item, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-slate-800 rounded-xl shadow
-                         p-6 text-center"
+              className="bg-white dark:bg-slate-800 rounded-xl shadow p-6 text-center
+                         hover:scale-105 transition-transform duration-300"
             >
               <item.icon className="mx-auto text-2xl text-green-500 mb-2" />
               <p className="text-3xl font-bold text-gray-900 dark:text-white">
