@@ -7,6 +7,7 @@ import { NotFoundData } from "../../components/helper/NotFoundData";
 import { toast } from "react-toastify";
 import { EditCity } from "./EditModals/EditCity";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { CityCategoPlaceChart } from "../../components/dashboardComponent/CityPlaceChart";
 
 export const Cities = () => {
   /* ================= STATE ================= */
@@ -176,6 +177,15 @@ export const Cities = () => {
             </table>
           </div>
         )}
+        {/* chart */}
+        <div
+          className="grid grid-cols-1
+                           bg-white dark:bg-slate-800
+                            border-t border-gray-200 dark:border-slate-700"
+        >
+          {/* charts */}
+          <CityCategoPlaceChart />
+        </div>
       </section>
 
       {/* ================= EDIT MODAL ================= */}
