@@ -50,7 +50,7 @@ export const TestimonialsSlider = () => {
         </div>
 
         {/* ================= SLIDER ================= */}
-        <div className="relative min-h-[320px] flex items-center justify-center">
+        <div className="relative min-h-[120px] flex items-center justify-center">
           <AnimatePresence mode="wait">
             <motion.div
               key={index}
@@ -58,7 +58,7 @@ export const TestimonialsSlider = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -40, scale: 0.96 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="w-full"
+              className="w-[70%]"
             >
               <TestimonialCard comment={testimonials[index]} />
             </motion.div>
