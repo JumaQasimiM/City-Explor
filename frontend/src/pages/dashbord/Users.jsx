@@ -8,6 +8,8 @@ import { NotFoundData } from "../../components/helper/NotFoundData";
 import { ErrorMessage } from "../../components/helper/Error";
 import { Loader } from "../../components/helper/Loading";
 
+// chart component
+import { UsersChart } from "../../components/dashboardComponent/UsersChart";
 export const Users = () => {
   /* ================= STATE ================= */
   const [searchUser, setSearchUser] = useState("");
@@ -184,6 +186,7 @@ export const Users = () => {
           </table>
         </div>
       )}
+      <UsersChart />
     </section>
   );
 };

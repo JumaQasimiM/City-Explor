@@ -1,12 +1,12 @@
 import {
-  LineChart,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   ResponsiveContainer,
   CartesianGrid,
   Tooltip,
   Legend,
-  Line,
 } from "recharts";
 import { useUsers } from "../../hooks/useUsers";
 
@@ -26,27 +26,29 @@ export const UsersChart = () => {
   }));
 
   return (
-    <section className="bg-gradient-to-r from-sky-700 to-sky-500 rounded-xl p-4">
-      <h1 className="text-xl font-semibold text-white mb-4">Users by Role</h1>
+    <section className="bg-gradient-to-r from-sky-700 to-sky-500 rounded p-4">
+      <h1 className="text-md font-semibold mb-4 text-gray-300">
+        Users by Role
+      </h1>
 
-      <div className="w-full h-[300px] bg-white rounded-lg p-3">
+      <div className="w-full h-[300px] bg-white rounded p-3">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={data}>
+          <AreaChart data={data}>
             <CartesianGrid strokeDasharray="4 4" />
             <XAxis dataKey="role" />
             <YAxis allowDecimals={false} />
             <Tooltip />
             <Legend />
 
-            <Line
+            <Area
               type="monotone"
               dataKey="count"
               stroke="#0284c7"
               strokeWidth={3}
-              dot={{ r: 5 }}
+              fill="#0284e1"
               activeDot={{ r: 7 }}
             />
-          </LineChart>
+          </AreaChart>
         </ResponsiveContainer>
       </div>
     </section>
