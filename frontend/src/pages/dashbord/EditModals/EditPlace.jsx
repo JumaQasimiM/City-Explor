@@ -47,14 +47,7 @@ export const EditPlace = ({ id, onClose }) => {
     });
   }, [place]);
 
-  /* ================= ESC CLOSE ================= */
-  useEffect(() => {
-    const handleEsc = (e) => e.key === "Escape" && onClose();
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, [onClose]);
-
-  /* ================= HANDLERS ================= */
+  /* ================= handlers ================= */
   const updateField = (key, value) =>
     setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -66,7 +59,7 @@ export const EditPlace = ({ id, onClose }) => {
     });
   };
 
-  /* ================= SUBMIT ================= */
+  /* ================= submit ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -89,7 +82,7 @@ export const EditPlace = ({ id, onClose }) => {
 
   return (
     <section className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative w-full max-w-6xl bg-white dark:bg-slate-700 rounded-xl shadow-xl flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-5xl bg-teal-800 rounded shadow-xl flex flex-col max-h-[90vh]">
         {/* ================= HEADER ================= */}
         <header className="flex justify-between items-center px-6 py-4 border-b dark:border-slate-700">
           <div>
@@ -101,7 +94,7 @@ export const EditPlace = ({ id, onClose }) => {
 
           <button
             onClick={onClose}
-            className="p-2 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-500"
+            className="p-2 rounded cursor-pointer hover:bg-red-100 dark:hover:bg-red-900 text-red-500"
           >
             <FaXmark size={20} />
           </button>

@@ -21,12 +21,12 @@ export const PlacesChart = () => {
   }));
 
   return (
-    <section className="bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-xl p-4">
-      <h1 className="text-xl font-semibold text-white mb-4">
+    <section className="bg-gradient-to-r from-emerald-600 to-emerald-400 rounded p-4">
+      <h1 className="text font-semibold text-gray-300 mb-4">
         Places Price Chart
       </h1>
 
-      <div className="w-full h-[350px] bg-white rounded-lg p-3">
+      <div className="w-full h-[350px] bg-white rounded p-3">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={chartData}>
             <CartesianGrid strokeDasharray="5 5" />
