@@ -120,7 +120,7 @@ export const BlogDetail = () => {
         </aside>
       </div>
       {/* comments */}
-      <div className="max-w-7xl mx-auto border-t-2 border-t-gray-200 ">
+      <div className="max-w-7xl mx-auto border-t-2 border-t-gray-200  py-5">
         <BlogComments blog_id={blog?.id} />
       </div>
     </section>

@@ -338,13 +338,6 @@
   ],
   "placecomments": [
     {
-      "id": "bcc6",
-      "user_id": "38a4",
-      "place_id": "pl16",
-      "body": "Sunrise Cafe",
-      "created_at": "2026-01-17T15:09:59.336Z"
-    },
-    {
       "id": "9041",
       "user_id": "38a4",
       "place_id": "pl17",
@@ -385,6 +378,20 @@
       "place_id": "pl17",
       "body": "Family Supermarket",
       "created_at": "2026-01-31T12:30:53.017Z"
+    },
+    {
+      "id": "fc7d",
+      "user_id": "38a4",
+      "place_id": "pl16",
+      "body": "knlc",
+      "created_at": "2026-02-14T22:18:58.477Z"
+    },
+    {
+      "id": "92da",
+      "user_id": "38a4",
+      "place_id": "pl16",
+      "body": "nsdl",
+      "created_at": "2026-02-14T22:19:01.130Z"
     }
   ],
   "blogs": [
@@ -494,13 +501,6 @@
       "created_at": "2026-01-17T14:46:53.760Z"
     },
     {
-      "id": "ab93",
-      "user_id": "38a4",
-      "blog_id": "353",
-      "body": "firsr comment for  Cultural and Historical Sites in Jaghori",
-      "created_at": "2026-01-22T14:59:19.209Z"
-    },
-    {
       "id": "7e37",
       "user_id": "3265",
       "blog_id": "7009",
@@ -508,11 +508,18 @@
       "created_at": "2026-01-31T12:30:25.818Z"
     },
     {
-      "id": "f247",
+      "id": "57f3",
+      "user_id": "38a4",
+      "blog_id": "7009",
+      "body": "dfbakjösdfkjasdfasdfa",
+      "created_at": "2026-02-14T17:26:44.318Z"
+    },
+    {
+      "id": "24a4",
       "user_id": "38a4",
       "blog_id": "353",
-      "body": "löfasdkfasdf",
-      "created_at": "2026-02-02T16:04:00.226Z"
+      "body": "xnfyl",
+      "created_at": "2026-02-14T22:19:13.015Z"
     }
   ],
   "bookings": [

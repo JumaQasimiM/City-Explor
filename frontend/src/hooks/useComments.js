@@ -10,13 +10,14 @@ export const useComments = () => {
   const { data: blogscomments } = useFetch(`${ApiUrl}/blogscomments`);
   const { data: placecomments } = useFetch(`${ApiUrl}/placecomments`);
 
-  //   blog comment
-  const createBlogComment = async (payload) => {
+  /* ---------------- CREATE COMMENT ---------------- */
+
+  const createComment = async (endpoint, payload) => {
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/blogscomments`, {
+      const res = await fetch(`${ApiUrl}/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,42 +37,54 @@ export const useComments = () => {
       setLoading(false);
     }
   };
-  // place comment
-  const createPlaceComment = async (payload) => {
+
+  const createBlogComment = (payload) =>
+    createComment("blogscomments", payload);
+
+  const createPlaceComment = (payload) =>
+    createComment("placecomments", payload);
+
+  /* ---------------- DELETE COMMENT ---------------- */
+
+  const deleteComment = async (endpoint, id) => {
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/placecomments`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+      const res = await fetch(`${ApiUrl}/${endpoint}/${id}`, {
+        method: "DELETE",
       });
 
       if (!res.ok) {
-        throw new Error("Failed to create comment");
+        throw new Error("Failed to delete comment");
       }
 
-      return await res.json();
+      return true;
     } catch (err) {
       setError(err.message || "Something went wrong");
-      return null;
+      return false;
     } finally {
       setLoading(false);
     }
   };
+
+  const deleteBlogComment = (id) => deleteComment("blogscomments", id);
+
+  const deletePlaceComment = (id) => deleteComment("placecomments", id);
+
+  /* ---------------- RETURN ---------------- */
+
   return {
     createBlogComment,
     createPlaceComment,
+    deleteBlogComment,
+    deletePlaceComment,
     blogscomments,
     placecomments,
     error,
     loading,
   };
 };
-
 export const useCommentuser = (user_id) => {
   return useFetch(user_id ? `${ApiUrl}/users/${user_id}` : null);
 };
