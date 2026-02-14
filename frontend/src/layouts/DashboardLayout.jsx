@@ -55,7 +55,7 @@ export const DashboardLayout = () => {
     { name: "Cities", icon: <FaCity />, to: "/dashboard/cities" },
     { name: "Countries", icon: <FaGlobe />, to: "/dashboard/countries" },
     { name: "Categories", icon: <FaGlobe />, to: "/dashboard/categories" },
-    { name: "Bookings", to: "/dashboard/bookings", icon: <FaClipboardList /> },
+    // { name: "Bookings", to: "", icon: <FaClipboardList /> },
     { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];
   const navItemsOwner = [
