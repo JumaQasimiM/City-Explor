@@ -28,6 +28,8 @@ import { BlogDetail } from "./pages/BlogDetail";
 import { ProtectedRoutes } from "./routes/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 import { Contact } from "./pages/Contact";
+import { Setting } from "./pages/dashbord/Setting";
+import { NotFoundPage } from "./pages/404";
 
 function App() {
   return (
@@ -79,9 +81,11 @@ function App() {
                 <Route path="add" element={<AddPlace />} />
                 <Route path=":id" element={<PlaceDetail />} />
               </Route>
+              <Route path="settings" element={<Setting />} />
             </Route>
           </Route>
           {/* ======================================================================= */}
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
