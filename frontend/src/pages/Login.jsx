@@ -39,7 +39,7 @@ export const Login = () => {
   // role base access controll
   useEffect(() => {
     if (user?.role === "admin") {
-      toast.success(`Welcome ${user.firstname}`);
+      // toast.success(`Welcome ${user.firstname}`);
       navigate("/dashboard", { replace: true });
     } else if (user?.role === "owner") {
       navigate("/dashboard/places");

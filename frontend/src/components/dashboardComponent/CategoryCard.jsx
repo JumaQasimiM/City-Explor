@@ -9,16 +9,19 @@ import { RiHotelFill } from "react-icons/ri";
 import { useUsers } from "../../hooks/useUsers";
 import { usePlaces } from "../../hooks/usePlaces";
 import { useCities } from "../../hooks/useCities";
+import { useComments } from "../../hooks/useComments";
 
 export const CategoryCard = () => {
-  const { users } = useUsers();
-  const { places } = usePlaces();
-  const { cities } = useCities();
+  const { users = [] } = useUsers();
+  const { places = [] } = usePlaces();
+  const { cities = [] } = useCities();
+  const { blogscomments = [], placecomments = [] } = useComments();
+  const comments = blogscomments.length + placecomments.length;
   const categories = [
     {
       label: "Comments",
       icon: <FaCommentDots />,
-      count: 13,
+      count: comments || 0,
       color: "from-orange-400 to-orange-600",
       monthly: 23,
       trend: "up",
@@ -27,7 +30,7 @@ export const CategoryCard = () => {
     {
       label: "Users",
       icon: <FaUsers />,
-      count: users.length,
+      count: users.length || 0,
       color: "from-sky-400 to-sky-600",
       monthly: 45,
       trend: "down",
@@ -36,7 +39,7 @@ export const CategoryCard = () => {
     {
       label: "Places",
       icon: <RiHotelFill />,
-      count: places.length,
+      count: places.length || 0,
       color: "from-emerald-400 to-emerald-600",
       monthly: 12,
       trend: "up",
@@ -45,7 +48,7 @@ export const CategoryCard = () => {
     {
       label: "Cities",
       icon: <FaMountainCity />,
-      count: cities.length,
+      count: cities.length || 0,
       color: "from-purple-400 to-purple-600",
       monthly: 5,
       trend: "down",

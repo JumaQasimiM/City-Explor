@@ -5,10 +5,10 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // ✅ important
+  const [loading, setLoading] = useState(true); //  important
   const [error, setError] = useState(null);
 
-  // 🔹 Load user on app start
+  //  Load user on app start
   useEffect(() => {
     const savedUser = localStorage.getItem("City_user");
     if (savedUser) {
@@ -17,10 +17,10 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
-  // 🔹 Save user when it changes
+  //  Save user when it changes
   useEffect(() => {
     if (user) {
-      localStorage.setItem("City_user", JSON.stringify(user)); // ✅ save FULL user
+      localStorage.setItem("City_user", JSON.stringify(user)); //  save FULL user
     } else {
       localStorage.removeItem("City_user");
     }
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null); // ✅ this is enough
+    setUser(null);
   };
 
   return (
