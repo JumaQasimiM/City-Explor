@@ -6,6 +6,7 @@ export const EditCountry = ({ id, onClose }) => {
   const [newCountry, setNewCountry] = useState("");
   const { data: country } = useCountryById(id);
   const { updateCountry, error, loading } = useEditCountry();
+  //
   useEffect(() => {
     if (country) {
       setNewCountry(country.name);

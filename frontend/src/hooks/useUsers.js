@@ -53,8 +53,44 @@ export const useCreateUser = () => {
   };
   return { createUser, error, loading };
 };
-// delete user - DELETE
+// update user
 
+export const useUpdateUser = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const updateUser = async (payload, user_id) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/users/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to update user");
+      }
+
+      return data;
+    } catch (error) {
+      setError(error.message || "Something went wrong");
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { updateUser, loading, error };
+};
+
+// delete user - DELETE
 export const useDeleteUser = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -68,8 +104,10 @@ export const useDeleteUser = () => {
       if (!res.ok) {
         throw new Error("Failed to delete user");
       }
+      return true;
     } catch (error) {
       setError(error.message);
+      return false;
     } finally {
       setLoading(false);
     }
@@ -126,7 +164,7 @@ export const useActiveUser = () => {
         "service_i9nieml", // service id
         "template_4o61op6", // template id
         template_parms,
-        "5PHdd8XfmakRljKox"
+        "5PHdd8XfmakRljKox",
       );
       setSuccess("User activated & email sent successfully");
       return updatedUser;
@@ -145,7 +183,7 @@ export const useActiveUser = () => {
 export const useCheckRepeatEmail = (email) => {
   const [error, setError] = useState(null);
   const { data, loading } = useFetch(
-    email ? `http://localhost:3000/users?email=${email}` : null
+    email ? `http://localhost:3000/users?email=${email}` : null,
   );
 
   const checkEmail = async () => {
@@ -161,3 +199,6 @@ export const useCheckRepeatEmail = (email) => {
   };
   return { checkEmail, error, loading };
 };
+
+// change password
+export const useChangePassword = () => {};

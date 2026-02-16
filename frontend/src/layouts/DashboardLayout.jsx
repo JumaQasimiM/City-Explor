@@ -3,19 +3,11 @@ import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 
 // react icons
 import { HiMiniHomeModern } from "react-icons/hi2";
-import {
-  FaClipboardList,
-  FaUsers,
-  FaCity,
-  FaGlobe,
-  FaCog,
-  FaBars,
-} from "react-icons/fa";
+import { FaUsers, FaCity, FaGlobe, FaCog, FaBars } from "react-icons/fa";
 import {
   MdOutlineNotifications,
   MdOutlineKeyboardArrowRight,
   MdDashboard,
-  MdOutlineMapsHomeWork,
 } from "react-icons/md";
 import { GrLanguage } from "react-icons/gr";
 import { AiOutlineLogout } from "react-icons/ai";
@@ -34,7 +26,7 @@ export const DashboardLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const navItemsAdmin = [
+  const adminItems = [
     { name: "Dashboard", to: "/dashboard", icon: <MdDashboard /> },
     {
       name: "Places",
@@ -56,9 +48,15 @@ export const DashboardLayout = () => {
     { name: "Countries", icon: <FaGlobe />, to: "/dashboard/countries" },
     { name: "Categories", icon: <FaGlobe />, to: "/dashboard/categories" },
     // { name: "Bookings", to: "", icon: <FaClipboardList /> },
-    { name: "Settings", to: "/dashboard/settings", icon: <FaCog /> },
   ];
-  const navItemsOwner = [
+  const commonItems = [
+    {
+      name: "Settings",
+      to: "/dashboard/settings",
+      icon: <FaCog />,
+    },
+  ];
+  const ownerItems = [
     {
       name: "Places",
       icon: <HiMiniHomeModern />,
@@ -68,7 +66,12 @@ export const DashboardLayout = () => {
       ],
     },
   ];
-  const navItems = user?.role === "admin" ? navItemsAdmin : navItemsOwner;
+
+  const navItems =
+    user?.role === "admin"
+      ? [...adminItems, ...commonItems]
+      : [...ownerItems, ...commonItems];
+
   const handleLogout = () => {
     logout();
     navigate("/");
@@ -186,48 +189,6 @@ export const DashboardLayout = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col md:ml-60 overflow-hidden bg-gray-200  dark:text-gray-200 dark:bg-gray-800">
-        {/* Header */}
-        {/* <header className="fixed top-0 left-0 right-0 z-40 flex items-center justify-between h-16 px-4 bg-gradient-to-l from-teal-600 to-teal-700 text-white shadow-md">
-          <div className="flex items-center gap-4 md:ml-55">
-            <button className="md:hidden" onClick={toggleSidebar}>
-              <FaBars size={24} />
-            </button>
-            <img src={logo} alt="Logo" className="w-12 h-12" />
-            <h1 className="text-xl font-semibold hidden md:block">
-              City Explor Admin panel
-            </h1>
-          </div>
-          <MdOutlineMapsHomeWork />
-          <div className="flex items-center gap-4">
-            <MdOutlineNotifications
-              size={24}
-              className="cursor-pointer hover:text-green-500 transition"
-            />
-            <div className="relative">
-              <button
-                onClick={toggleLanguage}
-                className="p-2 rounded-full hover:bg-teal-600 transition"
-              >
-                <GrLanguage size={20} />
-              </button>
-              {showLang && (
-                <ul className="absolute right-0 mt-2 w-20 bg-teal-800 text-white rounded shadow-lg">
-                  <li className="px-4 py-2 hover:bg-teal-700 cursor-pointer">
-                    EN
-                  </li>
-                  <li className="px-4 py-2 hover:bg-teal-700 cursor-pointer">
-                    DE
-                  </li>
-                </ul>
-              )}
-            </div>
-            <AiOutlineLogout
-              size={24}
-              className="cursor-pointer hover:text-red-500 transition"
-              onClick={handleLogout}
-            />
-          </div>
-        </header> */}
         <header className="fixed top-0 left-0 right-0 z-40 h-16 bg-gradient-to-r from-teal-700 via-teal-800 to-slate-900 shadow-lg">
           <div className="h-full max-w-full px-5 flex items-center justify-between text-white">
             {/* ================= LEFT ================= */}

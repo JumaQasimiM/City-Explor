@@ -1,35 +1,37 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer, Bounce } from "react-toastify";
 
-// website pages
+// Website pages
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
-
-// layout
-import { MainLayout } from "./layouts/MainLayout";
-import { DashboardLayout } from "./layouts/DashboardLayout";
-
-// dashboard pages
-import { Dashboard } from "./pages/dashbord/Dashboard";
-import { Users } from "./pages/dashbord/Users";
-import { Cities } from "./pages/dashbord/Cities";
-import { Places } from "./pages/dashbord/Places";
-import { AddPlace } from "./pages/dashbord/AddPlace";
-import { Country } from "./pages/dashbord/Country";
-import { Category } from "./pages/dashbord/Category";
-import { PlaceDetail } from "./pages/dashbord/PlaceDetail";
-import { Login } from "./pages/Login";
-import { RegisterUser } from "./pages/Resgister";
-import { ResetPassword } from "./pages/ResetPassword";
+import { Contact } from "./pages/Contact";
 import { PlacesInSite } from "./pages/Places";
 import { PlaceDetailOnSite } from "./pages/PlaceDetailOnSite";
 import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
+import { Login } from "./pages/Login";
+import { RegisterUser } from "./pages/Resgister";
+import { ResetPassword } from "./pages/ResetPassword";
+import { NotFoundPage } from "./pages/404";
+
+// Layouts
+import { MainLayout } from "./layouts/MainLayout";
+import { DashboardLayout } from "./layouts/DashboardLayout";
+
+// Dashboard pages
+import { Dashboard } from "./pages/dashbord/Dashboard";
+import { Users } from "./pages/dashbord/Users";
+import { Cities } from "./pages/dashbord/Cities";
+import { Country } from "./pages/dashbord/Country";
+import { Category } from "./pages/dashbord/Category";
+import { Places } from "./pages/dashbord/Places";
+import { AddPlace } from "./pages/dashbord/AddPlace";
+import { PlaceDetail } from "./pages/dashbord/PlaceDetail";
+import { Setting } from "./pages/dashbord/Setting";
+
+// Auth
 import { ProtectedRoutes } from "./routes/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
-import { Contact } from "./pages/Contact";
-import { Setting } from "./pages/dashbord/Setting";
-import { NotFoundPage } from "./pages/404";
 
 function App() {
   return (
@@ -43,7 +45,7 @@ function App() {
         />
 
         <Routes>
-          {/* Website */}
+          {/* ================= WEBSITE ROUTES ================= */}
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/places" element={<PlacesInSite />} />
@@ -56,35 +58,37 @@ function App() {
             <Route path="/register" element={<RegisterUser />} />
             <Route path="/resetpassword" element={<ResetPassword />} />
           </Route>
-          {/* =========================================================================== */}
-          {/* protected Routes and role base access  */}
 
-          <Route element={<ProtectedRoutes allowRole={["admin"]} />}>
-            {/* Dashboard */}
-
+          {/* ================= DASHBOARD (ALL LOGGED USERS) ================= */}
+          <Route element={<ProtectedRoutes />}>
             <Route path="/dashboard" element={<DashboardLayout />}>
               <Route index element={<Dashboard />} />
 
-              <Route path="users" element={<Users />} />
-              <Route path="cities" element={<Cities />} />
-
-              <Route path="countries" element={<Country />} />
-              <Route path="categories" element={<Category />} />
-            </Route>
-          </Route>
-
-          {/* admin + owner */}
-          <Route element={<ProtectedRoutes allowRole={["admin", "owner"]} />}>
-            <Route path="/dashboard" element={<DashboardLayout />}>
-              <Route path="places">
-                <Route index element={<Places />} />
-                <Route path="add" element={<AddPlace />} />
-                <Route path=":id" element={<PlaceDetail />} />
-              </Route>
+              {/* Available for ALL logged-in users */}
               <Route path="settings" element={<Setting />} />
+
+              {/* Admin only */}
+              <Route element={<ProtectedRoutes allowRole={["admin"]} />}>
+                <Route path="users" element={<Users />} />
+                <Route path="cities" element={<Cities />} />
+                <Route path="countries" element={<Country />} />
+                <Route path="categories" element={<Category />} />
+              </Route>
+
+              {/* Admin + Owner */}
+              <Route
+                element={<ProtectedRoutes allowRole={["admin", "owner"]} />}
+              >
+                <Route path="places">
+                  <Route index element={<Places />} />
+                  <Route path="add" element={<AddPlace />} />
+                  <Route path=":id" element={<PlaceDetail />} />
+                </Route>
+              </Route>
             </Route>
           </Route>
-          {/* ======================================================================= */}
+
+          {/* ================= NOT FOUND ================= */}
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

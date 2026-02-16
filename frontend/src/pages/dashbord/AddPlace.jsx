@@ -88,7 +88,7 @@ export const AddPlace = () => {
       <form onSubmit={handleSubmit} className="space-y-10">
         {/* ================= GENERAL INFO ================= */}
         <Card title="General Information">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             <InputField
               label="Place Name"
               placeholder="Place Name"
@@ -230,7 +230,7 @@ export const AddPlace = () => {
 
 /* ================= REUSABLE CARD ================= */
 const Card = ({ title, span = true, children }) => (
-  <div className="bg-white dark:bg-slate-700 rounded shadow-sm p-2 md:p-6">
+  <div className="bg-white dark:bg-slate-700 rounded shadow-sm p-5 md:p-6">
     <h2 className="text-lg font-semibold mb-6 border-b pb-2">
       {title}
       {span === true && <span className="text-red-400">*</span>}
