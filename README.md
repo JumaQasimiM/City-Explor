@@ -77,7 +77,7 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 - Register
 
-- Reset Password
+<!-- - Reset Password -->
 
 - 404 – Not Found
 
@@ -116,10 +116,9 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
     ├── pages/ # Application pages
     ├── hooks/ # Custom React hooks (API & logic)
     ├── context/ # Global state (Auth, Theme)
-    ├── services/ # JSON Server API handlers
-    ├── routes/ # Public & protected routes
+    ├── routes/ # protected routes
     ├── assets/ # Images & icons
-    ├── utils/ # Helper functions
+    ├── layouts/ # dashboard and main layout
     ├── api/ # API base configuration
     │
     ├── App.jsx

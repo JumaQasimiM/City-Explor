@@ -1,41 +1,62 @@
 import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { HiOutlinePhotograph } from "react-icons/hi";
-
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAuth } from "../../context/AuthContext";
-import { useDeleteUser, useUpdateUser } from "../../hooks/useUsers";
 
+import { useAuth } from "../../context/AuthContext";
+import {
+  useChangePassword,
+  useDeleteUser,
+  useUpdateUser,
+} from "../../hooks/useUsers";
+
+// logo
+import logo from "../../assets/logo.png";
 export const Setting = () => {
   const { user, logout } = useAuth();
-  const { updateUser, changePassword, loading, error } = useUpdateUser();
-  const { deleteUser } = useDeleteUser();
-  // =========================
+  const navigate = useNavigate();
+
+  // =============================
+  // Hooks (separate loading states)
+  // =============================
+  const {
+    updateUser,
+    loading: updateLoading,
+    error: updateError,
+  } = useUpdateUser();
+
+  const {
+    changePassword,
+    loading: passwordLoading,
+    error: passwordError,
+  } = useChangePassword();
+
+  const { deleteUser, loading: deleteLoading } = useDeleteUser();
+
+  // =============================
   // Profile States
-  // =========================
+  // =============================
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState("");
 
-  const navigate = useNavigate();
-  // =========================
+  // =============================
   // Password States
-  // =========================
+  // =============================
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // =========================
+  // =============================
   // Preferences
-  // =========================
+  // =============================
   const [theme, setTheme] = useState(false);
   const [language, setLanguage] = useState("English");
 
-  // =========================
-  // Fill form when user loads
-  // =========================
+  // =============================
+  // Fill user info
+  // =============================
   useEffect(() => {
     if (user) {
       setFirstname(user.firstname || "");
@@ -45,20 +66,30 @@ export const Setting = () => {
     }
   }, [user]);
 
-  // =========================
-  // Dark mode effect
-  // =========================
+  // =============================
+  // Load theme from localStorage
+  // =============================
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("CEXtheme");
+    if (savedTheme === "dark") {
+      setTheme(true);
+      document.documentElement.classList.add("dark");
+    }
+  }, []);
+
   useEffect(() => {
     if (theme) {
       document.documentElement.classList.add("dark");
+      localStorage.setItem("CEXtheme", "dark");
     } else {
       document.documentElement.classList.remove("dark");
+      localStorage.setItem("CEXtheme", "light");
     }
   }, [theme]);
 
-  // =========================
+  // =============================
   // Update Profile
-  // =========================
+  // =============================
   const submitUserInfo = async (e) => {
     e.preventDefault();
     if (!user) return;
@@ -70,23 +101,29 @@ export const Setting = () => {
       dateOfBirth: dob,
     };
 
-    const success = await updateUser(payload, user.id);
-    if (success) {
-      toast.success("update your Information successfully");
+    const res = await updateUser(payload, user.id);
+
+    if (res) {
+      toast.success("Profile updated successfully");
     } else {
-      toast.error("something went wrong!");
+      toast.error("Failed to update profile");
     }
   };
 
-  // =========================
+  // =============================
   // Change Password
-  // =========================
+  // =============================
   const submitPassword = async (e) => {
     e.preventDefault();
     if (!user) return;
 
     if (!currentPassword || !newPassword || !confirmPassword) {
       toast.error("All fields are required");
+      return;
+    }
+
+    if (user.password !== currentPassword) {
+      toast.error("Current password is incorrect");
       return;
     }
 
@@ -100,24 +137,21 @@ export const Setting = () => {
       return;
     }
 
-    const payload = {
-      currentPassword,
-      newPassword,
-    };
-
-    const res = await changePassword(payload, user.id);
+    const res = await changePassword({ password: newPassword }, user.id);
 
     if (res) {
       toast.success("Password updated successfully");
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
+    } else {
+      toast.error("Failed to update password");
     }
   };
 
-  // ==========================
-  // delete acout
-  // ==========================
+  // =============================
+  // Delete Account
+  // =============================
   const deleteAccount = async () => {
     if (!user) return;
 
@@ -141,9 +175,16 @@ export const Setting = () => {
   if (!user) return null;
 
   return (
-    <section className="min-h-screen bg-gray-50 dark:bg-slate-900 py-10 px-4">
-      <div className="max-w-6xl mx-auto space-y-10">
-        <h1 className="text-3xl font-bold dark:text-white">Settings</h1>
+    <section className="min-h-screen bg-gray-50 dark:bg-slate-900 p-6 space-y-8 rounded-xl">
+      <div className="max-w-6xl mx-auto space-y-10 ">
+        <div className="">
+          <h1 className="text-xl font-semibold text-slate-800 dark:text-white">
+            Settings
+          </h1>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            Manage your account settings
+          </p>
+        </div>
 
         {/* ================= Profile ================= */}
         <div className="bg-white dark:bg-slate-800 rounded shadow p-8">
@@ -152,7 +193,12 @@ export const Setting = () => {
           </h2>
 
           <div className="flex items-center gap-6 mb-8">
-            <FaUserCircle className="text-7xl text-gray-300" />
+            {/* <FaUserCircle className="text-7xl text-gray-300" /> */}
+            <img
+              src={logo}
+              alt={user.firstname}
+              className="w-15 h-15 rounded-full outline-3 outline-green-400"
+            />
             <div>
               <p className="font-medium dark:text-white">Update your avatar</p>
               <p className="text-sm text-gray-500">JPG, PNG. Max 2MB</p>
@@ -163,25 +209,25 @@ export const Setting = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <input
                 type="text"
-                placeholder="First Name"
                 value={firstname}
                 onChange={(e) => setFirstname(e.target.value)}
+                placeholder="First Name"
                 className="input"
               />
 
               <input
                 type="text"
-                placeholder="Last Name"
                 value={lastname}
                 onChange={(e) => setLastname(e.target.value)}
+                placeholder="Last Name"
                 className="input"
               />
 
               <input
                 type="email"
-                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
                 className="input"
               />
 
@@ -194,30 +240,32 @@ export const Setting = () => {
             </div>
 
             <button
-              disabled={loading}
+              disabled={updateLoading}
               className="bg-teal-500 hover:bg-teal-700 text-white px-6 py-2 rounded"
             >
-              {loading ? "Saving..." : "Save Changes"}
+              {updateLoading ? "Saving..." : "Save Changes"}
             </button>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {updateError && (
+              <p className="text-red-500 text-sm">{updateError}</p>
+            )}
           </form>
         </div>
 
         {/* ================= Password ================= */}
-        <div className="bg-white dark:bg-slate-800 rounded shadow p-8 ">
+        <div className="bg-white dark:bg-slate-800 rounded shadow p-8">
           <h2 className="text-xl font-semibold mb-6 text-amber-500">
             Change Password
           </h2>
 
           <form onSubmit={submitPassword} className="space-y-6">
-            <div className="flex flex-col md:flex-row">
+            <div className="flex flex-col md:flex-row gap-4">
               <input
                 type="password"
                 placeholder="Current Password"
                 value={currentPassword}
                 onChange={(e) => setCurrentPassword(e.target.value)}
-                className="input mx-2"
+                className="input"
               />
 
               <input
@@ -225,23 +273,28 @@ export const Setting = () => {
                 placeholder="New Password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="input mx-2"
+                className="input"
               />
 
               <input
                 type="password"
-                placeholder="Confirm New Password"
+                placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="input mx-2"
+                className="input"
               />
             </div>
+
             <button
-              disabled={loading}
-              className="bg-teal-500 text-white px-6 py-2 rounded hover:bg-teal-700"
+              disabled={passwordLoading}
+              className="bg-teal-500 hover:bg-teal-700 text-white px-6 py-2 rounded"
             >
-              {loading ? "Updating..." : "Change Password"}
+              {passwordLoading ? "Updating..." : "Change Password"}
             </button>
+
+            {passwordError && (
+              <p className="text-red-500 text-sm">{passwordError}</p>
+            )}
           </form>
         </div>
 
@@ -284,11 +337,13 @@ export const Setting = () => {
           <h2 className="text-xl font-semibold text-red-600 mb-4">
             Danger Zone
           </h2>
+
           <button
-            onClick={() => deleteAccount()}
+            onClick={deleteAccount}
+            disabled={deleteLoading}
             className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded"
           >
-            Delete Account
+            {deleteLoading ? "Deleting..." : "Delete Account"}
           </button>
         </div>
       </div>

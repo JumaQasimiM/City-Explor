@@ -201,4 +201,36 @@ export const useCheckRepeatEmail = (email) => {
 };
 
 // change password
-export const useChangePassword = () => {};
+export const useChangePassword = () => {
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  const changePassword = async (payload, user_id) => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch(`${ApiUrl}/users/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to update password");
+      }
+
+      return data;
+    } catch (error) {
+      setError(error.message || "Something went wrong");
+      return null;
+    } finally {
+      setLoading(false);
+    }
+  };
+  return { changePassword, loading, error };
+};

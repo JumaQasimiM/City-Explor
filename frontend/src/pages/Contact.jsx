@@ -17,7 +17,7 @@ export const Contact = () => {
         {/* ================= Header ================= */}
         <div className="text-center mb-20">
           <h1 className="font-caveat text-4xl md:text-7xl font-bold">
-            Get in <span className="text-teal-500">Touch</span>
+            Get in <span className="text-green-500">Touch</span>
           </h1>
 
           <p className="mt-6 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
@@ -140,7 +140,7 @@ export const Contact = () => {
               <button
                 type="submit"
                 className="w-full flex items-center justify-center gap-2
-                           bg-teal-600 hover:bg-teal-700
+                           bg-green-600 hover:bg-green-700 duration-150
                            text-white font-semibold
                            rounded-lg px-6 py-3 transition"
               >

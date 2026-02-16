@@ -1,37 +1,40 @@
-// BlogDetail.jsx
 import { useParams, Link } from "react-router-dom";
-import { FaUserAlt, FaCalendarAlt, FaEye, FaArrowLeft } from "react-icons/fa";
-import { useBlogAuthor, useBlogById } from "../hooks/useBlogs"; // custom hook to fetch blog by id
+import {
+  FaUserAlt,
+  FaCalendarAlt,
+  FaEye,
+  FaArrowLeft,
+  FaStar,
+} from "react-icons/fa";
 
-import restaurant1 from "../assets/restaurant1.jpg";
-import restaurant2 from "../assets/restaurant2.jpg";
-import restaurant3 from "../assets/restaurant3.jpg";
-import hotel1 from "../assets/hotel1.jpg";
-import jaghori1 from "../assets/jaghori1.jpg";
-import jaghori2 from "../assets/jaghori2.jpg";
+import { useBlogAuthor, useBlogById } from "../hooks/useBlogs";
 import { BlogComments } from "../components/BlogComments";
+
+import jaghori2 from "../assets/jaghori2.jpg";
+import restaurant1 from "../assets/restaurant1.jpg";
 
 export const BlogDetail = () => {
   const { id } = useParams();
-  const { data: blog, loading, error } = useBlogById(id); // fetch single blog
-  const { data: author } = useBlogAuthor(blog.user_id);
+  const { data: blog, loading, error } = useBlogById(id);
+  const { data: author } = useBlogAuthor(blog?.user_id);
 
   if (loading) {
     return (
-      <section className="py-20 text-center">
-        <p>Loading blog...</p>
+      <section className="py-32 text-center text-lg font-medium">
+        Loading blog...
       </section>
     );
   }
 
   if (error || !blog) {
     return (
-      <section className="py-20 text-center">
-        <p>Blog not found.</p>
+      <section className="py-32 text-center space-y-4">
+        <p className="text-xl font-semibold">Blog not found.</p>
         <Link
           to="/blogs"
-          className="mt-4 inline-block bg-sky-700 hover:bg-sky-800 text-white py-2 px-4 rounded"
+          className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-all"
         >
+          <FaArrowLeft />
           Back to Blogs
         </Link>
       </section>
@@ -39,31 +42,27 @@ export const BlogDetail = () => {
   }
 
   return (
-    <section className="bg-gray-100 dark:bg-slate-900 text-gray-800 dark:text-gray-100">
+    <section className="bg-gray-50 dark:bg-slate-950 text-gray-900 dark:text-gray-100">
       {/* ================= HERO ================= */}
-      <div className="relative h-[280px] sm:h-[400px] md:h-[520px]">
+      <div className="relative h-[350px] md:h-[500px] overflow-hidden">
         <img
           src={jaghori2}
           alt={blog.title}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"
         />
-        <div className="absolute inset-0 bg-black/50" />
-
-        <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
-          <span className="uppercase tracking-widest text-green-400 font-semibold mb-3">
-            {blog.category || "Uncategorized"}
-          </span>
-          <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold text-white max-w-4xl">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
+        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center px-6 max-w-3xl">
+          <h1 className="text-md md:text-5xl font-semibold md:font-bold text-white leading-tight drop-shadow-lg">
             {blog.title}
           </h1>
-          <div className="flex flex-wrap justify-center items-center gap-6 text-white/80 text-sm mt-4">
-            <span className="flex items-center gap-2">
-              <FaUserAlt /> {author.firstname || "Author"}
+          <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-white/80 text-sm mt-6">
+            <span className="flex items-center gap-2 text-bold text-white">
+              <FaUserAlt /> {author?.firstname || "Author"}
             </span>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 text-bold text-white">
               <FaCalendarAlt /> {blog.created_at}
             </span>
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-2 text-bold text-white">
               <FaEye /> {blog.views || 0} views
             </span>
           </div>
@@ -71,20 +70,56 @@ export const BlogDetail = () => {
       </div>
 
       {/* ================= CONTENT ================= */}
-      <div className="max-w-7xl mx-auto px-4 py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
-        {/* ========= MAIN CONTENT ========= */}
-        <article className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl shadow p-6 md:p-10 space-y-6">
-          <img src={jaghori2} alt="" />
-          <p className="leading-relaxed text-gray-700 dark:text-gray-300">
+      <div className="max-w-7xl mx-auto px-6 py-10 md:py-20 grid grid-cols-1 lg:grid-cols-3 gap-16">
+        {/* ===== MAIN CONTENT ===== */}
+        <article className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-md shadow-2xl p-10 md:p-14 space-y-10 backdrop-blur-sm">
+          <div className="flex justify-between ">
+            <div>
+              <h1 className="text-md font-semibold">{blog.title}</h1>
+              {/* Rating */}
+              <div className="flex items-center gap-2 text-amber-400 text-lg">
+                {[1, 2, 3, 4, 5].map((_, i) => (
+                  <FaStar key={i} />
+                ))}
+                <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
+                  5.0 Rating
+                </span>
+              </div>
+
+              <h1 className="block md:hidden">
+                <span className="flex items-center gap-2 text-bold text-gray-500">
+                  <FaCalendarAlt /> {blog.created_at}
+                </span>
+              </h1>
+            </div>
+            <h1
+              className="
+            hidden md:block text-gray-600"
+            >
+              <span className="flex items-center gap-2 text-bold text-gray-500">
+                <FaCalendarAlt /> {blog.created_at}
+              </span>
+            </h1>
+          </div>
+
+          {/* Image */}
+          <img
+            src={jaghori2}
+            alt=""
+            className="rounded shadow-lg border border-gray-100 dark:border-slate-700"
+          />
+
+          {/* Description */}
+          <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
             {blog.description}
           </p>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-3 pt-4">
+          <div className="flex flex-wrap gap-3 pt-6">
             {blog.tags?.map((tag, index) => (
               <span
-                key={`${tag}-${index}`} // unique key for safety
-                className="px-4 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm rounded-full"
+                key={index}
+                className="px-4 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-green-700 dark:text-green-300 text-sm rounded-full hover:scale-105 hover:bg-emerald-200 dark:hover:bg-emerald-800 transition-all"
               >
                 #{tag}
               </span>
@@ -92,19 +127,19 @@ export const BlogDetail = () => {
           </div>
         </article>
 
-        {/* ========= SIDEBAR ========= */}
-        <aside className="space-y-6">
+        {/* ===== SIDEBAR ===== */}
+        <aside className="space-y-10">
           {/* Author Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow p-6 text-center">
+          <div className="bg-white dark:bg-slate-900 rounded shadow-2xl p-8 text-center backdrop-blur-md hover:scale-105 transition-transform duration-300">
             <img
-              src={restaurant1 || "/images/blogs/author.jpg"}
-              alt={blog.author_name || "Author"}
-              className="w-24 h-24 mx-auto rounded-full object-cover mb-4"
+              src={restaurant1}
+              alt="author"
+              className="w-28 h-28 mx-auto rounded-full object-cover border-3 border-emerald-500 shadow-xl mb-4"
             />
-            <h3 className="font-semibold text-lg">
-              {author.firstname || "Author"}
+            <h3 className="font-semibold text-xl text-gray-500">
+              {author?.firstname || "Author"}
             </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
               Travel writer & local guide
             </p>
           </div>
@@ -112,15 +147,16 @@ export const BlogDetail = () => {
           {/* Back Button */}
           <Link
             to="/blogs"
-            className="flex items-center justify-center gap-2 bg-sky-700 hover:bg-sky-800 text-white py-3 rounded-lg transition"
+            className="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white py-4 rounded transition-all shadow-xl font-semibold"
           >
             <FaArrowLeft />
             Back to Blogs
           </Link>
         </aside>
       </div>
-      {/* comments */}
-      <div className="max-w-7xl mx-auto border-t-2 border-t-gray-200  py-5">
+
+      {/* ================= COMMENTS ================= */}
+      <div className="max-w-5xl mx-auto border-t border-gray-200 dark:border-slate-800 md:py-16 px-6">
         <BlogComments blog_id={blog?.id} />
       </div>
     </section>

@@ -140,7 +140,7 @@ export const Cities = () => {
                 {cities.map((city, index) => (
                   <tr
                     key={city.id}
-                    className="border-b dark:border-slate-700
+                    className="border-b dark:border-slate-700 border-b-slate-200
                       hover:bg-slate-50 dark:hover:bg-slate-700/40 transition"
                   >
                     <td className="py-3 px-2">{index + 1}</td>

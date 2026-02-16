@@ -28,7 +28,8 @@ export const About = () => {
 
           <p className="mt-6 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
             Discover new places, explore cities, and create unforgettable
-            experiences with <strong>City Explor</strong>.
+            experiences with{" "}
+            <strong className="font-caveat text-green-500">City Explor</strong>.
           </p>
         </div>
 
@@ -71,7 +72,8 @@ export const About = () => {
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-green-400/20 rounded-full blur-3xl"></div>
 
             <h3 className="text-xl font-semibold mb-6 text-green-500">
-              Why Choose City Explor?
+              Why Choose{" "}
+              <span className="font-caveat font-extrabold ">City Explor</span>?
             </h3>
 
             <ul className="space-y-4 text-gray-600 dark:text-gray-300">

@@ -105,7 +105,7 @@ export const Category = () => {
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="text-left text-sm text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-700">
+                <tr className="text-left text-sm text-slate-500 dark:text-slate-400 border-b border-slate-400 dark:border-slate-700">
                   <th className="py-3 px-2">#</th>
                   <th className="py-3 px-2">Category Name</th>
                   <th className="py-3 px-2 text-right">Actions</th>
@@ -116,7 +116,7 @@ export const Category = () => {
                 {categories.map((category, index) => (
                   <tr
                     key={category.id}
-                    className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition"
+                    className="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/40 transition"
                   >
                     <td className="py-3 px-2 text-slate-600 dark:text-slate-300">
                       {index + 1}

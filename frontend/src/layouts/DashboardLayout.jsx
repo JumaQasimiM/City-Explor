@@ -122,7 +122,7 @@ export const DashboardLayout = () => {
                     end={item.to === "/dashboard"}
                     onClick={() => setShowSidebar(false)}
                     className={({ isActive }) =>
-                      `flex items-center gap-3 px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors
+                      `flex items-center gap-3 px-4 py-2 rounded hover:bg-teal-700 transition-colors
                         ${
                           isActive
                             ? "bg-teal-700 font-semibold"
