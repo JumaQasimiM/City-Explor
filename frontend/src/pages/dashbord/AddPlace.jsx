@@ -8,6 +8,9 @@ import { InputField } from "../../components/helper/Input";
 import { SelectField } from "../../components/helper/SelectField";
 import { useAuth } from "../../context/AuthContext";
 
+// api url
+import { ApiUrl } from "../../api/ApiUrl";
+
 export const AddPlace = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -58,7 +61,7 @@ export const AddPlace = () => {
     };
 
     try {
-      await fetch("http://localhost:3000/places", {
+      await fetch(`${ApiUrl}/places`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),

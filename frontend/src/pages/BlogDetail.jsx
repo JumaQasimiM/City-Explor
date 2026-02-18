@@ -52,10 +52,10 @@ export const BlogDetail = () => {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
         <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center px-6 max-w-3xl">
-          <h1 className="text-xl md:text-4xl font-semibold md:font-bold text-white drop-shadow-lg">
+          <h1 className="text-md md:text-5xl font-semibold md:font-bold text-white leading-tight drop-shadow-lg">
             {blog.title}
           </h1>
-          <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-white/80 text-lg mt-6">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-white/80 text-md mt-6">
             <span className="flex items-center gap-2 text-bold text-white">
               <FaUserAlt /> {author?.firstname || "Author"}
             </span>
