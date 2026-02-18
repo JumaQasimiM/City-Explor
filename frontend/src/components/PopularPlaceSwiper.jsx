@@ -1,6 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
-import jaghoriImage from "../assets/hero.jpeg";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -16,6 +15,8 @@ import Hotel1 from "../assets/Hotel1.jpg";
 import HotelRoom1 from "../assets/HotelRoom1.jpg";
 import restaurant1 from "../assets/restaurant1.jpg";
 import jaghori1 from "../assets/jaghori1.jpg";
+import { Loader } from "./helper/Loading";
+import { ErrorMessage } from "./helper/Error";
 const placeImages = [Hotel1, HotelRoom1, restaurant1, jaghori1];
 
 const ShowCategory = ({ cate_id }) => {
@@ -33,7 +34,12 @@ const BlogAuthor = ({ author_id }) => {
   );
 };
 export const PopularPlacesSwiper = () => {
-  const { blogs } = useBlogs();
+  const { blogs = [], loading, error } = useBlogs();
+
+  /* ================= LOADING / ERROR ================= */
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
   return (
     <div className="w-full">
       <Swiper

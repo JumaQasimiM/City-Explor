@@ -4,13 +4,23 @@ import Hotel1 from "../assets/Hotel1.jpg";
 import Hotel2 from "../assets/Hotel2.jpg";
 import Hotel3 from "../assets/Hotel3.jpg";
 import Hotel4 from "../assets/Hotel4.jpg";
+
+// helper components
+import { Loader } from "./helper/Loading";
+import { ErrorMessage } from "./helper/Error";
+
 const hotelImages = [Hotel1, Hotel2, Hotel3, Hotel4];
 
 export const PopularHotels = () => {
   // hard code for Hotel id
-  const { popularPlace, error } = usePopularPlace("1");
+  const { popularPlace, error, loading } = usePopularPlace("1");
+
+  /* ================= LOADING / ERROR ================= */
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
   return (
-    <section className="w-full dark:bg-slate-900 dark:text-white py-16">
+    <section className="w-full dark:bg-slate-900 dark:text-white py-8 md:py-16">
       <div className="max-w-8xl px-5 md:mx-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-10 border-b border-gray-500 dark:border-white/20 pb-4">

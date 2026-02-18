@@ -1,8 +1,16 @@
 import { useUsers } from "../../hooks/useUsers";
 
 import avatorImage from "../../assets/hero.jpeg";
+
+import { Loader } from "../../components/helper/Loading";
+import { ErrorMessage } from "../../components/helper/Error";
 export const UserListInfoDashboard = () => {
   const { users, error, loading, hasUsers, refetch } = useUsers();
+
+  /* ================= LOADING / ERROR ================= */
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
   return (
     <section className="bg-white dark:bg-slate-800 rounded shadow-lg w-full">
       {/* Header */}

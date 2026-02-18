@@ -2,8 +2,10 @@ import jaghori1 from "../assets/jaghori1.jpg";
 import { useBlogAuthor, useBlogs } from "../hooks/useBlogs";
 import { Link } from "react-router-dom";
 import { CityWeather } from "./CityWeather";
+import { Loader } from "./helper/Loading";
+import { ErrorMessage } from "./helper/Error";
 export const PlaceArtical = () => {
-  const { blogs } = useBlogs();
+  const { blogs = [], loading, error } = useBlogs();
 
   const BlogAuthor = ({ author_id }) => {
     const { data: author } = useBlogAuthor(author_id);
@@ -13,19 +15,21 @@ export const PlaceArtical = () => {
       </span>
     );
   };
+
+  /* ================= LOADING / ERROR ================= */
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
   return (
-    <section className="w-full py-24 bg-white dark:bg-slate-900 transition-colors">
+    <section className="w-full py-10 md:py-24 bg-white dark:bg-slate-900 transition-colors">
       {blogs.slice(0, 1).map((blog) => (
         <div className="max-w-7xl mx-auto px-5">
           {/* Section Header */}
           <div className="max-w-3xl mb-16">
-            <h1 className="font-milonga text-3xl md:text-4xl text-slate-900 dark:text-white leading-tight">
-              {/* Best destinations in Afghanistan for budget travelers */}
+            <h1 className="font-milonga text-2xl md:text-4xl text-slate-900 dark:text-white leading-tight">
               {blog.title}
             </h1>
             <p className="mt-4 text-slate-600 dark:text-slate-400 text-lg">
-              {/* Carefully selected destinations offering beauty, culture, and
-              affordability for modern explorers. */}
               {blog.description.slice(0, 159)} ...
             </p>
           </div>

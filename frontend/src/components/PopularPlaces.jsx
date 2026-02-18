@@ -1,13 +1,12 @@
-import jaghoriImage from "../assets/hero.jpeg";
 import restaurant1 from "../assets/restaurant1.jpg";
 import { PopularPlacesSwiper } from "./PopularPlaceSwiper";
 
 export const PopularPlaces = () => {
   return (
-    <section className="w-full py-24 bg-white dark:bg-slate-900 transition-colors">
+    <section className="w-full py-10 md:py-24 bg-white dark:bg-slate-900 transition-colors">
       <div className="max-w-7xl mx-auto px-5">
         {/* Section title */}
-        <h1 className="text-4xl font-milonga mb-14 text-slate-900 dark:text-white">
+        <h1 className="text-2xl md:text-4xl font-milonga mb-8 md:mb-14 text-slate-900 dark:text-white">
           Popular Places
         </h1>
 

@@ -85,8 +85,9 @@ export const PlacesInSite = () => {
         <ErrorMessage />
       </div>
     );
+
   return (
-    <section className="mt-20 mb-10 py-5 bg-gray-100 dark:bg-slate-800">
+    <section className="mt-5 md:mt-12 py-5 bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 md:pb-20">
         {/* ================= TOP CONTROLS ================= */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 pt-10">

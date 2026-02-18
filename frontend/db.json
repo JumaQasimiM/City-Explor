@@ -206,7 +206,9 @@
       "name": "Sunrise Cafe",
       "description": "Breakfast cafe.",
       "address": "Kabul",
-      "services": ["Tea"],
+      "services": [
+        "Tea"
+      ],
       "price": 10,
       "city_id": "kabul1",
       "category_id": "ce5f",
@@ -221,7 +223,9 @@
       "name": "Sunrise Cafe",
       "description": "Breakfast cafe.",
       "address": "Kabul",
-      "services": ["Tea"],
+      "services": [
+        "Tea"
+      ],
       "price": 10,
       "city_id": "kabul1",
       "category_id": "d367",
@@ -236,7 +240,9 @@
       "name": "Family Supermarket",
       "description": "Affordable market.",
       "address": "Kabul",
-      "services": ["Groceries"],
+      "services": [
+        "Groceries"
+      ],
       "price": 0,
       "city_id": "e180",
       "category_id": "ce5d",
@@ -251,7 +257,9 @@
       "name": "Community Health Clinic",
       "description": "Basic healthcare.",
       "address": "Lower Jaghori",
-      "services": ["Checkups"],
+      "services": [
+        "Checkups"
+      ],
       "price": 0,
       "city_id": "jaghori1",
       "category_id": "ce53",
@@ -266,7 +274,11 @@
       "address": "Jaghori, bazari Ghojor",
       "price": 0,
       "description": "Bazar Ghojor is a well-known local marketplace located in Jaghori District, Ghazni Province, Afghanistan. It serves as an important commercial and social hub for the surrounding villages, where people gather daily to trade goods, meet neighbors, and maintain long-standing community traditions.\n\nThe bazar offers a wide range of products, including fresh agricultural produce, groceries, clothing, household items, and local crafts. Many of the goods are supplied by nearby farmers and traders, reflecting the region’s strong connection to agriculture and self-sustained local economy.\n\nBeyond commerce, Bazar Ghojor plays a vital role in community life. It is a place where people exchange news, strengthen social ties, and preserve cultural values passed down through generations. On busy days, especially before religious events and seasonal occasions, the bazar becomes lively and vibrant, showcasing the spirit and resilience of the Jaghori people.\n\nBazar Ghojor stands as a symbol of local identity, cooperation, and everyday life in Jaghori, highlighting the importance of traditional marketplaces in Afghanistan’s rural regions.",
-      "services": ["Larg Parking ", "Super Markets", "Hospital"],
+      "services": [
+        "Larg Parking ",
+        "Super Markets",
+        "Hospital"
+      ],
       "city_id": "4c70",
       "category_id": "df61",
       "user_id": "38a4"
@@ -302,6 +314,22 @@
       "city_id": "4c70",
       "category_id": "5860",
       "user_id": "3265"
+    },
+    {
+      "id": "b0a0",
+      "name": "Bazar Ghojor",
+      "address": "lemgöwerngölf.dns",
+      "price": 3453,
+      "description": ".dsmnf\nalsnfa,ndsfklamsd\nfadfladsmf\nölandsfla\ndfamsldfaldsf\nadfm\naölsdf\nlasödf\nöadflm\naöldsfm\naö",
+      "services": [
+        "mdsö",
+        "ölfmö",
+        "lnföl",
+        "lönö"
+      ],
+      "city_id": "2508",
+      "category_id": "df61",
+      "user_id": "38a4"
     }
   ],
   "placecomments": [
@@ -395,7 +423,13 @@
       "slug": "exploring-the-beauty-of-jaghori",
       "description": "The natural beauty of Jaghori is one of its greatest treasures. From rolling green hills to wide valleys and seasonal rivers, the landscape changes beautifully throughout the year. Walking through these areas allows visitors to connect with nature and experience a slower, more meaningful way of life.",
       "image": "images/blogs/jaghori1.jpg",
-      "tags": ["Jaghori", "Nature", "Photography", "Adventure", "Travel"],
+      "tags": [
+        "Jaghori",
+        "Nature",
+        "Photography",
+        "Adventure",
+        "Travel"
+      ],
       "category_id": "ce5f",
       "published": true,
       "views": 980,
@@ -411,7 +445,13 @@
       "slug": "top-hotels-and-restaurants-in-jaghori",
       "description": "Jaghori offers a growing number of hotels and restaurants that provide comfort and quality services for both locals and visitors. Local restaurants serve delicious traditional Afghan food, including rice dishes, kebabs, fresh bread, and dairy products made from local farms. Travelers can enjoy authentic flavors and friendly service.",
       "image": "images/blogs/jaghori2.jpg",
-      "tags": ["Jaghori", "Food", "Hotels", "Travel", "Afghanistan"],
+      "tags": [
+        "Jaghori",
+        "Food",
+        "Hotels",
+        "Travel",
+        "Afghanistan"
+      ],
       "category_id": "ce5f",
       "published": true,
       "views": 870,
@@ -427,7 +467,13 @@
       "slug": "cultural-and-historical-sites-in-jaghori",
       "description": "Jaghori has a rich cultural and historical identity shaped by centuries of tradition and community life. Local bazaars, mosques, and gathering places reflect the heritage of the Hazara people. Handicrafts, traditional clothing, and customs are preserved and shared through generations, making Jaghori a meaningful destination for cultural exploration.",
       "image": "images/blogs/jaghori3.jpg",
-      "tags": ["Jaghori", "Culture", "History", "Heritage", "Travel"],
+      "tags": [
+        "Jaghori",
+        "Culture",
+        "History",
+        "Heritage",
+        "Travel"
+      ],
       "category_id": "1",
       "published": true,
       "views": 790,

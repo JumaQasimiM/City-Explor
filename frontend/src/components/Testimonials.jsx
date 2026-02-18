@@ -58,7 +58,7 @@ export const TestimonialsSlider = () => {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -40, scale: 0.96 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="w-[70%]"
+              className="w-[90%] md:w-[70%]"
             >
               <TestimonialCard comment={testimonials[index]} />
             </motion.div>

@@ -85,7 +85,7 @@ export const Header = () => {
       <nav
         className={`md:hidden overflow-hidden transition-all duration-500 ${
           isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-        } bg-white dark:bg-slate-900`}
+        } bg-white dark:bg-slate-900 dark:text-white`}
       >
         <ul className="flex flex-col items-center gap-6 py-6">
           {navItems.map((item) => (

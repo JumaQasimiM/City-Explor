@@ -6,8 +6,18 @@ import {
 } from "../../hooks/usePlaces";
 import { Link } from "react-router-dom";
 
+// =======================
+//===== helper components
+// ========================
+import { Loader } from "../../components/helper/Loading";
+import { ErrorMessage } from "../../components/helper/Error";
+
 export const PlacesListDashboard = () => {
-  const { places } = usePlaces();
+  const { places = [], loading, error } = usePlaces();
+
+  /* ================= LOADING / ERROR ================= */
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
 
   const PlaceRow = ({ place, index }) => {
     const { data: owner } = usePlaceOwner(place.user_id);

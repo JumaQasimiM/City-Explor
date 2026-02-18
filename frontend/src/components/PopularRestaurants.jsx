@@ -7,12 +7,20 @@ import restaurant1 from "../assets/restaurant1.jpg";
 import restaurant2 from "../assets/restaurant2.jpg";
 import restaurant3 from "../assets/restaurant3.jpg";
 import restaurant4 from "../assets/restaurant4.jpg";
+import { Loader } from "./helper/Loading";
+import { ErrorMessage } from "./helper/Error";
 const restaurantImages = [restaurant1, restaurant2, restaurant3, restaurant4];
 
 export const PopularRestaurants = () => {
-  const { popularPlace: restaurant, error } = usePopularPlace("ce5f");
+  // usePopularPlace take a category id as argument
+  const { popularPlace: restaurant, error, loading } = usePopularPlace("ce5f");
+
+  /* ================= LOADING / ERROR ================= */
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage message={error} />;
+
   return (
-    <section className="w-full dark:bg-slate-900 dark:text-white py-16">
+    <section className="w-full dark:bg-slate-900 dark:text-white py-5 md:py-13">
       <div className="max-w-8xl px-5 md:mx-10">
         {/* Header */}
         <div className="flex items-center justify-between mb-10 border-b border-gray-500 dark:border-white/20 pb-4">

@@ -5,6 +5,8 @@ import { MdTravelExplore } from "react-icons/md";
 
 import heroImg from "../assets/hero.jpeg";
 
+// api url
+import { ApiUrl } from "../api/ApiUrl";
 // hooks
 import { useCities } from "../hooks/useCities";
 import { useCategories } from "../hooks/useCategories";
@@ -73,9 +75,7 @@ export const Hero = () => {
       if (category) params.append("category_id", category);
       if (distance) params.append("distance_lte", distance);
 
-      const res = await fetch(
-        `http://localhost:3000/places?${params.toString()}`,
-      );
+      const res = await fetch(`${ApiUrl}/places?${params.toString()}`);
 
       if (!res.ok) throw new Error("Failed to fetch places");
 

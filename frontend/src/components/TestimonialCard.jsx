@@ -20,7 +20,7 @@ export const TestimonialCard = ({ comment }) => {
       whileHover={{ y: -8, scale: 1.02 }}
       transition={{ type: "spring", stiffness: 200 }}
       className="
-        relative rounded-3xl p-8
+        relative rounded p-8
         bg-white/10 backdrop-blur-xl
         border border-white/15
         shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]
