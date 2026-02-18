@@ -4,10 +4,10 @@ import { BlogCard } from "../components/BlogCard";
 import { PopularBlogCard } from "../components/PopularBlogCard";
 
 export const Blog = () => {
-  const { blogs } = useBlogs();
+  const { blogs = [] } = useBlogs();
 
   return (
-    <section className="my-16 bg-gray-100 dark:bg-slate-900">
+    <section className="mt-16 bg-gray-100 dark:bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 space-y-16">
         {/* ================= hero ================= */}
         <div className="relative h-[260px] sm:h-[380px] md:h-[520px] overflow-hidden">
