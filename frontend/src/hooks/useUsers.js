@@ -33,6 +33,7 @@ export const useCreateUser = () => {
 
   const createUser = async (payload) => {
     setLoading(true);
+    setError(null);
     try {
       const res = await fetch(`${ApiUrl}/users`, {
         method: "POST",
@@ -157,7 +158,7 @@ export const useActiveUser = () => {
       const template_parms = {
         name: updatedUser.lastname,
         email: updatedUser.email,
-        login_link: "https://onlinemarkt.netlify.app/login", // this is template
+        login_link: `${ApiUrl}/login`,
       };
       // send email
       await emailjs.send(
@@ -183,7 +184,7 @@ export const useActiveUser = () => {
 export const useCheckRepeatEmail = (email) => {
   const [error, setError] = useState(null);
   const { data, loading } = useFetch(
-    email ? `http://localhost:3000/users?email=${email}` : null,
+    email ? `${ApiUrl}/users?email=${email}` : null,
   );
 
   const checkEmail = async () => {

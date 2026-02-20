@@ -6,10 +6,11 @@ import {
   usePlaceOwner,
 } from "../hooks/usePlaces";
 
+import { Loader } from "../components/helper/Loading";
+import { ErrorMessage } from "../components/helper/Error";
 import { FaMapMarkerAlt, FaTag, FaUser, FaStar } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 import restaurant1 from "../assets/restaurant1.jpg";
@@ -49,7 +50,7 @@ const categoryImagesMap = {
 
 export const PlaceDetailOnSite = () => {
   const { id } = useParams();
-  const { data: place, loading, error } = usePlaceById(id);
+  const { data: place = [], loading, error } = usePlaceById(id);
 
   const { data: owner } = usePlaceOwner(place?.user_id);
   const { data: city } = usePlaceCity(place?.city_id);
@@ -57,17 +58,9 @@ export const PlaceDetailOnSite = () => {
 
   const images = categoryImagesMap[category?.name] || [restaurant1, hospital1];
 
-  // Default location: Jaghori, Afghanistan
-  const defaultLat = 33.4579;
-  const defaultLng = 68.6255;
-
-  if (loading) {
-    return <p className="text-center mt-20">Loading place details...</p>;
-  }
-
-  if (error || !place) {
-    return <p className="text-center mt-20 text-red-500">Place not found.</p>;
-  }
+  // =========== error and laoding
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
     <section className="bg-gray-100 dark:bg-slate-900 text-black/80 dark:text-white/90 py-5 md:py-10">
@@ -175,7 +168,7 @@ export const PlaceDetailOnSite = () => {
         </div>
 
         {/* Sidebar */}
-        <aside className="bg-white dark:bg-slate-800 rounded-2xl shadow p-6 h-fit space-y-6">
+        <aside className="bg-white dark:bg-slate-800 rounded shadow p-6 h-fit space-y-6">
           {/* Owner Info */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Owner Information</h3>
@@ -208,7 +201,7 @@ export const PlaceDetailOnSite = () => {
           {/* Back Button */}
           <Link
             to="/places"
-            className="block text-center bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl transition font-semibold"
+            className="block text-center bg-green-500 hover:bg-green-600 text-white py-3 rounded transition font-semibold"
           >
             Back to places
           </Link>

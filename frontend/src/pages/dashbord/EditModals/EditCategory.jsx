@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useCategoryById, useEditCategory } from "../../../hooks/useCategories";
 import { FaXmark } from "react-icons/fa6";
+import { Loader } from "../../../components/helper/Loading";
+import { ErrorMessage } from "../../../components/helper/Error";
 export const EditCategory = ({ id, onClose }) => {
   const { data: category } = useCategoryById(id);
   const { updateCategory, loading, error } = useEditCategory();
@@ -23,6 +25,9 @@ export const EditCategory = ({ id, onClose }) => {
   };
 
   if (!category) return null;
+  // =========== error and laoding
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
     <section className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center">

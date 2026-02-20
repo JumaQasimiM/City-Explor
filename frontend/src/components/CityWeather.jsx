@@ -18,7 +18,7 @@ export const CityWeather = ({ city_name = "Jaghori" }) => {
   });
 
   return (
-    <section className="bg-gradient-to-br from-teal-700 via-slate-800 to-sky-900 text-white p-6 rounded shadow-2xl mx-auto max-w-xl">
+    <section className="bg-gradient-to-br from-teal-700 via-slate-800 to-sky-900 text-white p-6 rounded shadow-2xl mx-auto max-w-xl border">
       {/* ================= TODAY WEATHER ================= */}
       <div className="grid grid-cols-3 items-center mb-6">
         {/* City & Date */}

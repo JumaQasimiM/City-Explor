@@ -3,8 +3,14 @@ import { useBlogs } from "../hooks/useBlogs";
 import { BlogCard } from "../components/BlogCard";
 import { PopularBlogCard } from "../components/PopularBlogCard";
 
+import { Loader } from "../components/helper/Loading";
+import { ErrorMessage } from "../components/helper/Error";
 export const Blog = () => {
-  const { blogs = [] } = useBlogs();
+  const { blogs = [], loading, error } = useBlogs();
+
+  // =========== error and laoding
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
 
   return (
     <section className="mt-16 bg-gray-100 dark:bg-slate-900">

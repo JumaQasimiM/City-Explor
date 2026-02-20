@@ -174,6 +174,19 @@ export const Setting = () => {
 
   if (!user) return null;
 
+  // ====================
+  // === loading and error
+  // ====================
+
+  // loading and error for update user
+  if (updateLoading) return <Loader />;
+  if (updateError) return <ErrorMessage />;
+  // loading and error for delete user
+  if (deleteLoading) return <Loader />;
+  // loading and error for change password user
+  if (passwordLoading) return <Loader />;
+  if (passwordError) return <ErrorMessage />;
+
   return (
     <section className="min-h-screen bg-gray-50 dark:bg-slate-900 p-6 space-y-8 rounded-xl">
       <div className="max-w-6xl mx-auto space-y-10 ">

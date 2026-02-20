@@ -3,6 +3,10 @@ import { useCreateUser } from "../hooks/useUsers";
 import { IoIosWarning } from "react-icons/io";
 import { toast } from "react-toastify";
 import backgroundImage from "../assets/jaghori2.jpg";
+// api url
+import { ApiUrl } from "../api/ApiUrl";
+import { Loader } from "../components/helper/Loading";
+import { ErrorMessage } from "../components/helper/Error";
 
 export const RegisterUser = () => {
   const navigate = useNavigate();
@@ -10,7 +14,7 @@ export const RegisterUser = () => {
 
   // Check if email already exists
   const checkEmail = async (email) => {
-    const res = await fetch(`http://localhost:3000/users?email=${email}`);
+    const res = await fetch(`${ApiUrl}/users?email=${email}`);
     const data = await res.json();
     return data.length > 0;
   };
@@ -87,6 +91,10 @@ export const RegisterUser = () => {
     }
   };
 
+  // =========== error and laoding
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
+
   return (
     <section
       style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -133,8 +141,7 @@ export const RegisterUser = () => {
               <label className="text-sm font-medium">Role</label>
               <select className="input" name="role">
                 <option value="">Select role</option>
-                <option value="guest">Guest / Trip</option>
-                <option value="writer">Writer</option>
+                <option value="writer">Writer / Trip / Guest</option>
                 <option value="owner">Business</option>
               </select>
             </div>

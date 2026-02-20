@@ -3,11 +3,17 @@ import { useCountries } from "../../../hooks/useCountry";
 import { useCityById, useEditCity } from "../../../hooks/useCities";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Loader } from "../../../components/helper/Loading";
+import { ErrorMessage } from "../../../components/helper/Error";
 
 export const EditCity = ({ id, onClose }) => {
-  const { data: city, loading } = useCityById(id);
+  const { data: city, loading, error } = useCityById(id);
   const { countries } = useCountries();
-  const { updateCity, error, loading: updateLoading } = useEditCity();
+  const {
+    updateCity,
+    error: updateError,
+    loading: updateLoading,
+  } = useEditCity();
 
   const [name, setName] = useState("");
   const [countryId, setCountryId] = useState("");
@@ -35,7 +41,12 @@ export const EditCity = ({ id, onClose }) => {
     }
   };
 
-  if (loading) return null;
+  // =========== error and laoding
+  if (loading) return <Loader />;
+  if (error) return <ErrorMessage />;
+  // update error and losing
+  if (updateLoading) return <Loader />;
+  if (updateError) return <ErrorMessage />;
 
   return (
     <section className="fixed inset-0 z-50 bg-black/70 flex items-center justify-center">

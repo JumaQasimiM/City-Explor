@@ -85,6 +85,17 @@ function App() {
                   <Route path=":id" element={<PlaceDetail />} />
                 </Route>
               </Route>
+              {/* Admin + writer (guide) */}
+              {/* <Route
+                element={
+                  <ProtectedRoutes allowRole={["admin", "owner", "writer"]} />
+                }
+              >
+                <Route path="blogs">
+                  <Route element={<DashboardBlogs />} />
+                  <Route path="add" element={<CreateBlog />} />
+                </Route>
+              </Route> */}
             </Route>
           </Route>
 
