@@ -25,9 +25,12 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 ⚡ Smooth UI interactions
 
+## ER DIAGRAM MODEL
+
 <p align="center">
-  <img src="./frontend/src/assets/ER_MODEL.png" alt="ER_MODEL" width="200" />
+  <img src="./frontend/src/assets/ER_MODEL.png" alt="ER_MODEL" width="80%" />
 </p>
+
 ## Technologies Used
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
