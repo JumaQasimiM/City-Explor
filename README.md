@@ -234,24 +234,24 @@ The project heavily relies on custom hooks to keep components clean and reusable
 ## Gallary
 
 <p align="center">
-  <img src="./frontend/src/assets/responsivNav.png" alt="responsivNavbar" width="50%" />
-  <img src="./frontend/src/assets/category.png" alt="categories" width="50%" />
+  <img src="./frontend/src/assets/responsivNav.png" alt="responsivNavbar" width="30%" />
+  <img src="./frontend/src/assets/category.png" alt="categories" width="30%" />
 </p>
 <p align="center">
-  <img src="./frontend/src/assets/landing.png" alt="Landing page" width="50%" />
-  <img src="./frontend/src/assets/places.png" alt="Places" width="50%" />
+  <img src="./frontend/src/assets/landing.png" alt="Landing page" width="30%" />
+  <img src="./frontend/src/assets/places.png" alt="Places" width="30%" />
 </p>
 
 <p align="center">
-  <img src="./frontend/src/assets/heroReadme.png" alt="Hero " width="50%" />
-  <img src="./frontend/src/assets/dashboard.png" alt="Dashboard" width="50%" />
+  <img src="./frontend/src/assets/heroReadme.png" alt="Hero " width="30%" />
+  <img src="./frontend/src/assets/dashboard.png" alt="Dashboard" width="30%" />
 </p>
 <p align="center">
   <img src="./frontend/src/assets/login.png" alt="login" width="200" />
-  <img src="./frontend/src/assets/coment.png" alt="blog Comment" width="50%" />
+  <img src="./frontend/src/assets/coment.png" alt="blog Comment" width="30%" />
 </p>
 
 <p align="center">
-  <img src="./frontend/src/assets/blogs.png" alt="Blogs" width="50%" />
-  <img src="./frontend/src/assets/blogd.png" alt="blog detail" width="50%" />
+  <img src="./frontend/src/assets/blogs.png" alt="Blogs" width="30%" />
+  <img src="./frontend/src/assets/blogd.png" alt="blog detail" width="30%" />
 </p>
