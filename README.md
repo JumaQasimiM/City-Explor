@@ -231,22 +231,27 @@ The project heavily relies on custom hooks to keep components clean and reusable
 - Continuous learning mindset
   x
 
+## Gallary
+
 <p align="center">
-  <img src="./frontend/src/assets/responsivNav.png" alt="responsivNavbar" width="200" />
-  <img src="./frontend/src/assets/login.png" alt="login" width="200" />
-  <img src="./frontend/src/assets/category.png" alt="categories" width="200" />
+  <img src="./frontend/src/assets/responsivNav.png" alt="responsivNavbar" width="50%" />
+  <img src="./frontend/src/assets/category.png" alt="categories" width="50%" />
 </p>
 <p align="center">
-  <img src="./frontend/src/assets/landing.png" alt="Landing page" width="200" />
-  <img src="./frontend/src/assets/places.png" alt="Places" width="200" />
+  <img src="./frontend/src/assets/landing.png" alt="Landing page" width="50%" />
+  <img src="./frontend/src/assets/places.png" alt="Places" width="50%" />
 </p>
 
 <p align="center">
-  <img src="./frontend/src/assets/heroReadme.png" alt="Hero " width="200" />
-  <img src="./frontend/src/assets/dashboard.png" alt="Dashboard" width="200" />
+  <img src="./frontend/src/assets/heroReadme.png" alt="Hero " width="50%" />
+  <img src="./frontend/src/assets/dashboard.png" alt="Dashboard" width="50%" />
 </p>
 <p align="center">
-  <img src="./frontend/src/assets/blogs.png" alt="Blogs" width="200" />
-  <img src="./frontend/src/assets/blogd.png" alt="blog detail" width="200" />
-  <img src="./frontend/src/assets/coment.png" alt="blog Comment" width="200" />
+  <img src="./frontend/src/assets/login.png" alt="login" width="200" />
+  <img src="./frontend/src/assets/coment.png" alt="blog Comment" width="50%" />
+</p>
+
+<p align="center">
+  <img src="./frontend/src/assets/blogs.png" alt="Blogs" width="50%" />
+  <img src="./frontend/src/assets/blogd.png" alt="blog detail" width="50%" />
 </p>
