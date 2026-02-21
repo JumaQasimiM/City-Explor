@@ -75,16 +75,16 @@ export const PopularPlacesSwiper = () => {
                 </span>
 
                 <h3 className="hover:text-orange-500 text-sm md:text-xl font-semibold text-slate-900 dark:text-white leading-snug">
-                  <Link to={`blogs/${blog.id}`}>{blog.title.slice(0, 40)}</Link>
+                  <Link to={`blogs/${blog.id}`}>{blog.title.slice(0, 30)}</Link>
                 </h3>
 
-                <p className="text-slate-600 dark:text-slate-300  text-sm leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed text-justify">
                   {blog.description.slice(0, 150)}
                 </p>
 
-                <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mt-5 mb-3">
+                <div className="flex flex-col items-left sm:flex-row gap-3 text-xs text-slate-500 dark:text-slate-400 mt-5 mb-3">
                   <span>{blog.created_at}</span>
-                  <span className="w-1 h-1 bg-slate-400 rounded-full"></span>
+                  <span className="w-1 h-1 bg-slate-400 rounded-full hidden sm:block"></span>
                   <BlogAuthor author_id={blog.user_id} />
                 </div>
               </div>

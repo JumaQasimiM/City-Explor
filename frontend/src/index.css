@@ -35,12 +35,13 @@
 .swiper-button-prev {
   width: 28px !important;
   height: 28px !important;
-  background-color: rgba(0, 0, 0, 0.6);
+  /* background-color: rgba(0, 0, 0, 0.6); */
   border-radius: 9999px;
   top: 50% !important;
   transform: translateY(-50%);
   z-index: 20;
 }
+
 /* Arrow icon */
 .swiper-button-next::after,
 .swiper-button-prev::after {
@@ -86,7 +87,7 @@
 
 .dark .swiper-button-next,
 .dark .swiper-button-prev {
-  background-color: rgba(3, 112, 1, 0.25) !important;
+  /* background-color: rgba(3, 112, 1, 0.25) !important; */
   opacity: 10 !important;
 }
 
