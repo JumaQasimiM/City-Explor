@@ -25,6 +25,9 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 ⚡ Smooth UI interactions
 
+<p align="center">
+  <img src="./src/assets/ER_MODEL.png" alt="ER_MODEL" width="200" />
+</p>
 ## Technologies Used
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
@@ -223,3 +226,24 @@ The project heavily relies on custom hooks to keep components clean and reusable
 - Clean UI / UX
 - Scalable frontend architecture
 - Continuous learning mindset
+  x
+
+<p align="center">
+  <img src="./src/assets/responsivNav.png" alt="responsivNavbar" width="200" />
+  <img src="./src/assets/login.png" alt="login" width="200" />
+  <img src="./src/assets/category.png" alt="categories" width="200" />
+</p>
+<p align="center">
+  <img src="./src/assets/landing.png" alt="Landing page" width="200" />
+  <img src="./src/assets/places.png" alt="Places" width="200" />
+</p>
+
+<p align="center">
+  <img src="./src/assets/heroReadme.png" alt="Hero " width="200" />
+  <img src="./src/assets/dashboard.png" alt="Dashboard" width="200" />
+</p>
+<p align="center">
+  <img src="./src/assets/blogs.png" alt="Blogs" width="200" />
+  <img src="./src/assets/blogd.png" alt="blog detail" width="200" />
+  <img src="./src/assets/coment.png" alt="blog Comment" width="200" />
+</p>
