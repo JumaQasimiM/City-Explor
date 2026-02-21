@@ -26,7 +26,7 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 ⚡ Smooth UI interactions
 
 <p align="center">
-  <img src="./src/assets/ER_MODEL.png" alt="ER_MODEL" width="200" />
+  <img src="./frontend/src/assets/ER_MODEL.png" alt="ER_MODEL" width="200" />
 </p>
 ## Technologies Used
 
