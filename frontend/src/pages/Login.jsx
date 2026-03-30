@@ -71,7 +71,12 @@ export const Login = () => {
         {/* Form */}
         <form className="space-y-6" onSubmit={handleLogin}>
           <div className="flex flex-col gap-2">
-            <label className="form-label">Username or Email</label>
+            <label className="form-label">
+              Username or Email{" "}
+              <small className="text-red-700">
+                [test User: testuser@gmail.com]
+              </small>
+            </label>
             <input
               type="text"
               value={email}
@@ -82,7 +87,10 @@ export const Login = () => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="form-label">Password</label>
+            <label className="form-label">
+              Password{" "}
+              <small className="text-red-700">[test pass: testP@ss09]</small>
+            </label>
             <input
               type="password"
               value={password}

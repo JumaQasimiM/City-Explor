@@ -47,7 +47,7 @@ export const Contact = () => {
                 <div>
                   <p className="text-sm font-semibold">Email</p>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    support@cityexplor.com
+                    info@cityexplor.com
                   </p>
                 </div>
               </div>
