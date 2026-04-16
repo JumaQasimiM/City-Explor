@@ -22,7 +22,7 @@ export const useCategories = () => {
     error,
     loading,
     refetch,
-  } = useFetch(`${ApiUrl}/categories`);
+  } = useFetch(`${ApiUrl}/categories/`);
   return {
     categories: data,
     error,
@@ -34,10 +34,10 @@ export const useCategories = () => {
 
 // get category by id
 export const useCategoryById = (id) => {
-  return useFetch(`${ApiUrl}/categories/${id}`);
+  return useFetch(`${ApiUrl}/categories/category_detail/${id}/`);
 };
-// create new category
 
+// create new category
 export const useCreateCategory = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -47,7 +47,7 @@ export const useCreateCategory = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/categories`, {
+      const res = await fetch(`${ApiUrl}/categories/create/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -81,9 +81,12 @@ export const useDeleteCategory = () => {
   const deleteCategory = async (category_id) => {
     setLoading(true);
     try {
-      const res = await fetch(`${ApiUrl}/categories/${category_id}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(
+        `${ApiUrl}/categories/delete_category/${category_id}/`,
+        {
+          method: "DELETE",
+        },
+      );
       if (!res.ok) {
         const text = await res.text();
         throw new Error(text || "Failed to create category");
@@ -109,13 +112,16 @@ export const useEditCategory = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/categories/${category_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${ApiUrl}/categories/update_category/${category_id}/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         },
-        body: JSON.stringify(payload),
-      });
+      );
 
       if (!res.ok) {
         const errData = await res.json();
