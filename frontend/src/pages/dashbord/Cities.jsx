@@ -13,6 +13,7 @@ export const Cities = () => {
   /* ================= STATE ================= */
   const [cityName, setCityName] = useState("");
   const [countryId, setCountryId] = useState("");
+  const [description, setDescription] = useState("");
   const [formError, setFormError] = useState("");
   const [cityEditId, setCityEditId] = useState(null);
 
@@ -40,7 +41,8 @@ export const Cities = () => {
 
     const success = await createCity({
       name: cityName.trim(),
-      country_id: countryId,
+      country: countryId,
+      description,
     });
 
     if (success) {
@@ -81,7 +83,7 @@ export const Cities = () => {
         {/* ================= ADD CITY ================= */}
         <form
           onSubmit={handleSubmit}
-          className="bg-slate-100 dark:bg-slate-700/40 p-5 rounded-lg grid grid-cols-1 md:grid-cols-3 gap-4"
+          className="bg-slate-100 dark:bg-slate-700/40 p-5 rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4"
         >
           <input
             type="text"
@@ -107,6 +109,15 @@ export const Cities = () => {
               </option>
             ))}
           </select>
+
+          <textarea
+            placeholder="City description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            className="md:col-span-2 h-24 border border-slate-300 dark:border-slate-600
+              bg-white dark:bg-slate-800 text-slate-800 dark:text-white
+              focus:ring-2 focus:ring-teal-500 outline-none rounded-md px-4 py-2"
+          />
 
           <button
             disabled={creating || !cityName || !countryId}
@@ -150,7 +161,7 @@ export const Cities = () => {
                     </td>
 
                     <td className="py-3 px-2 text-slate-500 dark:text-slate-300">
-                      {countryMap[city.country_id] || "Unknown"}
+                      {city.country_detail.name}
                     </td>
 
                     <td className="py-3 px-2">
@@ -184,7 +195,7 @@ export const Cities = () => {
                             border-t border-gray-200 dark:border-slate-700"
         >
           {/* charts */}
-          <CityCategoPlaceChart />
+          {/* <CityCategoPlaceChart /> */}
         </div>
       </section>
 

@@ -12,7 +12,7 @@ import { useReducer, useState } from "react";
  * @returns {object}
  */
 export const useCities = () => {
-  const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/cities`);
+  const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/cities/`);
 
   return {
     cities: data,
@@ -38,7 +38,7 @@ export const useCities = () => {
  *
  * */
 export const useCityById = (city_id) => {
-  return useFetch(`${ApiUrl}/cities/${city_id}`);
+  return useFetch(`${ApiUrl}/cities/${city_id}/`);
 };
 /**
  * Custom hook to delete a city
@@ -55,7 +55,7 @@ export const useDeleteCity = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/cities/${cityId}`, {
+      const res = await fetch(`${ApiUrl}/cities/${cityId}/`, {
         method: "DELETE",
       });
 
@@ -94,7 +94,7 @@ export const useCreateCity = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${ApiUrl}/cities`, {
+      const res = await fetch(`${ApiUrl}/cities/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -122,7 +122,7 @@ export const useEditCity = () => {
   const updateCity = async (city_id, payload) => {
     setLoading(true);
     try {
-      const res = await fetch(`${ApiUrl}/cities/${city_id}`, {
+      const res = await fetch(`${ApiUrl}/cities/${city_id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
