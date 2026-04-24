@@ -4,7 +4,7 @@ import { useFetch } from "./useFetch";
 
 // get all places
 export const usePlaces = () => {
-  const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/places`);
+  const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/places/`);
   return {
     places: data,
     error,
@@ -22,7 +22,7 @@ export const useDeletePlace = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${ApiUrl}/places/${place_id}`, {
+      const res = await fetch(`${ApiUrl}/places/${place_id}/`, {
         method: "DELETE",
       });
       if (!res.ok) {
@@ -39,21 +39,21 @@ export const useDeletePlace = () => {
 };
 // get place by id
 export const usePlaceById = (id) => {
-  return useFetch(id ? `${ApiUrl}/places/${id}` : null);
+  return useFetch(id ? `${ApiUrl}/places/${id}/` : null);
 };
 
 // Get the owner of a place (user)
 export const usePlaceOwner = (user_id) => {
-  return useFetch(user_id ? `${ApiUrl}/users/${user_id}` : null);
+  return useFetch(user_id ? `${ApiUrl}/users/${user_id}/` : null);
 };
 
 // Get the city of a place
 export const usePlaceCity = (city_id) => {
-  return useFetch(city_id ? `${ApiUrl}/cities/${city_id}` : null);
+  return useFetch(city_id ? `${ApiUrl}/cities/${city_id}/` : null);
 };
 // Get the category of a place
 export const usePlaceCategory = (cate_id) => {
-  return useFetch(cate_id ? `${ApiUrl}/categories/${cate_id}` : null);
+  return useFetch(cate_id ? `${ApiUrl}/categories/${cate_id}/` : null);
 };
 
 // placeList
@@ -63,7 +63,7 @@ export const usePopularPlace = (category_id) => {
     error,
     loading,
   } = useFetch(
-    category_id ? `${ApiUrl}/places?category_id = ${category_id}` : null,
+    category_id ? `${ApiUrl}/places?category_id = ${category_id}/` : null,
   );
   return {
     popularPlace: popularPlace ? popularPlace.slice(0, 4) : [],
@@ -79,7 +79,7 @@ export const useSearchByCategory = (category_id) => {
     data: category,
     error,
     loading,
-  } = useFetch(`${ApiUrl}/places?category_id = ${category_id}`);
+  } = useFetch(`${ApiUrl}/places?category_id = ${category_id}/`);
 };
 
 // edit place
@@ -92,7 +92,7 @@ export const useEditPlace = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${ApiUrl}/places/${id}`, {
+      const res = await fetch(`${ApiUrl}/places/${id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

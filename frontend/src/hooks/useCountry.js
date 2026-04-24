@@ -11,7 +11,7 @@ export const useCountries = () => {
     error,
     loading,
     refetch,
-  } = useFetch(`${ApiUrl}/countries`);
+  } = useFetch(`${ApiUrl}/countries/`);
 
   return {
     countries: data,
@@ -23,7 +23,7 @@ export const useCountries = () => {
 };
 // get by id
 export const useCountryById = (id) => {
-  return useFetch(`${ApiUrl}/countries/${id}`);
+  return useFetch(`${ApiUrl}/countries/${id}/`);
 };
 
 // =======================
@@ -38,7 +38,7 @@ export const useCreateCountry = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/countries`, {
+      const res = await fetch(`${ApiUrl}/countries/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const useDeleteCountry = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/countries/${country_id}`, {
+      const res = await fetch(`${ApiUrl}/countries/${country_id}/`, {
         method: "DELETE",
       });
 
@@ -104,7 +104,7 @@ export const useEditCountry = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/countries/${country_id}`, {
+      const res = await fetch(`${ApiUrl}/countries/${country_id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
