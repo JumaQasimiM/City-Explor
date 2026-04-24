@@ -1,216 +1,223 @@
 import { useParams, Link } from "react-router-dom";
-import {
-  usePlaceById,
-  usePlaceCategory,
-  usePlaceCity,
-  usePlaceOwner,
-} from "../hooks/usePlaces";
+import { useEffect, useState } from "react";
+import { usePlaceById } from "../hooks/usePlaces";
 
 import { Loader } from "../components/helper/Loading";
 import { ErrorMessage } from "../components/helper/Error";
+
 import { FaMapMarkerAlt, FaTag, FaUser, FaStar } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
+import { FiArrowLeft } from "react-icons/fi";
 
-import "leaflet/dist/leaflet.css";
-
-import restaurant1 from "../assets/restaurant1.jpg";
-import restaurant2 from "../assets/restaurant2.jpg";
-import restaurant3 from "../assets/restaurant3.jpg";
-import restaurant4 from "../assets/restaurant3.jpg";
-import hotel1 from "../assets/Hotel1.jpg";
-import hotel2 from "../assets/Hotel2.jpg";
-import hotel3 from "../assets/Hotel3.jpg";
-import hotel4 from "../assets/Hotel4.jpg";
-
-import hospital1 from "../assets/hospital1.jpg";
-import hospital2 from "../assets/hospital2.jpg";
-import hospital3 from "../assets/hospital3.jpg";
-import pharmacy1 from "../assets/pharmacy1.jpg";
-import pharmacy2 from "../assets/pharmacy2.webp";
-import supermarket1 from "../assets/supermarket1.jpg";
-import supermarket2 from "../assets/supermarket2.jpg";
-import supermarket3 from "../assets/supermarket3.jpg";
-import jaghori1 from "../assets/jaghori1.jpg";
-import avatorImage from "../assets/Hotel1.jpg";
 import { PlaceComments } from "../components/PlaceComment";
-
-const restaurantImage = [restaurant1, restaurant2, restaurant3, restaurant4];
-const hotelImage = [hotel1, hotel2, hotel3, hotel4];
-const supermarketImage = [supermarket1, supermarket2, supermarket3, jaghori1];
-const hospitalImage = [hospital1, hospital2, hospital3, pharmacy2];
-const pharmacyImage = [pharmacy1, pharmacy2, hospital3, hospital2];
-
-const categoryImagesMap = {
-  Hotel: hotelImage,
-  Restaurant: restaurantImage,
-  Hospital: hospitalImage,
-  Supermarket: supermarketImage,
-  Pharmacy: pharmacyImage,
-};
 
 export const PlaceDetailOnSite = () => {
   const { id } = useParams();
-  const { data: place = [], loading, error } = usePlaceById(id);
+  const { data: place, loading, error } = usePlaceById(id);
 
-  const { data: owner } = usePlaceOwner(place?.user_id);
-  const { data: city } = usePlaceCity(place?.city_id);
-  const { data: category } = usePlaceCategory(place?.category_id);
+  const [activeImage, setActiveImage] = useState(null);
 
-  const images = categoryImagesMap[category?.name] || [restaurant1, hospital1];
+  const images = place?.images?.slice(0, 5) || [];
 
-  // =========== error and laoding
+  useEffect(() => {
+    if (images.length > 0) {
+      setActiveImage(images[0].image);
+    }
+  }, [place]);
+
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
+  if (!place) return null;
 
   return (
-    <section className="bg-gray-100 dark:bg-slate-900 text-black/80 dark:text-white/90 py-5 md:py-10">
-      {/* Top Header */}
-      <div className="max-w-7xl mx-auto px-4 pt-20 pb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-        <div>
-          <div className="flex items-center gap-5 mt-3">
-            <h1 className="text-lg md:text-3xl font-bold">{place.name}</h1>
-            <h1 className="text-sm md:text-lg flex text-orange-400">
-              {[1, 2, 3, 4, 5].map((_, i) => (
+    <section className="bg-gray-50 dark:bg-[#0f172a] min-h-screen py-12 mt-14">
+      <div className="max-w-7xl mx-auto px-4 space-y-10">
+        {/* ===== HEADER ===== */}
+        <div className="flex flex-col md:flex-row justify-between gap-6">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight text-gray-900 dark:text-white">
+              {place.name}
+            </h1>
+
+            <p className="flex items-center gap-2 mt-2 text-gray-500 text-sm">
+              <FaMapMarkerAlt className="opacity-70" />
+              {place.address}, {place.city_detail?.name}
+            </p>
+
+            {/* Rating */}
+            <div className="flex gap-1 mt-3 text-yellow-400 text-sm">
+              {[...Array(5)].map((_, i) => (
                 <FaStar key={i} />
               ))}
-            </h1>
-          </div>
-          <p className="flex items-center gap-2 text-sm mt-1 text-gray-600 dark:text-gray-400">
-            <FaMapMarkerAlt className="text-orange-500" />
-            {place.address}, {city?.name || "Jaghori"}
-          </p>
-        </div>
-
-        <div className="bg-white dark:bg-slate-800 shadow rounded-xl px-6 py-4 text-center md:text-right">
-          <p className="text-md font-bold text-green-500">${place.price}</p>
-          <p className="text-sm text-gray-500">Per night for 2 Rooms</p>
-        </div>
-      </div>
-
-      {/* Image Gallery */}
-      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="md:col-span-2">
-          <img
-            src={
-              category?.name === "Hotel"
-                ? hotel2
-                : category?.name === "Restaurant"
-                  ? restaurant2
-                  : category?.name === "Hospital"
-                    ? hospital1
-                    : category?.name === "Supermarket"
-                      ? supermarket1
-                      : category?.name === "Pharmacy"
-                        ? pharmacy1
-                        : supermarket2
-            }
-            alt={place.name}
-            className="w-full h-[260px] md:h-[420px] object-cover rounded"
-          />
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          {images.map((img, index) => (
-            <img
-              key={index}
-              src={img}
-              alt=""
-              className="w-full h-[125px] md:h-[200px] object-cover rounded"
-            />
-          ))}
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
-        {/* Left Content */}
-        <div className="lg:col-span-2 space-y-10">
-          {/* Badges */}
-          <div className="flex flex-wrap gap-4">
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-full shadow text-sm">
-              <FaTag className="text-green-500" />
-              {category?.name || "General"}
-            </span>
-
-            <span className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 rounded-full shadow text-sm">
-              <FaUser className="text-blue-500" />
-              {owner?.firstname} {owner?.lastname}
-            </span>
+            </div>
           </div>
 
-          {/* Description */}
-          <div>
-            <h2 className="text-xl font-semibold mb-3">
-              <span className="dark:text-green-500 text-blue-500">
-                {place.name}
-              </span>
-            </h2>
-            <p className="leading-relaxed text-gray-700 dark:text-gray-300">
-              {place.description || "No description provided."}
+          {/* Price Card */}
+          <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl px-6 py-5 shadow-sm">
+            <p className="text-xs text-gray-500 uppercase tracking-wide">
+              Estimated price
+            </p>
+            <p className="text-2xl font-semibold text-gray-900 dark:text-white mt-1">
+              ${place.price || "--"}
             </p>
           </div>
+        </div>
 
-          {/* Services */}
-          <div>
-            <h2 className="text-xl font-semibold mb-3">Services</h2>
-            <div className="flex flex-wrap gap-3">
-              {place.services?.map((service, index) => (
-                <span
-                  key={index}
-                  title={service}
-                  className="px-4 py-2 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-sm font-medium"
-                >
-                  {service}
-                </span>
+        {/* ===== IMAGE GALLERY ===== */}
+        {images.length > 0 && (
+          <div className="grid md:grid-cols-3 gap-4">
+            {/* MAIN IMAGE */}
+            <div className="md:col-span-2">
+              <img
+                src={activeImage}
+                alt=""
+                className="w-full h-[320px] md:h-[440px] object-cover rounded-2xl shadow-sm"
+              />
+            </div>
+
+            {/* THUMBNAILS */}
+            <div className="grid grid-cols-2 gap-3">
+              {images.map((img) => (
+                <img
+                  key={img.id}
+                  src={img.image}
+                  onClick={() => setActiveImage(img.image)}
+                  className={`cursor-pointer h-[140px] object-cover rounded-xl border transition
+                  hover:opacity-80 hover:scale-[1.02]
+                  ${
+                    activeImage === img.image
+                      ? "border-black dark:border-white"
+                      : "border-transparent"
+                  }`}
+                />
               ))}
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Sidebar */}
-        <aside className="bg-white dark:bg-slate-800 rounded shadow p-6 h-fit space-y-6">
-          {/* Owner Info */}
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Owner Information</h3>
-            <div className="flex items-center gap-4">
-              <img
-                src={avatorImage}
-                alt={owner?.firstname}
-                className="w-14 h-14 rounded-full object-cover border"
+        {/* ===== MAIN CONTENT ===== */}
+        <div className="grid lg:grid-cols-3 gap-10">
+          {/* LEFT */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* TAGS */}
+            <div className="flex flex-wrap gap-3">
+              <Tag icon={<FaTag />} text={place.category_detail?.name} />
+              <Tag
+                icon={<FaUser />}
+                text={`${place.owner_detail?.first_name} ${place.owner_detail?.last_name}`}
               />
-              <div>
-                <p className="font-semibold">
-                  {owner?.firstname} {owner?.lastname}
-                </p>
-                <p className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                  <MdOutlineEmail />
-                  {owner?.email}
-                </p>
+            </div>
+
+            {/* DESCRIPTION */}
+            <Card title="Description">
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-[15px]">
+                {place.description || "No description available."}
+              </p>
+            </Card>
+
+            {/* SERVICES */}
+            {place.services_detail?.length > 0 && (
+              <Card title="Services">
+                <div className="flex flex-wrap gap-2">
+                  {place.services_detail.map((s) => (
+                    <span
+                      key={s.id}
+                      className="px-3 py-1.5 rounded-full text-sm
+                      bg-gray-100 dark:bg-slate-700
+                      text-gray-700 dark:text-gray-200"
+                    >
+                      {s.title}
+                    </span>
+                  ))}
+                </div>
+              </Card>
+            )}
+          </div>
+
+          {/* RIGHT SIDEBAR */}
+          <aside className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm space-y-6">
+            {/* OWNER */}
+            <div>
+              <h3 className="font-semibold text-gray-800 dark:text-white mb-4">
+                Owner
+              </h3>
+
+              <div className="flex items-center gap-4">
+                <img
+                  src={place.owner_detail?.avatar}
+                  className="w-14 h-14 rounded-full object-cover border"
+                />
+
+                <div>
+                  <p className="font-medium">
+                    {place.owner_detail?.first_name}{" "}
+                    {place.owner_detail?.last_name}
+                  </p>
+
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <MdOutlineEmail />
+                    {place.owner_detail?.email}
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Address */}
-          <div className="border-t pt-4">
-            <h3 className="text-lg font-semibold mb-2">Address</h3>
-            <p className="text-sm text-gray-600 dark:text-gray-300">
-              {place.address}
-            </p>
-          </div>
+            {/* INFO */}
+            <div className="border-t pt-4 space-y-2 text-sm">
+              <p className="text-gray-600 dark:text-gray-300">
+                📍 {place.address}
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                🏙 {place.city_detail?.name}
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                📞 {place.contact_number || "N/A"}
+              </p>
+              <p className="text-gray-600 dark:text-gray-300">
+                ⏰ {place.opening_hours || "Not specified"}
+              </p>
+            </div>
 
-          {/* Back Button */}
-          <Link
-            to="/places"
-            className="block text-center bg-green-500 hover:bg-green-600 text-white py-3 rounded transition font-semibold"
-          >
-            Back to places
-          </Link>
-        </aside>
-      </div>
-      {/* comments */}
-      <div className="max-w-7xl mx-auto border-t-2 border-t-gray-200 my-5">
-        <PlaceComments place_id={place?.id} />
+            {/* BACK BUTTON */}
+            <Link
+              to="/places"
+              className="flex items-center justify-center gap-2
+              bg-gray-900 hover:bg-black dark:bg-white dark:text-black
+              text-white py-3 rounded-xl transition font-medium"
+            >
+              <FiArrowLeft />
+              Back to Places
+            </Link>
+          </aside>
+        </div>
+
+        {/* COMMENTS */}
+        <div className="border-t pt-8">
+          <PlaceComments place_id={place.id} />
+        </div>
       </div>
     </section>
   );
 };
+
+/* ===== COMPONENTS ===== */
+
+const Card = ({ title, children }) => (
+  <div className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm">
+    <h2 className="font-semibold text-lg mb-4 text-gray-900 dark:text-white">
+      {title}
+    </h2>
+    {children}
+  </div>
+);
+
+const Tag = ({ icon, text }) => (
+  <span
+    className="flex items-center gap-2 px-3 py-1.5 rounded-full
+    bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700
+    text-sm text-gray-700 dark:text-gray-200 shadow-sm"
+  >
+    {icon}
+    {text}
+  </span>
+);
