@@ -3,8 +3,6 @@ import { useCreateUser } from "../hooks/useUsers";
 import { IoIosWarning } from "react-icons/io";
 import { toast } from "react-toastify";
 import backgroundImage from "../assets/jaghori2.jpg";
-// api url
-import { ApiUrl } from "../api/ApiUrl";
 import { Loader } from "../components/helper/Loading";
 import { ErrorMessage } from "../components/helper/Error";
 
@@ -12,78 +10,51 @@ export const RegisterUser = () => {
   const navigate = useNavigate();
   const { createUser, error, loading } = useCreateUser();
 
-  // Check if email already exists
-  const checkEmail = async (email) => {
-    const res = await fetch(`${ApiUrl}/users?email=${email}`);
-    const data = await res.json();
-    return data.length > 0;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
 
-    const firstname = formData.get("firstname").trim();
-    const lastname = formData.get("lastname").trim();
-    const email = formData.get("email").trim();
-    const password = formData.get("password").trim();
-    const role = formData.get("role");
-    const dateOfBirth = formData.get("db");
-    const answer1 = formData.get("answer1").trim();
-    const answer2 = formData.get("answer2").trim();
-    const avatarFile = formData.get("avator");
+    const form = new FormData(e.target);
+
+    const first_name = form.get("first_name")?.trim();
+    const last_name = form.get("last_name")?.trim();
+    const email = form.get("email")?.trim();
+    const username = form.get("username")?.trim();
+    const password = form.get("password")?.trim();
+    const bio = form.get("bio")?.trim();
+    const avatar = form.get("avatar");
 
     // Validation
-    if (
-      !firstname ||
-      !lastname ||
-      !email ||
-      !password ||
-      !role ||
-      !dateOfBirth ||
-      !answer1 ||
-      !answer2
-    ) {
-      toast.error("Please fill all required fields");
+    if (!first_name || !last_name || !email || !username || !password) {
+      toast.error("Please fill required fields");
       return;
     }
 
-    const isEmailExists = await checkEmail(email);
-    if (isEmailExists) {
-      toast.error("This email already exists");
+    if (!avatar || avatar.size === 0) {
+      toast.error("Please select an avatar");
       return;
     }
 
-    if (!avatarFile || avatarFile.size === 0) {
-      toast.error("Please select a profile image");
+    const allowedTypes = ["image/png", "image/jpeg", "image/jpg"];
+    if (!allowedTypes.includes(avatar.type)) {
+      toast.error("Only PNG/JPG images allowed");
       return;
     }
 
-    const validType = ["image/png", "image/jpeg"];
-    if (!validType.includes(avatarFile.type)) {
-      toast.error("Invalid image type. Only PNG or JPG allowed.");
-      return;
-    }
+    // 🔥 IMPORTANT: FormData (for file upload)
+    const formDataToSend = new FormData();
 
-    const formValues = {
-      firstname,
-      lastname,
-      email,
-      password,
-      role,
-      dateOfBirth,
-      status: "pending",
-      created_at: new Date().toISOString().split("T")[0],
-      avator: avatarFile.name,
-      securityQuestions: [
-        { question: "What is your birth city?", answer: answer1 },
-        { question: "What is your birth day?", answer: answer2 },
-      ],
-    };
+    formDataToSend.append("first_name", first_name);
+    formDataToSend.append("last_name", last_name);
+    formDataToSend.append("email", email);
+    formDataToSend.append("username", username);
+    formDataToSend.append("password", password);
+    formDataToSend.append("bio", bio || "");
+    formDataToSend.append("avatar", avatar);
 
-    const newUser = await createUser(formValues);
-    if (newUser) {
-      toast.success("Account created successfully! Wait for admin approval.");
+    const result = await createUser(formDataToSend);
+
+    if (result) {
+      toast.success("Account created successfully 🎉");
       e.target.reset();
       navigate("/login");
     } else {
@@ -91,127 +62,84 @@ export const RegisterUser = () => {
     }
   };
 
-  // =========== error and laoding
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
   return (
     <section
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="min-h-screen mt-14 flex items-center justify-center bg-gray-100 dark:bg-slate-900 px-4 bg-cover bg-center bg-no-repeat"
+      className="min-h-screen flex items-center justify-center bg-cover bg-center px-4"
     >
-      <div className="w-full max-w-3xl my-23 bg-gray-200 dark:bg-slate-800 dark:text-white/90 rounded shadow-lg p-6 md:p-8">
-        <h1 className="text-3xl font-semibold text-center mb-6 dark:text-white">
+      <div className="w-full max-w-3xl bg-gray-200 dark:bg-slate-800 rounded p-6 shadow-lg">
+        <h1 className="text-3xl text-center font-bold mb-6 dark:text-white/60 text-gray-700">
           Register User
         </h1>
-        <p>
-          All fields are required <span className="text-red-600">*</span>
-        </p>
 
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          {/* Name Fields */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">First Name</label>
-              <input
-                type="text"
-                name="firstname"
-                className="input"
-                placeholder="First name"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">Last Name</label>
-              <input
-                type="text"
-                name="lastname"
-                className="input"
-                placeholder="Last name"
-              />
-            </div>
+        <form
+          onSubmit={handleSubmit}
+          encType="multipart/form-data"
+          className="space-y-5"
+        >
+          {/* Names */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <input
+              name="first_name"
+              placeholder="First name"
+              className="input"
+            />
+            <input name="last_name" placeholder="Last name" className="input" />
           </div>
 
-          {/* DOB / Role */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">Date of Birth</label>
-              <input type="date" name="db" className="input" />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">Role</label>
-              <select className="input" name="role">
-                <option value="">Select role</option>
-                <option value="writer">Writer / Trip / Guest</option>
-                <option value="owner">Business</option>
-              </select>
-            </div>
+          {/* Username */}
+          <input
+            name="username"
+            placeholder="Username"
+            className="input w-full"
+          />
+
+          {/* Email + Password */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <input
+              name="email"
+              type="email"
+              placeholder="Email"
+              className="input"
+            />
+            <input
+              name="password"
+              type="password"
+              placeholder="Password"
+              className="input"
+            />
           </div>
 
-          {/* Email / Password */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="input"
-                placeholder="you@gmail.com"
-              />
-            </div>
-            <div className="flex flex-col gap-1">
-              <label className="text-sm font-medium">Password</label>
-              <input
-                type="password"
-                name="password"
-                className="input"
-                placeholder="********"
-              />
-            </div>
+          {/* Bio */}
+          <textarea
+            name="bio"
+            placeholder="Bio (optional)"
+            className="input w-full"
+          />
+
+          {/* Avatar */}
+          <div>
+            <label className="text-sm font-medium dark:text-gray-400">
+              Profile Image
+            </label>
+            <input type="file" name="avatar" className="file-input w-full" />
           </div>
 
-          {/* Security Questions */}
-          <h1 className="text-orange-600 flex items-center gap-2">
-            <IoIosWarning size={30} /> Security Questions – Remember these for
-            password reset!
-          </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium">
-                What is your birth city?
-              </label>
-              <input
-                type="text"
-                name="answer1"
-                className="input"
-                placeholder="Jaghori"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label className="text-sm font-medium">
-                What is your birth day?
-              </label>
-              <input
-                type="text"
-                name="answer2"
-                className="input"
-                placeholder="23"
-              />
-            </div>
+          {/* Warning */}
+          <div className="dark:text-orange-500 text-orange-700 flex items-center gap-2">
+            <IoIosWarning /> Upload a clear profile image
           </div>
 
-          {/* Profile Image */}
-          <div className="flex flex-col gap-1">
-            <label className="text-sm font-medium">Profile Image</label>
-            <input type="file" name="avator" className="file-input" />
-          </div>
-
-          {/* Submit Button */}
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2.5 rounded transition"
             disabled={loading}
+            className="w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded"
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Creating..." : "Register"}
           </button>
         </form>
       </div>
