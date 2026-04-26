@@ -80,7 +80,7 @@ export const Places = () => {
 
         <td className="px-4 py-3">
           <Link
-            to={`/dashboard/places/${place.id}`}
+            to={`/dashboard/places/${place.id}/`}
             className="font-semibold text-indigo-600 hover:underline"
           >
             {place.name}
@@ -88,21 +88,23 @@ export const Places = () => {
         </td>
 
         <td className="px-4 py-3 text-slate-500">
-          {owner ? `${owner.firstname} ${owner.lastname}` : "Loading..."}
+          {place.owner_detail
+            ? `${place.owner_detail.first_name} ${place.owner_detail.last_name}`
+            : "Loading..."}
         </td>
 
-        <td className="px-4 py-3">{city?.name || "Loading..."}</td>
+        <td className="px-4 py-3">{place.city_detail?.name || "Loading..."}</td>
 
         <td className="px-4 py-3">
           <span
             className={`px-3 py-1 rounded-full text-xs font-semibold
             ${
-              category?.name === "Hospital"
+              place.category_detail?.name === "Hospital"
                 ? "bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200"
                 : "bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-200"
             }`}
           >
-            {category?.name || "Loading..."}
+            {place.category_detail?.name || "Loading..."}
           </span>
         </td>
 
@@ -111,7 +113,7 @@ export const Places = () => {
         </td>
 
         <td className="px-4 py-3 font-semibold text-emerald-600">
-          ${place.price}
+          ${place.contact_number}
         </td>
 
         <td className="px-4 py-3">

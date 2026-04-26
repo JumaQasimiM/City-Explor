@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaTrash, FaUserCheck } from "react-icons/fa";
 
+import { BASE_URL } from "../../api/ApiUrl";
+
 import { useActiveUser, useDeleteUser, useUsers } from "../../hooks/useUsers";
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { ErrorMessage } from "../../components/helper/Error";
@@ -45,8 +47,8 @@ export const Users = () => {
     setFilteredUsers(
       users.filter(
         (u) =>
-          u.firstname?.toLowerCase().includes(query) ||
-          u.lastname?.toLowerCase().includes(query) ||
+          u.first_name?.toLowerCase().includes(query) ||
+          u.last_name?.toLowerCase().includes(query) ||
           u.email?.toLowerCase().includes(query) ||
           u.role?.toLowerCase().includes(query) ||
           u.created_at?.toLowerCase().includes(query),
@@ -102,10 +104,9 @@ export const Users = () => {
                 <th className="px-4 py-3 text-left">First Name</th>
                 <th className="px-4 py-3 text-left">Last Name</th>
                 <th className="px-4 py-3 text-left">Email</th>
+                <th className="px-4 py-3 text-left">Image</th>
                 <th className="px-4 py-3 text-left">Role</th>
-                <th className="px-4 py-3 text-left">Reg Date</th>
-                <th className="px-4 py-3 text-left">SQA1</th>
-                <th className="px-4 py-3 text-left">SQA2</th>
+                <th className="px-4 py-3 text-left">BIO</th>
                 <th className="px-4 py-3 text-center">Status</th>
                 <th className="px-4 py-3 text-center">Actions</th>
               </tr>
@@ -118,9 +119,16 @@ export const Users = () => {
                   className="hover:bg-slate-100 dark:hover:bg-slate-700/40 transition"
                 >
                   <td className="px-4 py-3">{index + 1}</td>
-                  <td className="px-4 py-3">{user.firstname}</td>
-                  <td className="px-4 py-3">{user.lastname}</td>
+                  <td className="px-4 py-3">{user.first_name}</td>
+                  <td className="px-4 py-3">{user.last_name}</td>
                   <td className="px-4 py-3">{user.email}</td>
+                  <td className="px-4 py-3">
+                    <img
+                      src={`${BASE_URL}${user.avatar}`}
+                      alt="avatar"
+                      className="w-10 h-10 rounded-full object-cover"
+                    />
+                  </td>
 
                   <td className="px-4 py-3">
                     <span
@@ -133,13 +141,7 @@ export const Users = () => {
                     </span>
                   </td>
 
-                  <td className="px-4 py-3">{user.created_at || "-"}</td>
-                  <td className="px-4 py-3">
-                    {user.securityQuestions?.[0]?.answer || "-"}
-                  </td>
-                  <td className="px-4 py-3">
-                    {user.securityQuestions?.[1]?.answer || "-"}
-                  </td>
+                  <td className="px-4 py-3">{user.bio}</td>
 
                   {/* STATUS */}
                   <td className="px-4 py-3 text-center">
