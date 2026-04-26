@@ -5,58 +5,70 @@ import { PopularBlogCard } from "../components/PopularBlogCard";
 
 import { Loader } from "../components/helper/Loading";
 import { ErrorMessage } from "../components/helper/Error";
+
 export const Blog = () => {
   const { blogs = [], loading, error } = useBlogs();
 
-  // =========== error and laoding
   if (loading) return <Loader />;
   if (error) return <ErrorMessage />;
 
   return (
-    <section className="mt-16 bg-gray-100 dark:bg-slate-900">
-      <div className="max-w-7xl mx-auto px-4 space-y-16">
-        {/* ================= hero ================= */}
-        <div className="relative h-[260px] sm:h-[380px] md:h-[520px] overflow-hidden">
+    <section className="bg-gray-50 dark:bg-slate-900 ">
+      <div className="max-w-7xl mx-auto px-4 space-y-12 pt-20">
+        {/* ================= HERO ================= */}
+        <div className="relative h-[220px] md:h-[320px] rounded overflow-hidden">
           <img
             src={jaghori1}
-            alt="Jaghori travel"
+            alt="Travel"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/40" />
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-6">
-            <span className="uppercase tracking-widest text-green-400 font-semibold mb-2">
-              Tours & Travels
+
+          {/* overlay */}
+          <div className="absolute inset-0 bg-black/50" />
+
+          {/* content */}
+          <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-12">
+            <span className="text-green-400 text-xs uppercase tracking-widest mb-2">
+              Travel Blog
             </span>
-            <h1 className="font-caveat text-2xl sm:text-6xl md:text-8xl font-bold text-white mb-3">
-              Amazing Places in Jaghori
+
+            <h1 className="text-2xl md:text-4xl font-bold text-white">
+              Discover Beautiful Places
             </h1>
-            <p className="text-white/80  font-semibold">
-              Discover nature, culture, and unforgettable experiences
+
+            <p className="text-white/80 text-sm mt-2 max-w-xl">
+              Explore travel stories, tips, and hidden gems from around the
+              world.
             </p>
-            <span className="mt-4 text-white/80 text-sm font-semibold">
-              December 12, 2025
-            </span>
           </div>
         </div>
 
-        {/* ================= content ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 py-10">
-          {/* ========= main blog crads ========= */}
-          <article className="lg:col-span-2 dark:bg-slate-800 overflow-hidden">
-            {blogs.map((blog, index) => (
-              <BlogCard blog={blog} key={blog.id} index={index} />
+        {/* ================= CONTENT ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          {/* ===== MAIN BLOG LIST ===== */}
+          <article className="lg:col-span-2 space-y-8">
+            {blogs.map((blog) => (
+              <BlogCard blog={blog} key={blog.id} />
             ))}
           </article>
 
-          {/* ========= sidebar ========= */}
-          <aside className="space-y-6 bg-gray-200 dark:bg-slate-800 p-4 rounded-lg">
-            <h3 className="text-xl font-semibold dark:text-gray-200">
+          {/* ===== SIDEBAR ===== */}
+          <aside
+            className="
+              h-fit sticky top-24
+              bg-white dark:bg-slate-900
+              border border-gray-200 dark:border-slate-700
+              rounded-2xl p-6 space-y-6 shadow-sm"
+          >
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Popular Blogs
             </h3>
 
-            {blogs.map((blog, index) => (
-              <PopularBlogCard blog={blog} index={index} key={blog.id} />
-            ))}
+            <div className="space-y-4">
+              {blogs.slice(0, 4).map((blog, index) => (
+                <PopularBlogCard blog={blog} index={index} key={blog.id} />
+              ))}
+            </div>
           </aside>
         </div>
       </div>

@@ -1,18 +1,10 @@
 import { useParams, Link } from "react-router-dom";
-import {
-  FaUserAlt,
-  FaCalendarAlt,
-  FaEye,
-  FaArrowLeft,
-  FaStar,
-} from "react-icons/fa";
-import { BASE_URL } from "../api/ApiUrl";
+import { FaUserAlt, FaCalendarAlt, FaEye, FaArrowLeft } from "react-icons/fa";
 
-import { useBlogAuthor, useBlogById } from "../hooks/useBlogs";
+import { useBlogById } from "../hooks/useBlogs";
 import { BlogComments } from "../components/BlogComments";
 
-import jaghori2 from "../assets/jaghori2.jpg";
-import restaurant1 from "../assets/restaurant1.jpg";
+// import { formatDistanceToNow } from "date-fns";
 
 export const BlogDetail = () => {
   const { id } = useParams();
@@ -20,7 +12,7 @@ export const BlogDetail = () => {
 
   if (loading) {
     return (
-      <section className="py-32 text-center text-lg font-medium">
+      <section className="py-32 text-center text-gray-500">
         Loading blog...
       </section>
     );
@@ -29,10 +21,10 @@ export const BlogDetail = () => {
   if (error || !blog) {
     return (
       <section className="py-32 text-center space-y-4">
-        <p className="text-xl font-semibold">Blog not found.</p>
+        <p className="text-lg font-medium">Blog not found</p>
         <Link
           to="/blogs"
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white px-6 py-3 rounded-xl font-semibold transition-all"
+          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-black dark:hover:text-white"
         >
           <FaArrowLeft />
           Back to Blogs
@@ -42,109 +34,93 @@ export const BlogDetail = () => {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-slate-950 text-gray-900 dark:text-gray-100">
-      {/* ================= HERO ================= */}
-      <div className="relative h-[350px] md:h-[500px] overflow-hidden">
-        <img
-          src={jaghori2}
-          alt={blog.title}
-          className="w-full h-full object-cover scale-105 hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 text-center px-6 max-w-3xl">
-          <h1 className="text-md md:text-5xl font-semibold md:font-bold text-white leading-tight drop-shadow-lg">
-            {blog.title}
-          </h1>
-          <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-white/80 text-md mt-6">
-            <span className="flex items-center gap-2 text-bold text-white">
-              <FaUserAlt /> {blog.user?.first_name || "Author"}
-            </span>
-            <span className="flex items-center gap-2 text-bold text-white">
-              <FaCalendarAlt /> {blog.updated_at}
-            </span>
-            <span className="flex items-center gap-2 text-bold text-white">
-              <FaEye /> {blog.views || 0} views
-            </span>
-          </div>
+    <section className="bg-white dark:bg-slate-900 py-10 mt-14">
+      {/* ===== IMAGE ===== */}
+      {blog.image && (
+        <div className="max-w-5xl mx-auto px-5">
+          <img
+            src={blog.image}
+            alt={blog.title}
+            className="w-full h-[300px] md:h-[420px] object-cover rounded"
+          />
         </div>
+      )}
+
+      {/* ===== CONTENT ===== */}
+
+      <div className="max-w-5xl mx-auto px-10 py-8 space-y-8">
+        {/* TITLE */}
+        <h1 className="text-2xl md:text-4xl font-semibold text-gray-900 dark:text-white leading-tight tracking-tight">
+          {blog.title}
+        </h1>
+
+        {/* META (optional but very German UX style) */}
+        <div className="flex flex-wrap gap-4 text-sm text-gray-500 dark:text-gray-400 border-b pb-4">
+          <span>By {blog.user?.first_name || "Author"}</span>
+          <span>•</span>
+          <span>
+            {new Date(blog.created_at).toLocaleString("de-DE", {
+              dateStyle: "long",
+
+              timeStyle: "short",
+            })}
+          </span>
+        </div>
+
+        {/* DESCRIPTION */}
+        <p className="text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl">
+          {blog.description}
+        </p>
+
+        {/* TAGS */}
+        {blog.tags && (
+          <div className="flex flex-wrap gap-2 pt-4">
+            {blog.tags.split(",").map((tag, index) => (
+              <span
+                key={index}
+                className="
+            px-3 py-1 rounded-full text-sm
+            bg-gray-100 dark:bg-slate-800
+            text-gray-700 dark:text-gray-300
+            border border-gray-200 dark:border-slate-700
+            hover:bg-gray-200 dark:hover:bg-slate-700
+            transition
+          "
+              >
+                #{tag.trim()}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* ================= CONTENT ================= */}
-      <div className="max-w-7xl mx-auto px-6 py-10 md:py-20 grid grid-cols-1 lg:grid-cols-3 gap-16">
-        {/* ===== MAIN CONTENT ===== */}
-        <article className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-md shadow-2xl p-10 md:p-14 space-y-10 backdrop-blur-sm">
-          <div className="flex justify-between ">
-            <div>
-              <h1 className="text-md font-semibold">{blog.title}</h1>
-              {/* Rating */}
-              <div className="flex items-center gap-2 text-amber-400 text-lg">
-                {[1, 2, 3, 4, 5].map((_, i) => (
-                  <FaStar key={i} />
-                ))}
-                <span className="text-sm text-gray-500 dark:text-gray-400 ml-2">
-                  5.0 Rating
-                </span>
-              </div>
-
-              <h1 className="block md:hidden">
-                <span className="flex items-center gap-2 text-bold text-gray-500">
-                  <FaCalendarAlt /> {blog.updated_at}
-                </span>
-              </h1>
-            </div>
-            <h1
-              className="
-            hidden md:block text-gray-600"
-            >
-              <span className="flex items-center gap-2 text-bold text-gray-500">
-                <FaCalendarAlt /> {blog.updated_at}
-              </span>
-            </h1>
-          </div>
-
-          {/* Image */}
+      {/* ===== AUTHOR + ACTION ===== */}
+      <div className="max-w-5xl mx-auto px-10 py-8 border-t border-gray-200 dark:border-slate-700 space-y-6">
+        <div className="flex items-center gap-4">
           <img
-            src={jaghori2}
-            alt=""
-            className="rounded shadow-lg border border-gray-100 dark:border-slate-700"
+            src={blog.user?.avatar || "/default-avatar.png"}
+            className="w-14 h-14 rounded-full object-cover border"
           />
 
-          {/* Description */}
-          <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            {blog.description}
-          </p>
-        </article>
-
-        {/* ===== SIDEBAR ===== */}
-        <aside className="space-y-10">
-          {/* Author Card */}
-          <div className="bg-white dark:bg-slate-900 rounded shadow-2xl p-8 text-center backdrop-blur-md hover:scale-105 transition-transform duration-300">
-            <img
-              src={`${blog.user?.avatar}`}
-              alt="author"
-              className="w-28 h-28 mx-auto rounded-full object-cover border-3 border-emerald-500 shadow-xl mb-4"
-            />
-            <h3 className="font-semibold text-xl text-gray-500">
+          <div>
+            <p className="font-medium text-gray-900 dark:text-white">
               {blog.user?.first_name || "Author"}
-            </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              Travel writer & local guide
             </p>
+            <p className="text-sm text-gray-500">Travel writer & local guide</p>
           </div>
+        </div>
 
-          {/* Back Button */}
-          <Link
-            to="/blogs"
-            className="flex items-center justify-center gap-2 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-white py-4 rounded transition-all shadow-xl font-semibold"
-          >
-            <FaArrowLeft />
-            Back to Blogs
-          </Link>
-        </aside>
+        <Link
+          to="/blogs"
+          className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-black dark:hover:text-white"
+        >
+          <FaArrowLeft />
+          Back to Blogs
+        </Link>
       </div>
 
-      {/* ================= COMMENTS ================= */}
-      <div className="max-w-5xl mx-auto border-t border-gray-200 dark:border-slate-800 py-8 md:py-16 px-6">
+      {/* ===== COMMENTS ===== */}
+      <div className="max-w-5xl mx-auto px-5 py-12 border-t border-gray-200 dark:border-slate-700">
         <BlogComments blog_id={blog?.id} />
       </div>
     </section>

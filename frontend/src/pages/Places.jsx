@@ -9,40 +9,9 @@ import { NotFoundData } from "../components/helper/NotFoundData";
 import { PopularBlogCard } from "../components/PopularBlogCard";
 import { useBlogs } from "../hooks/useBlogs";
 
-// تصاویر
-import restaurant1 from "../assets/restaurant1.jpg";
-import restaurant2 from "../assets/restaurant2.jpg";
-import restaurant3 from "../assets/restaurant3.jpg";
-import restaurant4 from "../assets/restaurant3.jpg";
-import hotel1 from "../assets/Hotel1.jpg";
-import hotel2 from "../assets/Hotel2.jpg";
-import hotel3 from "../assets/Hotel3.jpg";
-import hotel4 from "../assets/Hotel4.jpg";
-import hospital1 from "../assets/hospital1.jpg";
-import hospital2 from "../assets/hospital2.jpg";
-import hospital3 from "../assets/hospital3.jpg";
-import pharmacy1 from "../assets/pharmacy1.jpg";
-import pharmacy2 from "../assets/pharmacy2.webp";
-import supermarket1 from "../assets/supermarket1.jpg";
-import supermarket2 from "../assets/supermarket2.jpg";
-import supermarket3 from "../assets/supermarket3.jpg";
-import jaghori1 from "../assets/jaghori1.jpg";
+import placeholder from "../assets/jaghori1.jpg";
 import { Loader } from "../components/helper/Loading";
 import { ErrorMessage } from "../components/helper/Error";
-
-const restaurantImage = [restaurant1, restaurant2, restaurant3, restaurant4];
-const hotelImage = [hotel1, hotel2, hotel3, hotel4];
-const supermarketImage = [supermarket1, supermarket2, supermarket3, jaghori1];
-const hospitalImage = [hospital1, hospital2, hospital3, pharmacy2];
-const pharmacyImage = [pharmacy1, pharmacy2, hospital3, hospital2];
-
-const categoryImagesMap = {
-  Hotel: hotelImage,
-  Restaurant: restaurantImage,
-  Hospital: hospitalImage,
-  Supermarket: supermarketImage,
-  Pharmacy: pharmacyImage,
-};
 
 export const PlacesInSite = () => {
   const [query, setQuery] = useState("");
@@ -54,22 +23,18 @@ export const PlacesInSite = () => {
 
   const filteredPlace = useMemo(() => {
     return places.filter((place) => {
-      const categoryObj = categories.find(
-        (cate) => cate.id === place.category_id,
-      );
+      const categoryObj = categories.find((cate) => cate.id === place.category);
       const matchCategory =
         activeCategory === "All" || categoryObj?.name === activeCategory;
-      const matchQuery = place.name
-        ?.toLowerCase()
-        .includes(query.toLowerCase());
+      const matchQuery =
+        place.name?.toLowerCase().includes(query.toLowerCase()) ||
+        place.category_detail?.name
+          ?.toLowerCase()
+          .includes(query.toLowerCase()) ||
+        place.address?.toLowerCase().includes(query.toLowerCase());
       return matchCategory && matchQuery;
     });
   }, [places, categories, activeCategory, query]);
-
-  //  get iamge acurden category
-  const getCategoryImages = (categoryName) => {
-    return categoryImagesMap[categoryName] || [restaurant1, hospital1];
-  };
 
   const categoryRef = useRef(null);
   // show error and laoding
@@ -142,13 +107,6 @@ export const PlacesInSite = () => {
               <NotFoundData text="no place found" />
             ) : (
               <AnimatePresence>
-                {/* header */}
-                <div className="text-center mb-10">
-                  <h1 className="text-4xl md:text-5xl font-caveat font-extrabold text-gray-900 dark:text-gray-200 mb-3 drop-shadow-lg">
-                    Explore Amazing Places
-                  </h1>
-                </div>
-
                 {/* place card */}
                 <motion.div
                   layout
@@ -158,11 +116,11 @@ export const PlacesInSite = () => {
                     const imageUrl =
                       place.images?.length > 0
                         ? place.images[0].image
-                        : "/placeholder.jpg";
+                        : placeholder;
                     const categoryName = categories.find(
                       (c) => c.id === place.category_id,
                     )?.name;
-                    const images = getCategoryImages(categoryName);
+
                     return (
                       <motion.div
                         key={place.id}

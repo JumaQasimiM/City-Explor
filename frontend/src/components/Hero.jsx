@@ -7,6 +7,7 @@ import heroImg from "../assets/hero.jpeg";
 
 // api url
 import { ApiUrl } from "../api/ApiUrl";
+import { BASE_URL } from "../api/ApiUrl";
 // hooks
 import { useCities } from "../hooks/useCities";
 import { useCategories } from "../hooks/useCategories";
@@ -15,40 +16,10 @@ import { useCategories } from "../hooks/useCategories";
 import { PlaceCard } from "../components/PlaceCard";
 import { NotFoundData } from "../components/helper/NotFoundData";
 
-// images
-import Hotel1 from "../assets/Hotel1.jpg";
-import Hotel2 from "../assets/Hotel2.jpg";
-import Hotel3 from "../assets/Hotel3.jpg";
-import Hotel4 from "../assets/Hotel4.jpg";
-import HotelRoom1 from "../assets/HotelRoom1.jpg";
-import HotelRoom2 from "../assets/HotelRoom2.jpg";
-import restaurant1 from "../assets/restaurant1.jpg";
-import restaurant2 from "../assets/restaurant2.jpg";
-import restaurant3 from "../assets/restaurant3.jpg";
-import restaurant4 from "../assets/restaurant4.jpg";
-import jaghori1 from "../assets/jaghori1.jpg";
-import jaghori2 from "../assets/jaghori2.jpg";
-
-const placeImages = [
-  Hotel1,
-  Hotel2,
-  Hotel3,
-  Hotel4,
-  HotelRoom1,
-  HotelRoom2,
-  restaurant1,
-  restaurant2,
-  restaurant3,
-  restaurant4,
-  jaghori1,
-  jaghori2,
-];
-
 export const Hero = () => {
   const [searchedPlaces, setSearchedPlaces] = useState([]);
   const [city, setCity] = useState("");
   const [category, setCategory] = useState("");
-  const [distance, setDistance] = useState("");
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -60,7 +31,7 @@ export const Hero = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!city && !category && !distance) {
+    if (!city && !category) {
       setShowResults(false);
       return;
     }
@@ -71,9 +42,8 @@ export const Hero = () => {
 
     try {
       const params = new URLSearchParams();
-      if (city) params.append("city_id", city);
-      if (category) params.append("category_id", category);
-      if (distance) params.append("distance_lte", distance);
+      if (city) params.append("city", city);
+      if (category) params.append("category", category);
 
       const res = await fetch(`${ApiUrl}/places?${params.toString()}`);
 
@@ -152,8 +122,6 @@ export const Hero = () => {
 
             <input
               type="number"
-              value={distance}
-              onChange={(e) => setDistance(e.target.value)}
               className={inputClass}
               placeholder="Distance (km)"
             />
@@ -198,19 +166,22 @@ export const Hero = () => {
                 layout
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
               >
-                {searchedPlaces.map((place, index) => (
-                  <motion.div
-                    key={place.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                  >
-                    <PlaceCard
-                      place={place}
-                      image={placeImages[index % placeImages.length]}
-                    />
-                  </motion.div>
-                ))}
+                {searchedPlaces.map((place, index) => {
+                  const imageUrl = place.images?.[0]?.image
+                    ? `${place.images[0].image}`
+                    : "/placeholder.jpg";
+
+                  return (
+                    <motion.div
+                      key={place.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                    >
+                      <PlaceCard place={place} image={imageUrl} />
+                    </motion.div>
+                  );
+                })}
               </motion.div>
             </AnimatePresence>
           </div>

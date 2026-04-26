@@ -4,16 +4,24 @@ import { usePopularPlace } from "../hooks/usePlaces";
 
 // images
 import restaurant1 from "../assets/restaurant1.jpg";
-import restaurant2 from "../assets/restaurant2.jpg";
-import restaurant3 from "../assets/restaurant3.jpg";
-import restaurant4 from "../assets/restaurant4.jpg";
+import { BASE_URL } from "../api/ApiUrl";
+
 import { Loader } from "./helper/Loading";
 import { ErrorMessage } from "./helper/Error";
-const restaurantImages = [restaurant1, restaurant2, restaurant3, restaurant4];
+import { useCategories } from "../hooks/useCategories";
 
 export const PopularRestaurants = () => {
   // usePopularPlace take a category id as argument
-  const { popularPlace: restaurant, error, loading } = usePopularPlace("ce5f");
+  const { categories = [] } = useCategories();
+  const restaurantCategory = categories.find((c) =>
+    c.name.toLowerCase().includes("restaurant"),
+  );
+
+  const {
+    popularPlace: restaurant,
+    error,
+    loading,
+  } = usePopularPlace(restaurantCategory?.id);
 
   /* ================= LOADING / ERROR ================= */
   if (loading) return <Loader />;
@@ -39,13 +47,18 @@ export const PopularRestaurants = () => {
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {restaurant.map((restaurant, index) => (
-            <PopularRestaurantCard
-              key={index}
-              restaurant={restaurant}
-              image={restaurantImages[index % restaurantImages.length]}
-            />
-          ))}
+          {restaurant.map((restaurant) => {
+            const imageUrl = restaurant.images?.[0]?.image
+              ? `${restaurant.images[0].image}`
+              : "";
+            return (
+              <PopularRestaurantCard
+                key={restaurant.id}
+                restaurant={restaurant}
+                image={imageUrl}
+              />
+            );
+          })}
         </div>
       </div>
     </section>

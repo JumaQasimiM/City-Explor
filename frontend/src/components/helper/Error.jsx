@@ -14,7 +14,11 @@ export const ErrorMessage = ({ message = "Something went wrong" }) => (
     <span className="text-3xl mb-2 ">
       <IoIosWarning className="text-amber-400 dark:text-amber-200" size={45} />
     </span>
-    <p className="font-semibold text-sm dark:text-amber-800">{message}</p>
+    <p className="font-semibold text-sm dark:text-amber-800">
+      {typeof message === "string"
+        ? message
+        : message?.message || "Error occurred"}
+    </p>
     <p className="text-xs mt-1 opacity-80 dark:text-red-700">
       Please try again later
     </p>

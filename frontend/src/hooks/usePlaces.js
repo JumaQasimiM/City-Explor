@@ -57,14 +57,13 @@ export const usePlaceCategory = (cate_id) => {
 };
 
 // placeList
-export const usePopularPlace = (category_id) => {
+export const usePopularPlace = (category) => {
   const {
     data: popularPlace,
     error,
     loading,
-  } = useFetch(
-    category_id ? `${ApiUrl}/places?category_id = ${category_id}/` : null,
-  );
+  } = useFetch(category ? `${ApiUrl}/places?category=${category}` : null);
+
   return {
     popularPlace: popularPlace ? popularPlace.slice(0, 4) : [],
     error,
@@ -79,7 +78,7 @@ export const useSearchByCategory = (category_id) => {
     data: category,
     error,
     loading,
-  } = useFetch(`${ApiUrl}/places?category_id = ${category_id}/`);
+  } = useFetch(`${ApiUrl}/places?category = ${category_id}`);
 };
 
 // edit place

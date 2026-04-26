@@ -1,20 +1,18 @@
 import { usePopularPlace } from "../hooks/usePlaces";
 import { PopularHotelCard } from "./PopularHotelCard";
 import Hotel1 from "../assets/Hotel1.jpg";
-import Hotel2 from "../assets/Hotel2.jpg";
-import Hotel3 from "../assets/Hotel3.jpg";
-import Hotel4 from "../assets/Hotel4.jpg";
 
 // helper components
 import { Loader } from "./helper/Loading";
 import { ErrorMessage } from "./helper/Error";
-
-const hotelImages = [Hotel1, Hotel2, Hotel3, Hotel4];
+import { useCategories } from "../hooks/useCategories";
 
 export const PopularHotels = () => {
   // hard code for Hotel id
-  const { popularPlace, error, loading } = usePopularPlace("1");
+  const { categories = [] } = useCategories();
+  const hotelCategory = categories.find((c) => c.name === "Hotel");
 
+  const { popularPlace, error, loading } = usePopularPlace(hotelCategory?.id);
   /* ================= LOADING / ERROR ================= */
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
@@ -26,8 +24,7 @@ export const PopularHotels = () => {
         <div className="flex items-center justify-between mb-10 border-b border-gray-500 dark:border-white/20 pb-4">
           <div>
             <h2 className="text-md md:text-3xl font-semibold">
-              Popular Hotels{" "}
-              <span className="hidden md:block">& Accommodations</span>
+              Popular Hotels
             </h2>
 
             <h2 className="text-sm md:text-lg">
@@ -41,13 +38,15 @@ export const PopularHotels = () => {
 
         {/* Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {popularPlace.map((hotel, index) => (
-            <PopularHotelCard
-              key={hotel.id}
-              hotel={hotel}
-              image={hotelImages[index % hotelImages.length]}
-            />
-          ))}
+          {popularPlace.map((hotel) => {
+            const imageUrl = hotel.images?.[0]?.image
+              ? `${hotel.images[0].image}`
+              : hotel; // fallback
+
+            return (
+              <PopularHotelCard key={hotel.id} hotel={hotel} image={imageUrl} />
+            );
+          })}
         </div>
       </div>
     </section>
