@@ -1,55 +1,84 @@
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from "recharts";
+import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+
 import { useUsers } from "../../hooks/useUsers";
 
-export const UsersChart = () => {
-  const { users } = useUsers();
+const COLORS = [
+  "#111827", // black (primary)
+  "#3b82f6", // blue
+  "#10b981", // green
+  "#f59e0b", // yellow
+  "#ef4444", // red
+];
 
-  // group users by role
+export const UsersChart = () => {
+  const { users = [] } = useUsers();
+
+  /* ===== GROUP USERS BY ROLE ===== */
   const roleCount = users.reduce((acc, user) => {
-    acc[user.role] = (acc[user.role] || 0) + 1;
+    const role = user.role || "Unknown";
+    acc[role] = (acc[role] || 0) + 1;
     return acc;
   }, {});
 
-  // convert to chart data
   const data = Object.keys(roleCount).map((role) => ({
-    role,
-    count: roleCount[role],
+    name: role,
+    value: roleCount[role],
   }));
 
   return (
-    <section className="bg-gradient-to-r from-sky-700 to-sky-500 rounded p-4">
-      <h1 className="text-md font-semibold mb-4 text-gray-300">
-        Users by Role
-      </h1>
+    <section className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-2xl p-6 shadow-sm">
+      {/* ===== HEADER ===== */}
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Users by Role
+        </h2>
+        <p className="text-sm text-gray-500">Distribution of user roles</p>
+      </div>
 
-      <div className="w-full h-[300px] bg-white rounded p-3">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
-            <CartesianGrid strokeDasharray="4 4" />
-            <XAxis dataKey="role" />
-            <YAxis allowDecimals={false} />
-            <Tooltip />
-            <Legend />
+      {/* ===== CHART ===== */}
+      <div className="w-full h-[320px]">
+        <ResponsiveContainer>
+          <PieChart>
+            <Pie
+              data={data}
+              cx="50%"
+              cy="50%"
+              innerRadius={70} // donut style
+              outerRadius={110}
+              paddingAngle={3}
+              dataKey="value"
+            >
+              {data.map((_, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
 
-            <Area
-              type="monotone"
-              dataKey="count"
-              stroke="#0284c7"
-              strokeWidth={3}
-              fill="#0284e1"
-              activeDot={{ r: 7 }}
+            {/* TOOLTIP */}
+            <Tooltip
+              contentStyle={{
+                borderRadius: "10px",
+                border: "1px solid #e5e7eb",
+                fontSize: "12px",
+              }}
             />
-          </AreaChart>
+          </PieChart>
         </ResponsiveContainer>
+      </div>
+
+      {/* ===== LEGEND (CUSTOM) ===== */}
+      <div className="mt-6 grid grid-cols-2 gap-3 text-sm">
+        {data.map((item, index) => (
+          <div key={item.name} className="flex items-center gap-2">
+            <span
+              className="w-3 h-3 rounded-full"
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            />
+            <span className="text-gray-700 dark:text-gray-300">
+              {item.name}
+            </span>
+            <span className="ml-auto text-gray-500">{item.value}</span>
+          </div>
+        ))}
       </div>
     </section>
   );
