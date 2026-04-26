@@ -104,6 +104,7 @@ export const Country = () => {
                 <tr className="text-left text-sm text-slate-500 dark:text-slate-400 border-b dark:border-slate-700">
                   <th className="py-3 px-2">#</th>
                   <th className="py-3 px-2">Country Name</th>
+                  <th className="py-3 px-2">Totale city</th>
                   <th className="py-3 px-2 text-right">Actions</th>
                 </tr>
               </thead>
@@ -119,6 +120,9 @@ export const Country = () => {
 
                     <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
                       {country.name}
+                    </td>
+                    <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
+                      {country.totale_city}
                     </td>
 
                     <td className="py-3 px-2">

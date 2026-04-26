@@ -35,15 +35,17 @@ export const useCreateUser = () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${ApiUrl}/users`, {
+      const res = await fetch(`${ApiUrl}/users/register/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+
+        // when only send text
+        // body: JSON.stringify(payload),
+
+        // files -- image ...
+        body: payload,
       });
       if (!res.ok) {
-        throw new Error("Failed to create user");
+        throw new Error(JSON.stringify(data));
       }
       return true;
     } catch (error) {
@@ -65,12 +67,9 @@ export const useUpdateUser = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/users/${user_id}`, {
+      const res = await fetch(`${ApiUrl}/users/${user_id}/`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
+        body: payload,
       });
 
       const data = await res.json();

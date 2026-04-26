@@ -3,6 +3,7 @@ import { useCategoryById, useEditCategory } from "../../../hooks/useCategories";
 import { FaXmark } from "react-icons/fa6";
 import { Loader } from "../../../components/helper/Loading";
 import { ErrorMessage } from "../../../components/helper/Error";
+
 export const EditCategory = ({ id, onClose }) => {
   const { data: category } = useCategoryById(id);
   const { updateCategory, loading, error } = useEditCategory();

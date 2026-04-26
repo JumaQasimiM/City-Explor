@@ -29,7 +29,7 @@ export const Category = () => {
       return;
     }
 
-    const success = await createCategory({ title: categoryName.trim() });
+    const success = await createCategory({ name: categoryName.trim() });
 
     if (success) {
       toast.success("Category created successfully");
@@ -124,7 +124,7 @@ export const Category = () => {
                     </td>
 
                     <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
-                      {category.title}
+                      {category.name}
                     </td>
                     <td className="py-3 px-2 font-medium text-slate-800 dark:text-white">
                       {category.totle_place_per_category}

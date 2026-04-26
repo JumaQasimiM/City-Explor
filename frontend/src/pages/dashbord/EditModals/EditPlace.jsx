@@ -2,35 +2,46 @@ import { FaXmark } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
+import { ApiUrl } from "../../../api/ApiUrl";
+
 import { InputField } from "../../../components/helper/Input";
 import { SelectField } from "../../../components/helper/SelectField";
 
-import {
-  useEditPlace,
-  usePlaceById,
-  usePlaceOwner,
-} from "../../../hooks/usePlaces";
+import { useEditPlace, usePlaceById } from "../../../hooks/usePlaces";
+
 import { useCities } from "../../../hooks/useCities";
 import { useCategories } from "../../../hooks/useCategories";
 
 export const EditPlace = ({ id, onClose }) => {
   const { data: place } = usePlaceById(id);
-  const { data: owner } = usePlaceOwner(place?.user_id);
-
   const { updatePlace, loading } = useEditPlace();
+
   const { cities = [] } = useCities();
   const { categories = [] } = useCategories();
+
+  const [servicesList, setServicesList] = useState([]);
 
   /* ================= STATE ================= */
   const [form, setForm] = useState({
     name: "",
-    address: "",
-    price: "",
     description: "",
-    services: ["", "", "", ""],
-    city_id: "",
-    category_id: "",
+    address: "",
+    category: "",
+    city: "",
+    owner: "",
+    opening_hours: "",
+    contact_number: "",
+    website: "",
+    services: [],
   });
+
+  /* ================= FETCH SERVICES ================= */
+  useEffect(() => {
+    fetch(`${ApiUrl}/services/`)
+      .then((res) => res.json())
+      .then((data) => setServicesList(data))
+      .catch(() => toast.error("Failed to load services"));
+  }, []);
 
   /* ================= INIT ================= */
   useEffect(() => {
@@ -38,173 +49,203 @@ export const EditPlace = ({ id, onClose }) => {
 
     setForm({
       name: place.name || "",
-      address: place.address || "",
-      price: place.price || "",
       description: place.description || "",
-      services: place.services?.length ? place.services : ["", "", "", ""],
-      city_id: place.city_id || "",
-      category_id: place.category_id || "",
+      address: place.address || "",
+      category: place.category || "",
+      city: place.city || "",
+      owner: place.owner || "",
+      opening_hours: place.opening_hours || "",
+      contact_number: place.contact_number || "",
+      website: place.website || "",
+      services: place.services || [],
     });
   }, [place]);
 
-  /* ================= handlers ================= */
-  const updateField = (key, value) =>
-    setForm((prev) => ({ ...prev, [key]: value }));
+  /* ================= HANDLERS ================= */
 
-  const updateService = (i, value) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]: name === "category" || name === "city" ? Number(value) : value,
+    }));
+  };
+
+  const handleServiceChange = (id) => {
     setForm((prev) => {
-      const updated = [...prev.services];
-      updated[i] = value;
-      return { ...prev, services: updated };
+      const exists = prev.services.includes(id);
+
+      return {
+        ...prev,
+        services: exists
+          ? prev.services.filter((s) => s !== id)
+          : [...prev.services, id],
+      };
     });
   };
 
-  /* ================= submit ================= */
+  /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const payload = {
       ...form,
-      price: Number(form.price),
-      services: form.services.filter(Boolean),
+      category: Number(form.category),
+      city: Number(form.city),
+      owner: Number(form.owner),
+      services: form.services,
     };
 
     const success = await updatePlace(id, payload);
 
-    success
-      ? toast.success("Place updated successfully")
-      : toast.error("Update failed");
-
-    success && onClose();
+    if (success) {
+      toast.success("Place updated successfully ");
+      onClose();
+    } else {
+      toast.error("Update failed ");
+    }
   };
 
   if (!place) return null;
 
   return (
-    <section className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-      <div className="relative w-full max-w-5xl bg-teal-800 rounded shadow-xl flex flex-col max-h-[90vh]">
-        {/* ================= HEADER ================= */}
-        <header className="flex justify-between items-center px-6 py-4 border-b dark:border-slate-700">
+    <section className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+      <div className="relative w-full max-w-5xl bg-white rounded shadow-xl flex flex-col max-h-[90vh]">
+        {/* HEADER */}
+        <header className="flex justify-between items-center px-6 py-4 border-b">
           <div>
             <h2 className="text-xl font-bold">Edit Place</h2>
-            <p className="text-sm text-slate-800 dark:text-slate-300">
-              Modify place information
-            </p>
+            <p className="text-sm text-gray-500">Modify place information</p>
           </div>
 
-          <button
-            onClick={onClose}
-            className="p-2 rounded cursor-pointer hover:bg-red-100 dark:hover:bg-red-900 text-red-500"
-          >
+          <button onClick={onClose} className="text-red-500">
             <FaXmark size={20} />
           </button>
         </header>
 
-        {/* ================= BODY ================= */}
+        {/* BODY */}
         <form
           onSubmit={handleSubmit}
           className="flex-1 overflow-y-auto px-6 py-6 space-y-8"
         >
-          <Card title="General Information">
-            <div className="grid md:grid-cols-3 gap-6">
+          {/* GENERAL */}
+          <Card title="General">
+            <div className="grid md:grid-cols-2 gap-4">
               <InputField
-                label="Place Name"
+                label="Name"
+                name="name"
                 value={form.name}
-                onChange={(e) => updateField("name", e.target.value)}
-                required
-              />
-
-              <InputField
-                label="Average Price"
-                type="number"
-                value={form.price}
-                onChange={(e) => updateField("price", e.target.value)}
-                required
+                onChange={handleChange}
               />
 
               <SelectField
                 label="Category"
+                name="category"
+                value={form.category}
+                onChange={handleChange}
                 options={categories}
                 optionLabel="name"
-                value={form.category_id}
-                onChange={(e) => updateField("category_id", e.target.value)}
-                required
               />
             </div>
           </Card>
 
-          <Card title="Location & Owner">
-            <div className="grid md:grid-cols-3 gap-6">
+          {/* LOCATION */}
+          <Card title="Location">
+            <div className="grid md:grid-cols-3 gap-4">
               <InputField
                 label="Address"
+                name="address"
                 value={form.address}
-                onChange={(e) => updateField("address", e.target.value)}
-                required
+                onChange={handleChange}
               />
 
               <SelectField
                 label="City"
+                name="city"
+                value={form.city}
+                onChange={handleChange}
                 options={cities}
                 optionLabel="name"
-                value={form.city_id}
-                onChange={(e) => updateField("city_id", e.target.value)}
-                required
               />
 
               <InputField
                 label="Owner"
                 value={
-                  owner ? `${owner.firstname} ${owner.lastname}` : "Loading..."
+                  place.owner_detail
+                    ? `${place.owner_detail.first_name} ${place.owner_detail.last_name}`
+                    : ""
                 }
                 disabled
               />
             </div>
           </Card>
 
+          {/* CONTACT */}
+          <Card title="Contact">
+            <div className="grid md:grid-cols-3 gap-4">
+              <InputField
+                label="Opening Hours"
+                name="opening_hours"
+                value={form.opening_hours}
+                onChange={handleChange}
+              />
+
+              <InputField
+                label="Phone"
+                name="contact_number"
+                value={form.contact_number}
+                onChange={handleChange}
+              />
+
+              <InputField
+                label="Website"
+                name="website"
+                value={form.website}
+                onChange={handleChange}
+              />
+            </div>
+          </Card>
+
+          {/* SERVICES */}
           <Card title="Services">
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {form.services.map((s, i) => (
-                <input
-                  key={i}
-                  value={s}
-                  onChange={(e) => updateService(i, e.target.value)}
-                  placeholder={`Service ${i + 1}`}
-                  className="px-4 py-2 rounded-md border
-                  focus:ring-2 focus:ring-indigo-500
-                  dark:bg-slate-800"
-                />
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              {servicesList.map((s) => (
+                <label key={s.id} className="flex gap-2">
+                  <input
+                    type="checkbox"
+                    checked={form.services.includes(s.id)}
+                    onChange={() => handleServiceChange(s.id)}
+                  />
+                  {s.title}
+                </label>
               ))}
             </div>
           </Card>
 
+          {/* DESCRIPTION */}
           <Card title="Description">
             <textarea
-              rows={4}
+              name="description"
               value={form.description}
-              onChange={(e) => updateField("description", e.target.value)}
-              className="w-full px-4 py-3 rounded-md border
-              focus:ring-2 focus:ring-indigo-500
-              dark:bg-slate-800"
+              onChange={handleChange}
+              className="w-full border p-2 rounded"
             />
           </Card>
         </form>
 
-        {/* ================= FOOTER ================= */}
-        <footer className="px-6 py-4 border-t dark:border-slate-700 flex justify-end gap-3">
-          <button
-            type="button"
-            onClick={onClose}
-            className="px-6 py-2 border rounded-md"
-          >
+        {/* FOOTER */}
+        <footer className="px-6 py-4 border-t flex justify-end gap-3">
+          <button onClick={onClose} className="border px-4 py-2 rounded">
             Cancel
           </button>
+
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="px-8 py-2 bg-indigo-600 hover:bg-indigo-700
-            text-white rounded-md disabled:opacity-50"
+            className="bg-indigo-600 text-white px-6 py-2 rounded"
           >
-            {loading ? "Saving..." : "Save Changes"}
+            {loading ? "Saving..." : "Save"}
           </button>
         </footer>
       </div>
@@ -212,10 +253,10 @@ export const EditPlace = ({ id, onClose }) => {
   );
 };
 
-/* ================= CARD ================= */
+/* CARD */
 const Card = ({ title, children }) => (
-  <div className="bg-slate-50 dark:bg-slate-800 rounded-lg p-5 space-y-5">
-    <h3 className="font-semibold text-lg">{title}</h3>
+  <div className="bg-gray-50 p-4 rounded">
+    <h3 className="font-semibold mb-3">{title}</h3>
     {children}
   </div>
 );

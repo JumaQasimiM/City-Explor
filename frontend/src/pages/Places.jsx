@@ -155,6 +155,10 @@ export const PlacesInSite = () => {
                   className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-6"
                 >
                   {filteredPlace.map((place, index) => {
+                    const imageUrl =
+                      place.images?.length > 0
+                        ? place.images[0].image
+                        : "/placeholder.jpg";
                     const categoryName = categories.find(
                       (c) => c.id === place.category_id,
                     )?.name;
@@ -168,10 +172,7 @@ export const PlacesInSite = () => {
                         exit={{ opacity: 0, y: -20 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <PlaceCard
-                          place={place}
-                          image={images[index % images.length]}
-                        />
+                        <PlaceCard place={place} image={imageUrl} />
                       </motion.div>
                     );
                   })}

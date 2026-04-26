@@ -1,48 +1,77 @@
+import { useMemo } from "react";
 import { usePlaces } from "../../hooks/usePlaces";
-import { useCategories } from "../../hooks/useCategories";
+
 import {
-  AreaChart,
-  Area,
+  PieChart,
+  Pie,
+  Cell,
   ResponsiveContainer,
-  XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
 } from "recharts";
 
 export const PlacesChart = () => {
-  const { places } = usePlaces();
-  const { categories } = useCategories();
-  // آماده‌سازی دیتا برای چارت
-  const chartData = places.map((place) => ({
-    name: place.name,
-    price: place.price,
-  }));
+  const { places = [] } = usePlaces();
+
+  /* ===== COUNT PLACES PER CATEGORY ===== */
+  const chartData = useMemo(() => {
+    const grouped = {};
+
+    places.forEach((place) => {
+      const category = place.category_detail?.name || "Unknown";
+
+      grouped[category] = (grouped[category] || 0) + 1;
+    });
+
+    return Object.keys(grouped).map((cat) => ({
+      name: cat,
+      value: grouped[cat],
+    }));
+  }, [places]);
+
+  /* ===== COLORS ===== */
+  const COLORS = [
+    "#14b8a6", // teal
+    "#0ea5e9", // sky blue
+    "#22c55e", // green
+    "#06b6d4", // cyan
+    "#3b82f6", // blue
+  ];
 
   return (
-    <section className="bg-gradient-to-r from-emerald-600 to-emerald-400 rounded p-4">
-      <h1 className="text font-semibold text-gray-300 mb-4">
-        Places Price Chart
-      </h1>
+    <section className="bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-sm p-6">
+      {/* HEADER */}
+      <div className="mb-6">
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          Places by Category
+        </h2>
+        <p className="text-sm text-gray-500">
+          Distribution of places (Hospital, Restaurant, etc.)
+        </p>
+      </div>
 
-      <div className="w-full h-[350px] bg-white rounded p-3">
+      {/* CHART */}
+      <div className="w-full h-[300px]">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={chartData}>
-            <CartesianGrid strokeDasharray="5 5" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
+          <PieChart>
+            <Pie
+              data={chartData}
+              dataKey="value"
+              nameKey="name"
+              cx="50%"
+              cy="50%"
+              outerRadius={110}
+              innerRadius={55}
+              paddingAngle={3}
+            >
+              {chartData.map((_, index) => (
+                <Cell key={index} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
 
-            <Area
-              type="monotone"
-              dataKey="price"
-              stroke="#10b981"
-              fill="#a7f3d0"
-              strokeWidth={3}
-            />
-          </AreaChart>
+            <Tooltip />
+            <Legend verticalAlign="bottom" />
+          </PieChart>
         </ResponsiveContainer>
       </div>
     </section>

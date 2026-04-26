@@ -1,103 +1,121 @@
 import { useUsers } from "../../hooks/useUsers";
-
-import avatorImage from "../../assets/hero.jpeg";
-
 import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
-export const UserListInfoDashboard = () => {
-  const { users, error, loading, hasUsers, refetch } = useUsers();
+import { FaUser } from "react-icons/fa";
+import { BASE_URL } from "../../api/ApiUrl";
 
-  /* ================= LOADING / ERROR ================= */
+export const UserListInfoDashboard = () => {
+  const { users = [], error, loading } = useUsers();
+
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
 
   return (
-    <section className="bg-white dark:bg-slate-800 rounded shadow-lg w-full">
-      {/* Header */}
-      <div className="flex items-center justify-between px-6 py-4 border-t border-gray-200 dark:border-slate-700">
-        <h2 className="text-lg font-semibold text-gray-800 dark:text-white">
-          Users List
-        </h2>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
-          Manage all registered users
-        </span>
+    <section
+      className="
+      bg-white dark:bg-slate-800
+      border border-gray-200 dark:border-slate-700
+      rounded shadow-sm w-full overflow-hidden"
+    >
+      {/* HEADER */}
+      <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-slate-700">
+        <div>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+            Users List
+          </h2>
+          <p className="text-sm text-gray-500">Manage all registered users</p>
+        </div>
       </div>
 
-      {/* Scrollable Table Container */}
-      <div className="overflow-x-auto overflow-y-auto max-h-[450px] w-full">
-        <table className="min-w-[900px] w-full border-collapse divide-y divide-gray-300 dark:divide-gray-700">
-          <thead className="bg-gray-900 text-gray-100 dark:bg-sky-900 dark:text-gray-200 sticky top-0 z-10">
-            <tr>
-              <th className="px-5 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                #
-              </th>
-              <th className="px-5 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                Full Name
-              </th>
-              <th className="px-5 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                Email
-              </th>
-              <th className="px-5 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                Role
-              </th>
-              <th className="px-5 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                Date of Birth
-              </th>
-              <th className="px-5 py-3 text-left text-sm font-medium uppercase tracking-wider">
-                Image
-              </th>
-              <th className="px-5 py-3 text-center text-sm font-medium uppercase tracking-wider">
-                Status
-              </th>
-              <th className="px-5 py-3 text-center text-sm font-medium uppercase tracking-wider">
-                Actions
-              </th>
+      {/* TABLE */}
+      <div className="overflow-x-auto max-h-[500px]">
+        <table className="min-w-[900px] w-full text-sm">
+          <thead className="sticky top-0 bg-gray-50 dark:bg-slate-900 text-gray-600 dark:text-gray-300">
+            <tr className="text-left border-b border-gray-200 dark:border-slate-700">
+              <th className="px-5 py-3">#</th>
+              <th className="px-5 py-3">User</th>
+              <th className="px-5 py-3">Email</th>
+              <th className="px-5 py-3">Role</th>
+              <th className="px-5 py-3 text-center">Status</th>
+              <th className="px-5 py-3 text-center">Action</th>
             </tr>
           </thead>
 
-          <tbody className="bg-gray-50 dark:bg-slate-900 divide-y divide-gray-300 dark:divide-gray-700">
+          <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
             {users.map((user, idx) => (
               <tr
-                key={idx}
-                className="hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors duration-200"
+                key={user.id}
+                className="hover:bg-gray-50 dark:hover:bg-slate-700/40 transition"
               >
-                <td className="px-5 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
+                {/* INDEX */}
+                <td className="px-5 py-4 text-gray-500 dark:text-gray-400">
                   {idx + 1}
                 </td>
-                <td className="px-5 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
-                  {user.firstname} {user.lastname}
+
+                {/* USER */}
+                <td className="px-5 py-4 flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">
+                    {user.avatar ? (
+                      <img
+                        src={`${BASE_URL}${user.avatar}`}
+                        alt={`${user.first_name} ${user.last_name}`}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <FaUser className="text-gray-500 dark:text-gray-300 text-sm" />
+                    )}
+                  </div>
+
+                  <span className="text-gray-800 dark:text-white font-medium">
+                    {user.first_name} {user.last_name}
+                  </span>
                 </td>
-                <td className="px-5 py-3 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+
+                {/* EMAIL */}
+                <td className="px-5 py-4 text-gray-500 dark:text-gray-400">
                   {user.email}
                 </td>
-                <td className="px-5 py-3">
+
+                {/* ROLE */}
+                <td className="px-5 py-4">
                   <span
-                    className={`${
-                      user.role === "admin"
-                        ? "bg-green-100 text-sky-500 dark:bg-green-900 dark:text-white"
-                        : "bg-purple-100 text-sky-500 dark:bg-purple-800 dark:text-white"
-                    } px-3 py-2 rounded text-xs font-semibold
-                   `}
+                    className={`px-3 py-1 rounded-full text-xs font-semibold
+                      ${
+                        user.role === "admin"
+                          ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300"
+                          : "bg-indigo-100 text-indigo-700 dark:bg-indigo-900 dark:text-indigo-300"
+                      }`}
                   >
                     {user.role}
                   </span>
                 </td>
 
-                <td className="px-5 py-3 whitespace-nowrap text-sm text-gray-700 dark:text-gray-200">
-                  {user.dateOfBirth}
+                {/* STATUS */}
+
+                <td className="px-4 py-3 text-center">
+                  <button
+                    onClick={() => handleActivate(user.id)}
+                    disabled={user.status === "active"}
+                    className={`px-3 py-1 rounded-md text-xs font-semibold
+                      ${
+                        user.status === "active"
+                          ? "bg-gray-400 text-green-900 cursor-not-allowed"
+                          : "bg-orange-500 hover:bg-orange-600 text-black"
+                      }`}
+                  >
+                    {user.status === "active" ? "Active" : "Pending"}
+                  </button>
                 </td>
-                <td className="px-5 py-3">
-                  <div className="w-10 h-10 bg-gray-200 rounded-full dark:bg-gray-700 mx-auto object-contain">
-                    <img src={avatorImage} alt="" />
-                  </div>
-                </td>
-                <td className="px-5 py-3 text-center">
-                  <span className="px-3 py-1 rounded text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">
-                    {user.status}
-                  </span>
-                </td>
-                <td className="px-5 py-3 text-center space-x-2">
-                  <button className="px-2 py-1 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-md transition">
+
+                {/* ACTION */}
+                <td className="px-5 py-4 text-center">
+                  <button
+                    className="
+                    px-3 py-1.5 rounded-lg
+                    bg-blue-600 hover:bg-blue-700
+                    text-white text-xs font-medium
+                    transition"
+                  >
                     View
                   </button>
                 </td>

@@ -7,7 +7,7 @@ import { UsersChart } from "../../components/dashboardComponent/UsersChart";
 
 export const Dashboard = () => {
   return (
-    <section className="w-full space-y-6">
+    <section className="w-full space-y-6 mb-20">
       {/* ================= STATS CARDS ================= */}
 
       <CategoryCard />
@@ -22,14 +22,14 @@ export const Dashboard = () => {
         <PlacesChart />
         <UsersChart />
       </div>
-      <div
+      {/* <div
         className="grid grid-cols-1 gap-6
                    bg-white dark:bg-slate-800
                    p-4  border-t border-gray-200 dark:border-slate-700"
-      >
-        {/* charts */}
-        <CityCategoPlaceChart />
-      </div>
+      > */}
+      {/* charts */}
+      {/* <CityCategoPlaceChart /> */}
+      {/* </div> */}
 
       {/* ================= USERS LIST ================= */}
       <UserListInfoDashboard />
