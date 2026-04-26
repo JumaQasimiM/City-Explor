@@ -6,6 +6,7 @@ import {
   FaArrowLeft,
   FaStar,
 } from "react-icons/fa";
+import { BASE_URL } from "../api/ApiUrl";
 
 import { useBlogAuthor, useBlogById } from "../hooks/useBlogs";
 import { BlogComments } from "../components/BlogComments";
@@ -16,7 +17,6 @@ import restaurant1 from "../assets/restaurant1.jpg";
 export const BlogDetail = () => {
   const { id } = useParams();
   const { data: blog, loading, error } = useBlogById(id);
-  const { data: author } = useBlogAuthor(blog?.user_id);
 
   if (loading) {
     return (
@@ -57,10 +57,10 @@ export const BlogDetail = () => {
           </h1>
           <div className="flex flex-wrap justify-center gap-2 md:gap-6 text-white/80 text-md mt-6">
             <span className="flex items-center gap-2 text-bold text-white">
-              <FaUserAlt /> {author?.firstname || "Author"}
+              <FaUserAlt /> {blog.user?.first_name || "Author"}
             </span>
             <span className="flex items-center gap-2 text-bold text-white">
-              <FaCalendarAlt /> {blog.created_at}
+              <FaCalendarAlt /> {blog.updated_at}
             </span>
             <span className="flex items-center gap-2 text-bold text-white">
               <FaEye /> {blog.views || 0} views
@@ -88,7 +88,7 @@ export const BlogDetail = () => {
 
               <h1 className="block md:hidden">
                 <span className="flex items-center gap-2 text-bold text-gray-500">
-                  <FaCalendarAlt /> {blog.created_at}
+                  <FaCalendarAlt /> {blog.updated_at}
                 </span>
               </h1>
             </div>
@@ -97,7 +97,7 @@ export const BlogDetail = () => {
             hidden md:block text-gray-600"
             >
               <span className="flex items-center gap-2 text-bold text-gray-500">
-                <FaCalendarAlt /> {blog.created_at}
+                <FaCalendarAlt /> {blog.updated_at}
               </span>
             </h1>
           </div>
@@ -113,18 +113,6 @@ export const BlogDetail = () => {
           <p className="text-lg leading-relaxed text-gray-700 dark:text-gray-300">
             {blog.description}
           </p>
-
-          {/* Tags */}
-          <div className="flex flex-wrap gap-3 pt-6">
-            {blog.tags?.map((tag, index) => (
-              <span
-                key={index}
-                className="px-4 py-1 bg-emerald-100 dark:bg-emerald-900/20 text-green-700 dark:text-green-300 text-sm rounded-full hover:scale-105 hover:bg-emerald-200 dark:hover:bg-emerald-800 transition-all"
-              >
-                #{tag}
-              </span>
-            ))}
-          </div>
         </article>
 
         {/* ===== SIDEBAR ===== */}
@@ -132,12 +120,12 @@ export const BlogDetail = () => {
           {/* Author Card */}
           <div className="bg-white dark:bg-slate-900 rounded shadow-2xl p-8 text-center backdrop-blur-md hover:scale-105 transition-transform duration-300">
             <img
-              src={restaurant1}
+              src={`${blog.user?.avatar}`}
               alt="author"
               className="w-28 h-28 mx-auto rounded-full object-cover border-3 border-emerald-500 shadow-xl mb-4"
             />
             <h3 className="font-semibold text-xl text-gray-500">
-              {author?.firstname || "Author"}
+              {blog.user?.first_name || "Author"}
             </h3>
             <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
               Travel writer & local guide
