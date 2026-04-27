@@ -9,8 +9,10 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   //  Load user on app start
+  const STORAGE_KEY = "auth";
+
   useEffect(() => {
-    const savedUser = localStorage.getItem("City_user");
+    const savedUser = localStorage.getItem(STORAGE_KEY);
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
@@ -20,24 +22,29 @@ export const AuthProvider = ({ children }) => {
   //  Save user when it changes
   useEffect(() => {
     if (user) {
-      localStorage.setItem("City_user", JSON.stringify(user)); //  save FULL user
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user)); //  save FULL user
     } else {
-      localStorage.removeItem("City_user");
+      localStorage.removeItem(STORAGE_KEY);
     }
   }, [user]);
 
-  const login = async (email, password) => {
+  const login = async (username, password) => {
     setLoading(true);
     setError(null);
 
     try {
-      const result = await loginRequest(email, password);
-
+      const result = await loginRequest(username, password);
+      console.log("LOGIN RESULT:", result);
       if (!result.isLoggedIn) {
         setError(result.error || "Login failed");
         setUser(null);
       } else {
-        setUser(result.user); // { id, role, token, ... }
+        // { user, token, ... }
+        setUser({
+          user: result.user,
+          access: result.access,
+          refresh: result.refresh,
+        });
       }
     } catch (err) {
       setError("Something went wrong");
@@ -48,6 +55,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem(STORAGE_KEY);
     setUser(null);
   };
 
