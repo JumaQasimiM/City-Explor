@@ -36,10 +36,10 @@ export const Setting = () => {
   // =============================
   // Profile States
   // =============================
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [first_name, setFirstname] = useState("");
+  const [last_name, setLastname] = useState("");
   const [email, setEmail] = useState("");
-  const [dob, setDob] = useState("");
+  const [bio, setBio] = useState("");
 
   // =============================
   // Password States
@@ -59,10 +59,10 @@ export const Setting = () => {
   // =============================
   useEffect(() => {
     if (user) {
-      setFirstname(user.firstname || "");
-      setLastname(user.lastname || "");
-      setEmail(user.email || "");
-      setDob(user.dateOfBirth || "");
+      setFirstname(user?.user?.first_name || "");
+      setLastname(user?.user?.last_name || "");
+      setEmail(user?.user?.email || "");
+      setBio(user?.user?.bio || "");
     }
   }, [user]);
 
@@ -95,13 +95,13 @@ export const Setting = () => {
     if (!user) return;
 
     const payload = {
-      firstname,
-      lastname,
+      first_name,
+      last_name,
       email,
-      dateOfBirth: dob,
+      bio,
     };
 
-    const res = await updateUser(payload, user.id);
+    const res = await updateUser(payload, user?.user?.id);
 
     if (res) {
       toast.success("Profile updated successfully");
@@ -122,11 +122,6 @@ export const Setting = () => {
       return;
     }
 
-    if (user.password !== currentPassword) {
-      toast.error("Current password is incorrect");
-      return;
-    }
-
     if (newPassword !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -137,7 +132,7 @@ export const Setting = () => {
       return;
     }
 
-    const res = await changePassword({ password: newPassword }, user.id);
+    const res = await changePassword({ password: newPassword }, user?.user?.id);
 
     if (res) {
       toast.success("Password updated successfully");
@@ -161,7 +156,7 @@ export const Setting = () => {
 
     if (!confirmed) return;
 
-    const success = await deleteUser(user.id);
+    const success = await deleteUser(user?.user?.id);
 
     if (success) {
       toast.success("Account deleted successfully");
@@ -179,13 +174,13 @@ export const Setting = () => {
   // ====================
 
   // loading and error for update user
-  if (updateLoading) return <Loader />;
-  if (updateError) return <ErrorMessage />;
-  // loading and error for delete user
-  if (deleteLoading) return <Loader />;
-  // loading and error for change password user
-  if (passwordLoading) return <Loader />;
-  if (passwordError) return <ErrorMessage />;
+  // if (updateLoading) return <Loader />;
+  // if (updateError) return <ErrorMessage />;
+  // // loading and error for delete user
+  // if (deleteLoading) return <Loader />;
+  // // loading and error for change password user
+  // if (passwordLoading) return <Loader />;
+  // if (passwordError) return <ErrorMessage />;
 
   return (
     <section className="min-h-screen bg-gray-50 dark:bg-slate-900 p-6 space-y-8 rounded-xl">
@@ -208,8 +203,8 @@ export const Setting = () => {
           <div className="flex items-center gap-6 mb-8">
             {/* <FaUserCircle className="text-7xl text-gray-300" /> */}
             <img
-              src={logo}
-              alt={user.firstname}
+              src={user?.user?.avatar}
+              alt={user?.user?.first_name}
               className="w-15 h-15 rounded-full outline-3 outline-green-400"
             />
             <div>
@@ -222,7 +217,7 @@ export const Setting = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <input
                 type="text"
-                value={firstname}
+                value={first_name}
                 onChange={(e) => setFirstname(e.target.value)}
                 placeholder="First Name"
                 className="input"
@@ -230,7 +225,7 @@ export const Setting = () => {
 
               <input
                 type="text"
-                value={lastname}
+                value={last_name}
                 onChange={(e) => setLastname(e.target.value)}
                 placeholder="Last Name"
                 className="input"
@@ -245,9 +240,10 @@ export const Setting = () => {
               />
 
               <input
-                type="date"
-                value={dob}
-                onChange={(e) => setDob(e.target.value)}
+                type="text"
+                value={bio}
+                placeholder="Bio"
+                onChange={(e) => setBio(e.target.value)}
                 className="input"
               />
             </div>

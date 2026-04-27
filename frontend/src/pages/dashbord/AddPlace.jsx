@@ -8,11 +8,9 @@ import { toast } from "react-toastify";
 import { InputField } from "../../components/helper/Input";
 import { SelectField } from "../../components/helper/SelectField";
 import { ApiUrl } from "../../api/ApiUrl";
-
 export const AddPlace = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { user: loggedInUser } = useGetUserById(user?.id);
 
   const { cities } = useCities();
   const { categories } = useCategories();
@@ -25,7 +23,6 @@ export const AddPlace = () => {
     address: "",
     category: "",
     city: "",
-    owner: "",
     opening_hours: "",
     contact_number: "",
     website: "",
@@ -35,28 +32,14 @@ export const AddPlace = () => {
   const [images, setImages] = useState([]);
   const [preview, setPreview] = useState([]);
 
-  /* ================= FETCH SERVICES ================= */
+  // fetch services
   useEffect(() => {
     fetch(`${ApiUrl}/services/`)
       .then((res) => res.json())
-      .then((data) => setServicesList(data))
+      .then(setServicesList)
       .catch(() => toast.error("Failed to load services"));
   }, []);
 
-  /* ================= OWNER ================= */
-  useEffect(() => {
-    if (loggedInUser) {
-      setForm((prev) => ({
-        ...prev,
-        owner: 2,
-        // owner: loggedInUser.id, // ✅ درست
-      }));
-    }
-  }, [loggedInUser]);
-
-  /* ================= HANDLERS ================= */
-
-  // ✅ مهم: تبدیل به number
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -87,59 +70,50 @@ export const AddPlace = () => {
     setPreview(previewUrls);
   };
 
-  /* ================= SUBMIT ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user?.access) {
+      toast.error("Not authenticated");
+      return;
+    }
+
     const formData = new FormData();
 
-    formData.append("name", form.name);
-    formData.append("description", form.description);
-    formData.append("address", form.address);
+    Object.entries(form).forEach(([key, value]) => {
+      if (key === "services") return;
+      formData.append(key, value);
+    });
 
-    // ✅ مهم: ID عددی
-    formData.append("category", form.category);
-    formData.append("city", form.city);
-
-    formData.append("owner", form.owner);
-
-    formData.append("opening_hours", form.opening_hours);
-    formData.append("contact_number", form.contact_number);
-    formData.append("website", form.website);
-
-    // ✅ درست برای ManyToMany
     form.services.forEach((s) => {
       formData.append("services", s);
     });
 
-    // اگر backend image field داره
     images.forEach((img) => {
       formData.append("images", img);
     });
 
-    // 🔍 debug
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
     try {
       const res = await fetch(`${ApiUrl}/places/`, {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${user.access}`,
+        },
         body: formData,
       });
 
       const data = await res.json();
 
       if (!res.ok) {
-        console.error(data); // 👈 خیلی مهم
-        throw new Error("Error");
+        console.error(data);
+        throw new Error("Failed");
       }
 
-      toast.success("Place created successfully ✅");
+      toast.success("Place created ");
       navigate("/dashboard/places");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to create place ❌");
+      toast.error("Failed to create place ");
     }
   };
 
@@ -173,7 +147,7 @@ export const AddPlace = () => {
 
         {/* LOCATION */}
         <Card title="Location">
-          <div className="grid md:grid-cols-3 gap-4">
+          <div className="grid md:grid-cols-2 gap-4">
             <InputField
               label="Address"
               name="address"
@@ -188,16 +162,6 @@ export const AddPlace = () => {
               onChange={handleChange}
               options={cities}
               optionLabel="name"
-            />
-
-            <InputField
-              label="Owner"
-              value={
-                loggedInUser
-                  ? `${loggedInUser.first_name} ${loggedInUser.last_name}`
-                  : ""
-              }
-              disabled
             />
           </div>
         </Card>

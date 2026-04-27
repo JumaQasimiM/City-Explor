@@ -68,7 +68,9 @@ function App() {
               <Route path="settings" element={<Setting />} />
 
               {/* Admin only */}
-              <Route element={<ProtectedRoutes allowRole={["admin"]} />}>
+              <Route
+                element={<ProtectedRoutes allowRole={["admin", "viewer"]} />}
+              >
                 <Route path="users" element={<Users />} />
                 <Route path="cities" element={<Cities />} />
                 <Route path="countries" element={<Country />} />
@@ -77,7 +79,7 @@ function App() {
 
               {/* Admin + Owner */}
               <Route
-                element={<ProtectedRoutes allowRole={["admin", "owner"]} />}
+                element={<ProtectedRoutes allowRole={["admin", "business"]} />}
               >
                 <Route path="places">
                   <Route index element={<Places />} />
@@ -88,7 +90,9 @@ function App() {
               {/* Admin + writer (guide) */}
               {/* <Route
                 element={
-                  <ProtectedRoutes allowRole={["admin", "owner", "writer"]} />
+                  <ProtectedRoutes
+                    allowRole={["admin", "business", "viewer"]}
+                  />
                 }
               >
                 <Route path="blogs">

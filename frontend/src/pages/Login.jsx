@@ -6,16 +6,18 @@ import backgroundImage from "../assets/jaghori2.jpg";
 import { useAuth } from "../context/AuthContext";
 
 export const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   // from auth context -- useAuth hook
-  const { user = [], login, loading, error } = useAuth();
+  // user =[] wrong --> user have to be an object not an array of data
+  const { user, login, loading, error } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    if (!email) {
-      toast.error("Email is requered");
+    if (loading) return;
+    if (!username) {
+      toast.error("Username is requered");
       return;
     }
     if (!password) {
@@ -27,27 +29,34 @@ export const Login = () => {
       return;
     }
     // email validation
-    const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailExp.test(email)) {
-      toast.error("Enter a valid Email");
-      return;
-    }
+    // const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // if (!emailExp.test(email)) {
+    //   toast.error("Enter a valid Email");
+    //   return;
+    // }
 
     // login create in authContext
-    await login(email, password);
+    await login(username, password);
   };
   // role base access controll
   useEffect(() => {
-    if (user?.role === "admin") {
-      // toast.success(`Welcome ${user.firstname}`);
+    if (!user) return;
+
+    if (user.user.role === "admin") {
       navigate("/dashboard", { replace: true });
-    } else if (user?.role === "owner") {
-      navigate("/dashboard/places");
+    } else if (user.user.role === "business") {
+      navigate("/dashboard/places", { replace: true });
+    } else {
+      navigate("/", { replace: true });
     }
+  }, [user, navigate]);
+
+  // show error
+  useEffect(() => {
     if (error) {
       toast.error(error);
     }
-  }, [user, error, navigate]);
+  }, [error]);
   return (
     <section
       style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -72,16 +81,14 @@ export const Login = () => {
         <form className="space-y-6" onSubmit={handleLogin}>
           <div className="flex flex-col gap-2">
             <label className="form-label">
-              Username or Email{" "}
-              <small className="text-red-700">
-                [test User: testuser@gmail.com]
-              </small>
+              Username{" "}
+              <small className="text-red-700">[test User: testUser]</small>
             </label>
             <input
               type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@email.com"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="username"
               className="input"
             />
           </div>
@@ -102,12 +109,13 @@ export const Login = () => {
 
           <button
             type="submit"
+            disabled={loading}
             className="w-full mt-2 py-3 rounded text-lg font-semibold text-white 
             bg-gradient-to-r from-blue-600 to-indigo-600
             hover:from-blue-700 hover:to-indigo-700
             shadow-lg hover:shadow-xl transition-all"
           >
-            Login
+            {loading ? "loading..." : "login"}
           </button>
         </form>
 

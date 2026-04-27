@@ -67,14 +67,14 @@ export const DashboardLayout = () => {
     },
   ];
 
-  const navItems =
-    user?.role === "admin"
+  const navItems = !user
+    ? []
+    : user?.user?.role === "admin"
       ? [...adminItems, ...commonItems]
       : [...ownerItems, ...commonItems];
-
   const handleLogout = () => {
     logout();
-    navigate("/");
+    navigate("/login", { replace: true });
   };
 
   const toggleSidebar = () => setShowSidebar(!showSidebar);
@@ -103,7 +103,7 @@ export const DashboardLayout = () => {
             className="w-16 h-16 rounded-full border-2 border-cyan-600"
           />
           <div>
-            <h2 className="text-lg font-semibold">{user.lastname}</h2>
+            <h2 className="text-lg font-semibold">{user?.user?.last_name}</h2>
             <div className="flex items-center gap-2 text-green-500">
               <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
               <span className="text-sm">online</span>

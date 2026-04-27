@@ -2,6 +2,7 @@ import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
+import { useAuth } from "../context/AuthContext";
 /**
  * custom Hook to fetch users from api
  *
@@ -16,7 +17,7 @@ import emailjs from "@emailjs/browser";
  */
 
 export const useUsers = () => {
-  const { data = [], loading, error, refetch } = useFetch(`${ApiUrl}/users`);
+  const { data = [], loading, error, refetch } = useFetch(`${ApiUrl}/users/`);
 
   return {
     users: data,
@@ -59,6 +60,7 @@ export const useCreateUser = () => {
 // update user
 
 export const useUpdateUser = () => {
+  const { user } = useAuth();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +71,11 @@ export const useUpdateUser = () => {
     try {
       const res = await fetch(`${ApiUrl}/users/${user_id}/`, {
         method: "PATCH",
-        body: payload,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
+        },
+        body: JSON.stringify(payload),
       });
 
       const data = await res.json();
@@ -92,6 +98,7 @@ export const useUpdateUser = () => {
 
 // delete user - DELETE
 export const useDeleteUser = () => {
+  const { user } = useAuth();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const deleteUser = async (user_id) => {
@@ -99,6 +106,9 @@ export const useDeleteUser = () => {
     try {
       const res = await fetch(`${ApiUrl}/users/${user_id}`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user?.access}`,
+        },
       });
 
       if (!res.ok) {
@@ -202,6 +212,7 @@ export const useCheckRepeatEmail = (email) => {
 
 // change password
 export const useChangePassword = () => {
+  const { user } = useAuth();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -210,10 +221,11 @@ export const useChangePassword = () => {
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/users/${user_id}`, {
+      const res = await fetch(`${ApiUrl}/users/${user_id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.access}`,
         },
         body: JSON.stringify(payload),
       });

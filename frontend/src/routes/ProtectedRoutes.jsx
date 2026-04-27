@@ -15,14 +15,15 @@ export const ProtectedRoutes = ({ allowRole }) => {
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-  // if role is exist and the exist role inlude the user role
 
-  if (allowRole && !allowRole.includes(user.role)) {
-    if (allowRole === "owner") {
+  // ✅ همیشه array check
+  if (allowRole && !allowRole.includes(user?.user?.role)) {
+    // redirect based on role
+    if (user?.user?.role === "business") {
       return <Navigate to="/dashboard/places" replace />;
     }
+
     return <Navigate to="/" replace />;
-    // return <Navigate to="/403" replace />;
   }
 
   return <Outlet />;
