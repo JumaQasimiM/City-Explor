@@ -34,9 +34,9 @@ export const Places = () => {
     if (!places || !user) return;
 
     const data =
-      user.role === "admin"
+      user?.user?.role === "admin"
         ? places
-        : places.filter((p) => p.user_id === user.id);
+        : places.filter((p) => p.owner === user?.user?.id);
 
     setBasePlaces(data);
     setFilteredPlaces(data);
@@ -68,11 +68,8 @@ export const Places = () => {
 
   /* ================= ROW ================= */
   const PlaceRow = ({ place, index }) => {
-    const { data: category } = usePlaceCategory(place.category_id);
-    const { data: owner } = usePlaceOwner(place.user_id);
-    const { data: city } = usePlaceCity(place.city_id);
-
-    const canManage = user.role === "admin" || place.user_id === user.id;
+    const canManage =
+      user?.user?.role === "admin" || place.owner === user?.user?.id;
 
     return (
       <tr className="hover:bg-slate-100 dark:hover:bg-slate-700/40 transition">
@@ -88,12 +85,10 @@ export const Places = () => {
         </td>
 
         <td className="px-4 py-3 text-slate-500">
-          {place.owner_detail
-            ? `${place.owner_detail.first_name} ${place.owner_detail.last_name}`
-            : "Loading..."}
+          {`${place.owner_detail.first_name} ${place.owner_detail.last_name}`}
         </td>
 
-        <td className="px-4 py-3">{place.city_detail?.name || "Loading..."}</td>
+        <td className="px-4 py-3">{place.city_detail?.name}</td>
 
         <td className="px-4 py-3">
           <span
