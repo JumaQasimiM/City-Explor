@@ -57,6 +57,8 @@ export const DashboardLayout = () => {
     },
   ];
   const ownerItems = [
+    { name: "Dashboard", to: "/dashboard", icon: <MdDashboard /> },
+
     {
       name: "Places",
       icon: <HiMiniHomeModern />,
