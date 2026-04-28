@@ -10,17 +10,30 @@ import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { FaMapMarkerAlt, FaUser, FaTag } from "react-icons/fa";
 
+import { useAuth } from "../../context/AuthContext";
+import { useEffect, useState } from "react";
 export const PlacesListDashboard = () => {
+  // fitler place owner base
+  const [basePlace, setBasePlaces] = useState([]);
+  const [filterOwnerBasePlace, setFilterOwnerBasePlace] = useState([]);
+
+  // get all places from api
   const { places = [], loading, error } = usePlaces();
+  const { user } = useAuth();
+  useEffect(() => {
+    if (!places || !user) return;
+    const data =
+      user?.user?.role === "admin"
+        ? places
+        : places.filter((place) => place.owner == user?.user?.id);
+    setBasePlaces(data);
+    setFilterOwnerBasePlace(data);
+  }, [places, user]);
 
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
 
   const PlaceRow = ({ place, index }) => {
-    const { data: owner } = usePlaceOwner(place.user_id);
-    const { data: city } = usePlaceCity(place.city_id);
-    const { data: category } = usePlaceCategory(place.category_id);
-
     return (
       <tr
         className="
@@ -59,7 +72,7 @@ export const PlacesListDashboard = () => {
             className={`
               inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold
               ${
-                category?.name === "Hospital"
+                place?.category_detail?.name === "Hospital"
                   ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
                   : category?.name === "Restaurant"
                     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
@@ -126,7 +139,7 @@ export const PlacesListDashboard = () => {
           </thead>
 
           <tbody>
-            {places.map((place, index) => (
+            {filterOwnerBasePlace.map((place, index) => (
               <PlaceRow key={place.id} place={place} index={index} />
             ))}
           </tbody>
