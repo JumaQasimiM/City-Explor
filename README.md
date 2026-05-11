@@ -1,16 +1,15 @@
-# CITY EXPLOR
+# BeyondJA — Explore Beyond Jaghori
 
-City Explor is a modern, frontend-focused web application built with React.js that allows users to explore cities, places, and related content through a clean, responsive UI and a powerful role-based dashboard.
+BeyondJA is a modern full-stack city exploration platform built with React.js and Django REST Framework.
+The platform allows users to discover places, cities, local experiences, and community-driven content through a clean UI and a role-based dashboard system.
 
-The project uses JSON Server as a mock backend, simulating real-world REST APIs for learning, development, and frontend architecture practice.
-
-> ⚠️ Note: This project does not include a real backend. All data operations are handled via JSON Server.
+Designed with scalability, responsive design, and modern frontend architecture in mind.
 
 ![React](https://img.shields.io/badge/React-19-%2361DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-7-%646CFF?logo=vite&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-%2338B2AC?logo=tailwindcss&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)
-![JSON Server](https://img.shields.io/badge/JSON%20Server-Mock%20API-orange)
+![DRF]
 ![Status](https://img.shields.io/badge/Status-Completed-success)
 
 ## 🚀 Live Overview
@@ -24,6 +23,10 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 📱 Responsive & mobile-first design
 
 ⚡ Smooth UI interactions
+
+🔎 Search & filtering system
+
+🌙 Dark mode support
 
 ## ER DIAGRAM MODEL
 
@@ -43,27 +46,26 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 ![Framer Motion](https://img.shields.io/badge/Framer_Motion-Animations-0055FF?logo=framer)
 ![Custom Hooks](https://img.shields.io/badge/React-Custom_Hooks-lightblue)
 
+Frontend
+
 - React.js
-
+- Vite
 - Tailwind CSS
-
-- JavaScript (ES6+)
-
-- JSON Server (Mock Backend)
-
-- REST API Simulation
-
 - React Router DOM
-
-- React Icons
-
 - Framer Motion
-
+- React Icons
 - React Toastify
-
 - Context API
-
 - Custom Hooks
+- Recharts
+
+Backend
+
+- Django
+- Django REST Framework
+- JWT Authentication
+- SQLite / PostgreSQL
+- Django Filters
 
 # Pages & Features
 
@@ -72,8 +74,10 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 - Home
 
 - Places
+- Place Details
 
 - Blog
+- Blog Details
 
 - About
 
@@ -101,6 +105,8 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 - Countries Management
 
+- Analytics Charts
+
 - Settings
 
 ### 🔐 Access Control:
@@ -109,9 +115,18 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
     Admin: Full access
 
-    Owner: Manage own places
+    Business: Manage own places
 
-    User: Limited access
+    Viewer: Limited access - Explore content only
+
+Authentication
+
+The project uses:
+
+- JWT Authentication
+- Protected Routes
+- Role-based authorization
+- Persistent login state
 
 ### Project Folder Structure
 
@@ -134,7 +149,7 @@ The project uses JSON Server as a mock backend, simulating real-world REST APIs 
 
 - Start Date: October 2025
 
-- End Date: January 25, 2026
+- End Date: 02,05, 2026
 
 ## Core Concepts & Techniques
 
@@ -181,7 +196,7 @@ The project heavily relies on custom hooks to keep components clean and reusable
 
 - Simulating authentication without a real backend
 
-- Role-based authorization using mock data
+- Role-based authorization
 
 - Managing shared state across the dashboard
 
@@ -195,7 +210,7 @@ The project heavily relies on custom hooks to keep components clean and reusable
 
 - Building real-world dashboards with React
 
-- Working with mock APIs (JSON Server)
+- Working with APIs (DRF)
 
 - Advanced state management using Context API
 
