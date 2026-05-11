@@ -1,6 +1,7 @@
 import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 /**
  * custom Hook to fetch Categories from api
@@ -41,29 +42,34 @@ export const useCategoryById = (id) => {
 export const useCreateCategory = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const createCategory = async (payload) => {
+    if (!user?.access) throw new Error("Not authenticated");
+
     setLoading(true);
     setError(null);
 
     try {
       const res = await fetch(`${ApiUrl}/categories/`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
+        },
         body: JSON.stringify(payload),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Failed to create category");
+        throw new Error(data?.message || "Failed to create category");
       }
 
-      const data = await res.json();
       return data;
     } catch (err) {
-      const message = err.message || "Something went wrong";
-      setError(message);
-      throw new Error(message);
+      setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -77,52 +83,68 @@ export const useCreateCategory = () => {
 export const useDeleteCategory = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
-  const deleteCategory = async (category_id) => {
+  const deleteCategory = async (id) => {
+    if (!user?.access) throw new Error("Not authenticated");
+
     setLoading(true);
+    setError(null);
+
     try {
-      const res = await fetch(`${ApiUrl}/categories/${category_id}/`, {
+      const res = await fetch(`${ApiUrl}/categories/${id}/`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.access}`,
+        },
       });
+
       if (!res.ok) {
-        const text = await res.text();
-        throw new Error(text || "Failed to create category");
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.message || "Delete failed");
       }
-      await res.json();
-      return true;
-    } catch (error) {
-      setError(error.message);
-      throw new Error(error.message);
+
+      return true; // ✅ مهم
+    } catch (err) {
+      setError(err.message);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
-  return { deleteCategory, error, loading };
+
+  return { deleteCategory, loading, error };
 };
 // edite category
 export const useEditCategory = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
-  const updateCategory = async (category_id, payload) => {
+  const updateCategory = async (id, payload) => {
+    if (!user?.access) throw new Error("Not authenticated");
+
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/categories/${category_id}/`, {
+      const res = await fetch(`${ApiUrl}/categories/${id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
         body: JSON.stringify(payload),
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.message || "Failed to update category");
+        throw new Error(
+          data?.detail || data?.message || "Something went wrong",
+        );
       }
 
-      const data = await res.json();
       return data;
     } catch (err) {
       setError(err.message);
@@ -132,5 +154,5 @@ export const useEditCategory = () => {
     }
   };
 
-  return { updateCategory, error, loading };
+  return { updateCategory, loading, error };
 };

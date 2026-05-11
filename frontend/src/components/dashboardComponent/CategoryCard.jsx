@@ -5,23 +5,24 @@ import {
   FaArrowTrendDown,
   FaCommentDots,
 } from "react-icons/fa6";
+import { MdOutlineCategory } from "react-icons/md";
 import { RiHotelFill } from "react-icons/ri";
 import { useUsers } from "../../hooks/useUsers";
 import { usePlaces } from "../../hooks/usePlaces";
 import { useCities } from "../../hooks/useCities";
-import { useComments } from "../../hooks/useComments";
+import { useCategories } from "../../hooks/useCategories";
 
 export const CategoryCard = () => {
   const { users = [] } = useUsers();
   const { places = [] } = usePlaces();
   const { cities = [] } = useCities();
-  const { blogscomments = [], placecomments = [] } = useComments();
-  const comments = blogscomments.length + placecomments.length;
-  const categories = [
+  const { categories } = useCategories();
+
+  const categories_items = [
     {
-      label: "Comments",
-      icon: <FaCommentDots />,
-      count: comments || 0,
+      label: "Categories",
+      icon: <MdOutlineCategory />,
+      count: categories.length || 0,
       color: "from-orange-400 to-orange-600",
       monthly: 23,
       trend: "up",
@@ -33,7 +34,7 @@ export const CategoryCard = () => {
       count: users.length || 0,
       color: "from-sky-400 to-sky-600",
       monthly: 45,
-      trend: "down",
+      trend: "up",
       date: "01.10.2026",
     },
     {
@@ -58,7 +59,7 @@ export const CategoryCard = () => {
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 my-6">
-      {categories.map((item, index) => (
+      {categories_items.map((item, index) => (
         <div
           key={index}
           className="relative p-2 bg-white dark:bg-slate-700 rounded

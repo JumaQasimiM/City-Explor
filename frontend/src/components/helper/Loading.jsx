@@ -1,20 +1,15 @@
-export const Loader = ({ text = "Loading...", fullScreen = false }) => {
+export const Loader = ({ text = "Loading…", fullScreen = false }) => {
   return (
     <div
       className={`flex flex-col items-center justify-center ${
-        fullScreen ? "min-h-screen" : "py-16"
+        fullScreen ? "min-h-screen" : "py-12"
       }`}
     >
-      {/* Spinner */}
-      <div className="relative">
-        <div className="h-10 w-10 rounded-full border-4 border-gray-200"></div>
-        <div className="absolute top-0 left-0 h-10 w-10 rounded-full border-4 border-teal-600 border-t-transparent animate-spin"></div>
-      </div>
+      {/* spinner */}
+      <div className="h-8 w-8 rounded-full border-2 border-gray-300 border-t-gray-700 dark:border-gray-700 dark:border-t-gray-300 animate-spin" />
 
-      {/* Text */}
-      <p className="mt-4 text-sm font-medium text-gray-600 animate-pulse">
-        {text}
-      </p>
+      {/* text */}
+      <p className="mt-3 text-xs text-gray-500 dark:text-gray-400">{text}</p>
     </div>
   );
 };

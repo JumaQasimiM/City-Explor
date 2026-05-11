@@ -36,7 +36,7 @@ export const UsersChart = () => {
       </div>
 
       {/* ===== CHART ===== */}
-      <div className="w-full h-[320px]">
+      <div className="w-full h-[250px]">
         <ResponsiveContainer>
           <PieChart>
             <Pie

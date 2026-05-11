@@ -19,10 +19,15 @@ export const usePlaceGrowth = (period) => {
           },
         });
 
+        if (!res.ok) {
+          throw new Error(`Status: ${res.status}`);
+        }
+
         const json = await res.json();
         setData(json);
       } catch (err) {
         console.error(err);
+        setData([]);
       } finally {
         setLoading(false);
       }
@@ -30,6 +35,5 @@ export const usePlaceGrowth = (period) => {
 
     fetchData();
   }, [period, user]);
-
   return { data, loading };
 };

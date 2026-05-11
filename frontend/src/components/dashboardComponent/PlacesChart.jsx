@@ -51,7 +51,7 @@ export const PlacesChart = () => {
       </div>
 
       {/* CHART */}
-      <div className="w-full h-[300px]">
+      <div className="w-full h-[250px]">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie

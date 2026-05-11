@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { EditCity } from "./EditModals/EditCity";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { CityCategoPlaceChart } from "../../components/dashboardComponent/CityPlaceChart";
+import { useAuth } from "../../context/AuthContext";
 
 export const Cities = () => {
   /* ================= STATE ================= */
@@ -17,11 +18,17 @@ export const Cities = () => {
   const [formError, setFormError] = useState("");
   const [cityEditId, setCityEditId] = useState(null);
 
+  /* ====== use auth for check the user role ======== */
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
+
   /* ================= DATA ================= */
   const { cities, loading, error, hasCity, refetch } = useCities();
+
   const { countries } = useCountries();
-  const { createCity, loading: creating } = useCreateCity();
-  const { deleteCity, loading: deleting } = useDeleteCity();
+  const { createCity, loading: creating, error: createError } = useCreateCity();
+  const { deleteCity, loading: deleting, error: deleteError } = useDeleteCity();
 
   /* ================= COUNTRY MAP ================= */
   const countryMap = useMemo(
@@ -38,29 +45,31 @@ export const Cities = () => {
     if (!countryId) return setFormError("Please select a country");
 
     setFormError("");
+    try {
+      await createCity({
+        name: cityName.trim(),
+        country: countryId,
+        description,
+      });
 
-    const success = await createCity({
-      name: cityName.trim(),
-      country: countryId,
-      description,
-    });
-
-    if (success) {
       toast.success("City added successfully");
       setCityName("");
       setCountryId("");
+      setDescription("");
       refetch();
-    } else {
-      toast.error("Failed to add city");
+    } catch (error) {
+      toast.error(error.message);
     }
   };
-
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this city?")) return;
-
-    const success = await deleteCity(id);
-    success ? toast.success("City deleted") : toast.error("Delete failed");
-    success && refetch();
+    try {
+      await deleteCity(id);
+      toast.success("City deleted");
+      refetch();
+    } catch (error) {
+      toast.error(error.message || "Delete failed");
+    }
   };
 
   /* ================= LOADING / ERROR ================= */
@@ -119,13 +128,15 @@ export const Cities = () => {
               focus:ring-2 focus:ring-teal-500 outline-none rounded-md px-4 py-2"
           />
 
-          <button
-            disabled={creating || !cityName || !countryId}
-            className="bg-teal-600 hover:bg-teal-700 text-white font-medium
+          {!isViewer && (
+            <button
+              disabled={creating || !cityName || !countryId}
+              className="bg-teal-600 hover:bg-teal-700 text-white font-medium
               rounded-md px-6 py-2 transition disabled:opacity-50"
-          >
-            {creating ? "Adding..." : "Add City"}
-          </button>
+            >
+              {creating ? "Adding..." : "Add City"}
+            </button>
+          )}
 
           {formError && (
             <p className="md:col-span-3 text-sm text-red-500">{formError}</p>
@@ -133,6 +144,7 @@ export const Cities = () => {
         </form>
 
         {/* ================= CITY LIST ================= */}
+
         {!hasCity ? (
           <NotFoundData text="No cities found" />
         ) : (
@@ -161,25 +173,28 @@ export const Cities = () => {
                     </td>
 
                     <td className="py-3 px-2 text-slate-500 dark:text-slate-300">
-                      {city.country_detail.name}
+                      {city.country_detail?.name}
                     </td>
 
                     <td className="py-3 px-2">
                       <div className="flex justify-end gap-3">
                         <button
+                          disabled={isViewer}
                           onClick={() => setCityEditId(city.id)}
-                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition"
+                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition disabled:cursor-not-allowed"
                         >
                           <FaEdit size={16} />
                         </button>
 
-                        <button
-                          onClick={() => handleDelete(city.id)}
-                          disabled={deleting}
-                          className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
-                        >
-                          <FaTrash size={16} />
-                        </button>
+                        {!isViewer && (
+                          <button
+                            onClick={() => handleDelete(city.id)}
+                            disabled={deleting}
+                            className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
+                          >
+                            <FaTrash size={16} />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

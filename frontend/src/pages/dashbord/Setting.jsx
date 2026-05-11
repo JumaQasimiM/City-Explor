@@ -10,6 +10,8 @@ import {
   useUpdateUser,
 } from "../../hooks/useUsers";
 
+// base api url for show images
+// import { BASE_URL } from "../../api/ApiUrl";
 // logo
 import logo from "../../assets/logo.png";
 export const Setting = () => {
@@ -203,7 +205,8 @@ export const Setting = () => {
           <div className="flex items-center gap-6 mb-8">
             {/* <FaUserCircle className="text-7xl text-gray-300" /> */}
             <img
-              src={user?.user?.avatar}
+              src={`${user?.user?.avatar}`}
+              // src={`${BASE_URL}${user?.user?.avatar}`}
               alt={user?.user?.first_name}
               className="w-15 h-15 rounded-full outline-3 outline-green-400"
             />
@@ -230,7 +233,6 @@ export const Setting = () => {
                 placeholder="Last Name"
                 className="input"
               />
-
               <input
                 type="email"
                 value={email}
@@ -238,7 +240,6 @@ export const Setting = () => {
                 placeholder="Email"
                 className="input"
               />
-
               <input
                 type="text"
                 value={bio}

@@ -22,7 +22,7 @@ export const Advertisment = ({ day = 2 }) => {
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/60 to-transparent" />
 
         {/* CONTENT */}
-        <div className="relative z-10 p-6 sm:p-10 max-w-lg text-white md:ml-20">
+        <div className="relative z-10 p-6 sm:p-10 max-w-full md:max-w-lg text-white md:ml-20">
           {/* label */}
           <span className="text-xs uppercase tracking-widest text-emerald-400">
             Limited Offer

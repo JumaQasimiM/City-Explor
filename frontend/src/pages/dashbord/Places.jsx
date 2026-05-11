@@ -28,13 +28,15 @@ export const Places = () => {
   const { places, error, loading, refetch } = usePlaces();
   const { deletePlace, loading: deleting } = useDeletePlace();
   const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
 
   /* ================= ROLE FILTER ================= */
   useEffect(() => {
     if (!places || !user) return;
 
     const data =
-      user?.user?.role === "admin"
+      role === "admin" || role === "viewer"
         ? places
         : places.filter((p) => p.owner === user?.user?.id);
 
@@ -58,18 +60,21 @@ export const Places = () => {
   const handleDelete = async (id) => {
     if (!confirm("Delete this place?")) return;
 
-    const success = await deletePlace(id);
-    success ? toast.success("Place deleted") : toast.error("Delete failed");
-    success && refetch();
+    try {
+      await deletePlace(id);
+      toast.success("Place deleted");
+      refetch();
+    } catch (error) {
+      toast.error(error.message || "Delete failed");
+    }
   };
 
-  if (loading) return <Loader />;
+  if (loading) return <Loader text={"loading places"} />;
   if (error) return <ErrorMessage />;
 
   /* ================= ROW ================= */
   const PlaceRow = ({ place, index }) => {
-    const canManage =
-      user?.user?.role === "admin" || place.owner === user?.user?.id;
+    const canManage = role === "admin" || place.owner === user?.user?.id;
 
     return (
       <tr className="hover:bg-slate-100 dark:hover:bg-slate-700/40 transition">
@@ -108,19 +113,18 @@ export const Places = () => {
         </td>
 
         <td className="px-4 py-3 font-semibold text-emerald-600">
-          ${place.contact_number}
+          {place.contact_number}
         </td>
 
         <td className="px-4 py-3">
-          {canManage && (
-            <div className="flex justify-center gap-3">
-              <button
-                onClick={() => setPlaceEditId(place.id)}
-                className="p-2 rounded-md text-sky-600 hover:bg-sky-600/10 transition"
-              >
-                <FaEdit />
-              </button>
-
+          <div className="flex justify-center gap-3">
+            <button
+              onClick={() => setPlaceEditId(place.id)}
+              className="p-2 rounded-md text-sky-600 hover:bg-sky-600/10 transition"
+            >
+              <FaEdit />
+            </button>
+            {canManage && (
               <button
                 onClick={() => handleDelete(place.id)}
                 disabled={deleting}
@@ -129,8 +133,8 @@ export const Places = () => {
               >
                 <FaTrash />
               </button>
-            </div>
-          )}
+            )}
+          </div>
         </td>
       </tr>
     );
@@ -184,7 +188,7 @@ export const Places = () => {
                   <th className="px-4 py-3 text-left">City</th>
                   <th className="px-4 py-3 text-left">Category</th>
                   <th className="px-4 py-3 text-left">Address</th>
-                  <th className="px-4 py-3 text-left">Price</th>
+                  <th className="px-4 py-3 text-left">Contact Num</th>
                   <th className="px-4 py-3 text-center">Actions</th>
                 </tr>
               </thead>

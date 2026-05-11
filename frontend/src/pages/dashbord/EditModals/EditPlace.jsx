@@ -11,6 +11,7 @@ import { useEditPlace, usePlaceById } from "../../../hooks/usePlaces";
 
 import { useCities } from "../../../hooks/useCities";
 import { useCategories } from "../../../hooks/useCategories";
+import { useAuth } from "../../../context/AuthContext";
 
 export const EditPlace = ({ id, onClose }) => {
   const { data: place } = usePlaceById(id);
@@ -20,6 +21,10 @@ export const EditPlace = ({ id, onClose }) => {
   const { categories = [] } = useCategories();
 
   const [servicesList, setServicesList] = useState([]);
+  /* ========= auth check the admin have to be =============*/
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
 
   /* ================= STATE ================= */
   const [form, setForm] = useState({
@@ -32,6 +37,8 @@ export const EditPlace = ({ id, onClose }) => {
     opening_hours: "",
     contact_number: "",
     website: "",
+    latitude: "",
+    longitude: "",
     services: [],
   });
 
@@ -57,6 +64,8 @@ export const EditPlace = ({ id, onClose }) => {
       opening_hours: place.opening_hours || "",
       contact_number: place.contact_number || "",
       website: place.website || "",
+      latitude: place.latitude || "",
+      longitude: place.longitude || "",
       services: place.services || [],
     });
   }, [place]);
@@ -97,13 +106,12 @@ export const EditPlace = ({ id, onClose }) => {
       services: form.services,
     };
 
-    const success = await updatePlace(id, payload);
-
-    if (success) {
+    try {
+      await updatePlace(id, payload);
       toast.success("Place updated successfully ");
       onClose();
-    } else {
-      toast.error("Update failed ");
+    } catch (error) {
+      toast.error(error.message || "Update failed ");
     }
   };
 
@@ -111,12 +119,14 @@ export const EditPlace = ({ id, onClose }) => {
 
   return (
     <section className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
-      <div className="relative w-full max-w-5xl bg-white rounded shadow-xl flex flex-col max-h-[90vh]">
+      <div className="relative w-full max-w-5xl bg-white dark:bg-slate-500 rounded shadow-xl flex flex-col max-h-[90vh]">
         {/* HEADER */}
         <header className="flex justify-between items-center px-6 py-4 border-b">
           <div>
             <h2 className="text-xl font-bold">Edit Place</h2>
-            <p className="text-sm text-gray-500">Modify place information</p>
+            <p className="text-sm text-gray-500 dark:text-gray-300">
+              Modify place information
+            </p>
           </div>
 
           <button onClick={onClose} className="text-red-500">
@@ -131,7 +141,7 @@ export const EditPlace = ({ id, onClose }) => {
         >
           {/* GENERAL */}
           <Card title="General">
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
               <InputField
                 label="Name"
                 name="name"
@@ -147,6 +157,14 @@ export const EditPlace = ({ id, onClose }) => {
                 options={categories}
                 optionLabel="name"
               />
+              <SelectField
+                label="City"
+                name="city"
+                value={form.city}
+                onChange={handleChange}
+                options={cities}
+                optionLabel="name"
+              />
             </div>
           </Card>
 
@@ -159,24 +177,17 @@ export const EditPlace = ({ id, onClose }) => {
                 value={form.address}
                 onChange={handleChange}
               />
-
-              <SelectField
-                label="City"
-                name="city"
-                value={form.city}
-                onChange={handleChange}
-                options={cities}
-                optionLabel="name"
-              />
-
               <InputField
-                label="Owner"
-                value={
-                  place.owner_detail
-                    ? `${place.owner_detail.first_name} ${place.owner_detail.last_name}`
-                    : ""
-                }
-                disabled
+                label="Latitude"
+                name="latitude"
+                value={form.latitude}
+                onChange={handleChange}
+              />
+              <InputField
+                label="Longitude"
+                name="longitude"
+                value={form.longitude}
+                onChange={handleChange}
               />
             </div>
           </Card>
@@ -240,13 +251,15 @@ export const EditPlace = ({ id, onClose }) => {
             Cancel
           </button>
 
-          <button
-            onClick={handleSubmit}
-            disabled={loading}
-            className="bg-indigo-600 text-white px-6 py-2 rounded"
-          >
-            {loading ? "Saving..." : "Save"}
-          </button>
+          {!isViewer && (
+            <button
+              onClick={handleSubmit}
+              disabled={loading}
+              className="bg-indigo-600 text-white px-6 py-2 rounded"
+            >
+              {loading ? "Saving..." : "Save"}
+            </button>
+          )}
         </footer>
       </div>
     </section>
@@ -255,7 +268,7 @@ export const EditPlace = ({ id, onClose }) => {
 
 /* CARD */
 const Card = ({ title, children }) => (
-  <div className="bg-gray-50 p-4 rounded">
+  <div className="bg-gray-50 p-4 rounded dark:bg-slate-700">
     <h3 className="font-semibold mb-3">{title}</h3>
     {children}
   </div>

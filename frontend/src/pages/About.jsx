@@ -22,19 +22,19 @@ export const About = () => {
       <div className="max-w-7xl mx-auto px-5">
         {/* ---------------- Hero ---------------- */}
         <div className="text-center mb-20">
-          <h1 className="font-caveat text-4xl md:text-6xl font-bold text-gray-900 dark:text-white">
+          <h1 className="font-quicksand text-2xl md:text-4xl font-bold text-gray-900 dark:text-white">
             Explore Cities <span className="text-green-500">Smarter</span>
           </h1>
 
           <p className="mt-6 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
             Discover new places, explore cities, and create unforgettable
             experiences with{" "}
-            <strong className="font-caveat text-green-500">City Explor</strong>.
+            <strong className="font-quicksand text-green-500">BeyondJA</strong>.
           </p>
         </div>
 
         {/* ---------------- Main Content ---------------- */}
-        <div className="grid md:grid-cols-2 gap-14 items-center">
+        <div className="grid md:grid-cols-2 gap-14 items-center font-quicksand">
           {/* Left Content */}
           <div>
             <h2 className="text-2xl md:text-3xl font-bold mb-6">
@@ -68,12 +68,12 @@ export const About = () => {
           </div>
 
           {/* Right Card */}
-          <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 relative overflow-hidden">
+          <div className="bg-white dark:bg-slate-800 rounded shadow-xl p-8 relative overflow-hidden">
             <div className="absolute -top-10 -right-10 w-40 h-40 bg-green-400/20 rounded-full blur-3xl"></div>
 
             <h3 className="text-xl font-semibold mb-6 text-green-500">
               Why Choose{" "}
-              <span className="font-caveat font-extrabold ">City Explor</span>?
+              <span className="font-quicksand font-extrabold ">BeyondJA</span>?
             </h3>
 
             <ul className="space-y-4 text-gray-600 dark:text-gray-300">
@@ -123,7 +123,7 @@ export const About = () => {
           ].map((item, index) => (
             <div
               key={index}
-              className="bg-white dark:bg-slate-800 rounded-xl shadow p-6 text-center
+              className="bg-white dark:bg-slate-800 rounded shadow p-6 text-center
                          hover:scale-105 transition-transform duration-300"
             >
               <item.icon className="mx-auto text-2xl text-green-500 mb-2" />

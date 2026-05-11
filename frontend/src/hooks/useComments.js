@@ -1,100 +1,71 @@
-import { useFetch } from "./useFetch";
-import { ApiUrl } from "../api/ApiUrl";
 import { useState } from "react";
-
+import { ApiUrl } from "../api/ApiUrl";
+import { useFetch } from "./useFetch";
+import { useAuth } from "../context/AuthContext";
+/* ================= MAIN HOOK ================= */
 export const useComments = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { user } = useAuth();
 
-  // get all comments
-  const { data: blogscomments } = useFetch(`${ApiUrl}/blogscomments`);
-  const { data: placecomments } = useFetch(`${ApiUrl}/placecomments`);
-
-  /* ---------------- CREATE COMMENT ---------------- */
-
-  const createComment = async (endpoint, payload) => {
+  /* -------- CREATE -------- */
+  const createPlaceComment = async (payload) => {
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/${endpoint}`, {
+      const res = await fetch(`${ApiUrl}/placeComments/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to create comment");
-      }
+      if (!res.ok) throw new Error("Create failed");
 
       return await res.json();
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      setError(err.message);
       return null;
     } finally {
       setLoading(false);
     }
   };
 
-  const createBlogComment = (payload) =>
-    createComment("blogscomments", payload);
-
-  const createPlaceComment = (payload) =>
-    createComment("placecomments", payload);
-
-  /* ---------------- DELETE COMMENT ---------------- */
-
-  const deleteComment = async (endpoint, id) => {
+  /* -------- DELETE -------- */
+  const deletePlaceComment = async (id) => {
     setLoading(true);
     setError(null);
 
     try {
-      const res = await fetch(`${ApiUrl}/${endpoint}/${id}`, {
+      const res = await fetch(`${ApiUrl}/placeComments/${id}/`, {
         method: "DELETE",
+        headers: { Authorization: `Bearer ${user.access}` },
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to delete comment");
-      }
+      if (!res.ok) throw new Error("Delete failed");
 
       return true;
     } catch (err) {
-      setError(err.message || "Something went wrong");
+      setError(err.message);
       return false;
     } finally {
       setLoading(false);
     }
   };
 
-  const deleteBlogComment = (id) => deleteComment("blogscomments", id);
-
-  const deletePlaceComment = (id) => deleteComment("placecomments", id);
-
-  /* ---------------- RETURN ---------------- */
-
   return {
-    createBlogComment,
     createPlaceComment,
-    deleteBlogComment,
     deletePlaceComment,
-    blogscomments,
-    placecomments,
-    error,
     loading,
+    error,
   };
 };
-export const useCommentuser = (user_id) => {
-  return useFetch(user_id ? `${ApiUrl}/users/${user_id}` : null);
-};
 
-// get comment by blog id
-export const useCommentByBlogId = (blog_id) => {
-  return useFetch(`${ApiUrl}/blogscomments?blog_id=${blog_id}`);
-};
-
-// get comment by place id
 export const useCommentByPlaceId = (place_id) => {
-  return useFetch(`${ApiUrl}/placecomments?place_id=${place_id}`);
+  return useFetch(
+    place_id ? `${ApiUrl}/placeComments/?place=${place_id}` : null,
+  );
 };

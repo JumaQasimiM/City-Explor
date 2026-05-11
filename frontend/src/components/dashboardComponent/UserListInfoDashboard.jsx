@@ -2,10 +2,20 @@ import { useUsers } from "../../hooks/useUsers";
 import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { FaUser } from "react-icons/fa";
-import { BASE_URL } from "../../api/ApiUrl";
 
+import { useAuth } from "../../context/AuthContext";
+
+// image
+import user_cover from "../../assets/user_cover.png";
+//  for show images
+// import { BASE_URL } from "../../api/ApiUrl";
 export const UserListInfoDashboard = () => {
   const { users = [], error, loading } = useUsers();
+
+  /*========= auth check the role ==========*/
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
 
   if (loading) return <Loader />;
   if (error) return <ErrorMessage message={error} />;
@@ -23,7 +33,7 @@ export const UserListInfoDashboard = () => {
           <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
             Users List
           </h2>
-          <p className="text-sm text-gray-500">Manage all registered users</p>
+          <p className="text-sm text-gray-500">Latest user registrations</p>
         </div>
       </div>
 
@@ -42,7 +52,7 @@ export const UserListInfoDashboard = () => {
           </thead>
 
           <tbody className="divide-y divide-gray-100 dark:divide-slate-700">
-            {users.map((user, idx) => (
+            {users.slice(0, 5).map((user, idx) => (
               <tr
                 key={user.id}
                 className="hover:bg-gray-50 dark:hover:bg-slate-700/40 transition"
@@ -55,10 +65,12 @@ export const UserListInfoDashboard = () => {
                 {/* USER */}
                 <td className="px-5 py-4 flex items-center gap-3">
                   <div className="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden flex items-center justify-center text-xs font-bold text-gray-700 dark:text-white">
-                    {user.avatar ? (
+                    {!isViewer && user.avatar ? (
                       <img
-                        src={`${BASE_URL}${user.avatar}`}
-                        alt={`${user.first_name} ${user.last_name}`}
+                        src={`${user.avatar}` || user_cover}
+                        onError={(e) => (e.target.src = user_cover)}
+                        // src={`${BASE_URL}${user.avatar}`}
+                        // alt={`${user.first_name} ${user.last_name}`}
                         className="w-full h-full object-cover"
                       />
                     ) : (
@@ -67,14 +79,24 @@ export const UserListInfoDashboard = () => {
                   </div>
 
                   <span className="text-gray-800 dark:text-white font-medium">
-                    {user.first_name} {user.last_name}
+                    {!isViewer && user.first_name}
+                    {!isViewer && user.last_name}
+                    {isViewer && "No Permission"}
                   </span>
                 </td>
 
                 {/* EMAIL */}
-                <td className="px-5 py-4 text-gray-500 dark:text-gray-400">
-                  {user.email}
-                </td>
+
+                {!isViewer && (
+                  <td className="px-5 py-4 text-gray-500 dark:text-gray-400">
+                    {user.email}
+                  </td>
+                )}
+                {isViewer && (
+                  <td className="px-5 py-4 text-gray-500 dark:text-gray-400">
+                    No Permission
+                  </td>
+                )}
 
                 {/* ROLE */}
                 <td className="px-5 py-4">

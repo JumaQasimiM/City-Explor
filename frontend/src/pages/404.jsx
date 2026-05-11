@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 export const NotFoundPage = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 text-white px-6">
+    <section className="font-quicksand relative min-h-screen flex items-center justify-center overflow-hidden bg-slate-950 text-white px-6">
       {/* gradient background  */}
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-teal-600/60 rounded-full blur-3xl" />
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-sky-600/30 rounded-full blur-3xl" />

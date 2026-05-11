@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
+import {
+  Outlet,
+  NavLink,
+  useNavigate,
+  useLocation,
+  Link,
+} from "react-router-dom";
 
 // react icons
 import { HiMiniHomeModern } from "react-icons/hi2";
@@ -12,9 +18,11 @@ import {
 import { GrLanguage } from "react-icons/gr";
 import { AiOutlineLogout } from "react-icons/ai";
 
+// base api url for show images
+// import { BASE_URL } from "../api/ApiUrl";
 // images
-import logo from "../assets/logo.png";
-
+import logo from "../assets/logo1.png";
+import user_cover from "../assets/user_cover.png";
 import { useAuth } from "../context/AuthContext";
 
 export const DashboardLayout = () => {
@@ -23,6 +31,17 @@ export const DashboardLayout = () => {
   const [showSidebar, setShowSidebar] = useState(false);
 
   const { logout, user } = useAuth();
+  const role = user?.user?.role;
+  const isAdmin = role === "admin";
+  const isViewer = role === "viewer";
+  const isBusiness = role === "business";
+  const roleLabel = isAdmin
+    ? "ADMIN"
+    : isBusiness
+      ? "BUSINESS USER"
+      : isViewer
+        ? "VIEWER USER"
+        : "";
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -71,7 +90,7 @@ export const DashboardLayout = () => {
 
   const navItems = !user
     ? []
-    : user?.user?.role === "admin"
+    : user?.user?.role === "admin" || user?.user?.role === "viewer"
       ? [...adminItems, ...commonItems]
       : [...ownerItems, ...commonItems];
   const handleLogout = () => {
@@ -100,7 +119,9 @@ export const DashboardLayout = () => {
         {/* Logo */}
         <div className="flex items-center gap-4 px-6 py-4 border-b border-gray-600">
           <img
-            src={logo}
+            // src={`${BASE_URL}${user?.user?.avatar}`}
+            src={`${user?.user?.avatar}` || user_cover}
+            onError={(e) => (e.target.src = user_cover)}
             alt="Logo"
             className="w-16 h-16 rounded-full border-2 border-cyan-600"
           />
@@ -205,13 +226,16 @@ export const DashboardLayout = () => {
 
               {/* Logo */}
               <div className="flex items-center gap-3">
-                <img
-                  src={logo}
-                  alt="City Explor"
-                  className="w-10 h-10 rounded bg-white/10 p-1"
-                />
+                <Link to={"/"}>
+                  <img
+                    src={logo}
+                    alt="City Explor"
+                    title="Go to Home"
+                    className="w-20 h-10 p-1"
+                  />
+                </Link>
                 <h1 className="hidden md:block text-lg font-semibold tracking-wide">
-                  City Explor
+                  BeyondJA
                   <span className="block text-xs text-white/60">
                     Admin Dashboard
                   </span>
@@ -260,11 +284,25 @@ export const DashboardLayout = () => {
         </header>
 
         {/* Page Title */}
+
         <div className="mt-16 bg-gradient-to-r from-emerald-600 to-emerald-400 py-4 px-6 font-semibold text-2xl text-white">
           {currentTitle === "Dashboard" ? (
-            <span className="block text-xs text-white/60">Admin Dashboard</span>
+            <p>
+              {" "}
+              <span className="block text-xs text-white/60">
+                {" "}
+                Dashboard
+              </span>{" "}
+              <span className="block text-xs text-white/90"> {roleLabel}</span>
+            </p>
           ) : (
-            <span className="block text-xs text-white/60">{currentTitle}</span>
+            <p>
+              {" "}
+              <span className="block text-xs text-white/80">
+                Dashboard {">"} {currentTitle}
+              </span>
+              <span className="block text-xs text-white/90"> {roleLabel}</span>
+            </p>
           )}
         </div>
         {/* Page Content */}
@@ -276,7 +314,7 @@ export const DashboardLayout = () => {
           <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
             {/* Left */}
             <p className="opacity-80">
-              © {new Date().getFullYear()} City Explor. All rights reserved.
+              © {new Date().getFullYear()} BeyondJA. All rights reserved.
             </p>
 
             {/* Center */}

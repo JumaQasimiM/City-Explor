@@ -20,10 +20,11 @@ export const PlacesListDashboard = () => {
   // get all places from api
   const { places = [], loading, error } = usePlaces();
   const { user } = useAuth();
+  const role = user?.user?.role;
   useEffect(() => {
     if (!places || !user) return;
     const data =
-      user?.user?.role === "admin"
+      role === "admin" || role === "viewer"
         ? places
         : places.filter((place) => place.owner == user?.user?.id);
     setBasePlaces(data);
@@ -74,7 +75,7 @@ export const PlacesListDashboard = () => {
               ${
                 place?.category_detail?.name === "Hospital"
                   ? "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
-                  : category?.name === "Restaurant"
+                  : place?.category_detail?.name === "Restaurant"
                     ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300"
                     : "bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-300"
               }

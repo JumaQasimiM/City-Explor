@@ -10,13 +10,11 @@ import { SelectField } from "../../components/helper/SelectField";
 import { ApiUrl } from "../../api/ApiUrl";
 export const AddPlace = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
 
   const { cities } = useCities();
   const { categories } = useCategories();
 
   const [servicesList, setServicesList] = useState([]);
-
   const [form, setForm] = useState({
     name: "",
     description: "",
@@ -26,12 +24,18 @@ export const AddPlace = () => {
     opening_hours: "",
     contact_number: "",
     website: "",
+    latitude: "",
+    longitude: "",
     services: [],
   });
-
   const [images, setImages] = useState([]);
   const [preview, setPreview] = useState([]);
 
+  /* ======= auth ========*/
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
+  /* ================================== */
   // fetch services
   useEffect(() => {
     fetch(`${ApiUrl}/services/`)
@@ -97,7 +101,7 @@ export const AddPlace = () => {
       const res = await fetch(`${ApiUrl}/places/`, {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${user.access}`,
+          Authorization: `Bearer ${user?.access}`,
         },
         body: formData,
       });
@@ -105,33 +109,32 @@ export const AddPlace = () => {
       const data = await res.json();
 
       if (!res.ok) {
-        console.error(data);
-        throw new Error("Failed");
+        throw new Error(data.detail || data.message || "Failed");
       }
 
       toast.success("Place created ");
       navigate("/dashboard/places");
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to create place ");
+      toast.error(err.message || "Failed to create place ");
     }
   };
 
   if (!user) return null;
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-10">
+    <section className="max-w-7xl mx-auto px-4 py-10">
       <h1 className="text-2xl font-bold mb-6">Add New Place</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* GENERAL */}
         <Card title="General Information">
-          <div className="grid md:grid-cols-2 gap-4">
+          <div className="grid md:grid-cols-3 gap-4">
             <InputField
               label="Name"
               name="name"
               value={form.name}
               onChange={handleChange}
+              placeholder={"place name"}
             />
 
             <SelectField
@@ -141,20 +144,8 @@ export const AddPlace = () => {
               onChange={handleChange}
               options={categories}
               optionLabel="name"
+              placeholder={"select Category"}
             />
-          </div>
-        </Card>
-
-        {/* LOCATION */}
-        <Card title="Location">
-          <div className="grid md:grid-cols-2 gap-4">
-            <InputField
-              label="Address"
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-            />
-
             <SelectField
               label="City"
               name="city"
@@ -162,6 +153,34 @@ export const AddPlace = () => {
               onChange={handleChange}
               options={cities}
               optionLabel="name"
+              placeholder={"select City"}
+            />
+          </div>
+        </Card>
+
+        {/* LOCATION */}
+        <Card title="Location">
+          <div className="grid md:grid-cols-3 gap-4">
+            <InputField
+              label="Address"
+              name="address"
+              value={form.address}
+              onChange={handleChange}
+              placeholder={"Address"}
+            />
+            <InputField
+              label="Latitude"
+              name="latitude"
+              value={form.latitude}
+              onChange={handleChange}
+              placeholder={"Latitude"}
+            />
+            <InputField
+              label="Longitude"
+              name="longitude"
+              value={form.longitude}
+              onChange={handleChange}
+              placeholder={"Longitude"}
             />
           </div>
         </Card>
@@ -174,6 +193,7 @@ export const AddPlace = () => {
               name="opening_hours"
               value={form.opening_hours}
               onChange={handleChange}
+              placeholder={"Opening Hours"}
             />
 
             <InputField
@@ -181,6 +201,7 @@ export const AddPlace = () => {
               name="contact_number"
               value={form.contact_number}
               onChange={handleChange}
+              placeholder={"Contact number <0093 xxxx>"}
             />
 
             <InputField
@@ -188,6 +209,7 @@ export const AddPlace = () => {
               name="website"
               value={form.website}
               onChange={handleChange}
+              placeholder={"Website <https://www.site.com>"}
             />
           </div>
         </Card>
@@ -218,6 +240,7 @@ export const AddPlace = () => {
             value={form.description}
             onChange={handleChange}
             className="w-full border p-2 rounded"
+            placeholder="Description"
           />
         </Card>
 
@@ -247,12 +270,14 @@ export const AddPlace = () => {
             Cancel
           </button>
 
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded"
-          >
-            Create Place
-          </button>
+          {!isViewer && (
+            <button
+              type="submit"
+              className="px-6 py-2 bg-blue-600 text-white rounded"
+            >
+              Create Place
+            </button>
+          )}
         </div>
       </form>
     </section>
@@ -261,7 +286,7 @@ export const AddPlace = () => {
 
 /* CARD */
 const Card = ({ title, children, span = true }) => (
-  <div className="bg-white shadow p-5 rounded">
+  <div className="bg-white shadow p-5 rounded dark:bg-slate-700">
     <h2 className="font-semibold mb-4">
       {title} {span && <span className="text-red-500">*</span>}
     </h2>

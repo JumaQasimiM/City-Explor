@@ -15,9 +15,14 @@ export const GrowthChart = () => {
   const [period, setPeriod] = useState("day");
   const { data, loading } = usePlaceGrowth(period);
 
+  // 🔹 loading state
   if (loading) return <p>Loading...</p>;
 
-  //  format date
+  if (!Array.isArray(data)) {
+    return <p>Error loading data</p>;
+  }
+
+  // 🔹 format date
   const formatDate = (date) => {
     const d = new Date(date);
 
@@ -40,11 +45,14 @@ export const GrowthChart = () => {
     count: item.count,
   }));
 
-  if (!formatted.length) return <p>No data</p>;
+  //  no data
+  if (!formatted.length) {
+    return <p className="text-center">No data</p>;
+  }
 
   return (
     <div className="bg-white dark:bg-slate-800 p-4 rounded shadow">
-      {/* 🔘 SWITCH */}
+      {/* HEADER */}
       <div className="flex justify-between items-center mb-4">
         <h2 className="font-semibold text-slate-700 dark:text-white">
           Growth Places
@@ -53,26 +61,26 @@ export const GrowthChart = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setPeriod("day")}
-            className="text-teal-500 font-semibold hover:cursor-pointer"
+            className="text-teal-500 font-semibold cursor-pointer"
           >
             Day
           </button>
           <button
             onClick={() => setPeriod("week")}
-            className="text-orange-500 font-semibold hover:cursor-pointer"
+            className="text-orange-500 font-semibold cursor-pointer"
           >
             Week
           </button>
           <button
             onClick={() => setPeriod("month")}
-            className="text-blue-600 font-semibold hover:cursor-pointer"
+            className="text-blue-600 font-semibold cursor-pointer"
           >
             Month
           </button>
         </div>
       </div>
 
-      {/* 📊 CHART */}
+      {/* CHART */}
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={formatted}>
           <CartesianGrid strokeDasharray="3 3" />

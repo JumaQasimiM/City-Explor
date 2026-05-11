@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const PlaceCard = ({ place, image }) => {
   return (
-    <article className="relative w-full h-[200px] overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300">
+    <article className="relative w-full h-[240px] overflow-hidden group shadow-md hover:shadow-xl transition-shadow duration-300">
       {/* Image */}
 
       <img

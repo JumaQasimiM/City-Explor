@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ApiUrl } from "../api/ApiUrl";
 import { useFetch } from "./useFetch";
+import { useAuth } from "../context/AuthContext";
 
 // get all places
 export const usePlaces = () => {
@@ -18,23 +19,44 @@ export const usePlaces = () => {
 export const useDeletePlace = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
+
   const deletePlace = async (place_id) => {
     setLoading(true);
     setError(null);
+
     try {
+      if (!user?.access) {
+        throw new Error("No token found");
+      }
+
       const res = await fetch(`${ApiUrl}/places/${place_id}/`, {
+        headers: {
+          Authorization: `Bearer ${user?.access}`,
+        },
         method: "DELETE",
       });
+
+      let data = null;
+      try {
+        data = await res.json();
+      } catch (_) {}
+
       if (!res.ok) {
-        throw new Error("Failed to delete place");
+        throw new Error(
+          data?.detail || data?.message || "Failed to delete place",
+        );
       }
+
       return true;
     } catch (error) {
       setError(error.message || "something went wrong");
+      throw error;
     } finally {
       setLoading(false);
     }
   };
+
   return { deletePlace, error, loading };
 };
 // get place by id
@@ -57,17 +79,14 @@ export const usePlaceCategory = (cate_id) => {
 };
 
 // placeList
-export const usePopularPlace = (category) => {
-  const {
-    data: popularPlace,
-    error,
-    loading,
-  } = useFetch(category ? `${ApiUrl}/places?category=${category}` : null);
+export const usePopularPlace = () => {
+  const { data = [], error, loading } = useFetch(`${ApiUrl}/places/?limit=4`);
 
   return {
-    popularPlace: popularPlace ? popularPlace.slice(0, 4) : [],
-    error,
+    popularPlace: data,
     loading,
+    error,
+    hasData: data.length > 0,
   };
 };
 
@@ -82,34 +101,51 @@ export const useSearchByCategory = (category_id) => {
 };
 
 // edit place
-
 export const useEditPlace = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useAuth();
 
   const updatePlace = async (id, payload) => {
     setLoading(true);
     setError(null);
+
     try {
+      if (!user?.access) {
+        throw new Error("User not authenticated");
+      }
+
       const res = await fetch(`${ApiUrl}/places/${id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to update place");
+      let data = null;
+
+      try {
+        data = await res.json();
+      } catch (_) {
+        // empty body → ignore
       }
+
+      if (!res.ok) {
+        throw new Error(
+          data?.detail || data?.message || "Failed to update place",
+        );
+      }
+
       return data;
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Something went wrong");
       throw err;
     } finally {
       setLoading(false);
     }
   };
+
   return { updatePlace, error, loading };
 };

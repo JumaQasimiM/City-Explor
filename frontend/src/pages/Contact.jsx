@@ -12,12 +12,12 @@ export const Contact = () => {
   };
 
   return (
-    <section className="relative w-full min-h-screen bg-gray-100 dark:bg-slate-900 dark:text-white pt-28 pb-20">
+    <section className="relative w-full min-h-screen bg-gray-100 dark:bg-slate-900 dark:text-white pb-10 pt-28">
       <div className="max-w-7xl mx-auto px-5">
         {/* ================= Header ================= */}
         <div className="text-center mb-20">
-          <h1 className="font-caveat text-4xl md:text-7xl font-bold">
-            Get in <span className="text-green-500">Touch</span>
+          <h1 className="font-quicksand text-2xl md:text-4xl font-bold">
+            Contact <span className="text-green-500">us</span>
           </h1>
 
           <p className="mt-6 text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
@@ -31,7 +31,9 @@ export const Contact = () => {
           {/* -------- Contact Info -------- */}
           <div className="space-y-8">
             <div>
-              <h2 className="text-2xl font-bold mb-3">Contact Information</h2>
+              <h2 className="text-2xl font-bold mb-3 font-quicksand">
+                Contact Information
+              </h2>
               <p className="text-gray-600 dark:text-gray-300 max-w-md">
                 Reach out to us through any of the following channels. Our team
                 is always happy to help.
@@ -40,20 +42,20 @@ export const Contact = () => {
 
             <div className="space-y-5">
               {/* Email */}
-              <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded-xl p-5 shadow hover:shadow-lg transition">
+              <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded p-5 shadow hover:shadow-lg transition">
                 <div className="p-3 bg-indigo-500/10 rounded-lg">
                   <FaEnvelope className="text-indigo-500 text-xl" />
                 </div>
                 <div>
                   <p className="text-sm font-semibold">Email</p>
                   <p className="text-sm text-gray-600 dark:text-gray-300">
-                    info@cityexplor.com
+                    info@beyondja.com
                   </p>
                 </div>
               </div>
 
               {/* Phone */}
-              <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded-xl p-5 shadow hover:shadow-lg transition">
+              <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded p-5 shadow hover:shadow-lg transition">
                 <div className="p-3 bg-green-500/10 rounded-lg">
                   <FaPhoneAlt className="text-green-500 text-xl" />
                 </div>
@@ -66,7 +68,7 @@ export const Contact = () => {
               </div>
 
               {/* Location */}
-              <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded-xl p-5 shadow hover:shadow-lg transition">
+              <div className="flex items-center gap-4 bg-white dark:bg-slate-800 rounded p-5 shadow hover:shadow-lg transition">
                 <div className="p-3 bg-pink-500/10 rounded-lg">
                   <FaMapMarkerAlt className="text-pink-500 text-xl" />
                 </div>
@@ -81,11 +83,13 @@ export const Contact = () => {
           </div>
 
           {/* -------- Contact Form -------- */}
-          <div className="relative bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 md:p-10 overflow-hidden">
+          <div className="relative bg-white dark:bg-slate-800 rounded shadow p-8 md:p-10 overflow-hidden">
             {/* Decorative Blur */}
             <div className="absolute -top-12 -right-12 w-40 h-40 bg-teal-400/20 rounded-full blur-3xl"></div>
 
-            <h2 className="text-2xl font-bold mb-2">Send us a message</h2>
+            <h2 className="text-2xl font-bold mb-2 font-quicksand">
+              Send us a message
+            </h2>
             <p className="text-gray-600 dark:text-gray-300 mb-8">
               Fill out the form and we’ll respond as soon as possible.
             </p>
@@ -100,7 +104,7 @@ export const Contact = () => {
                   type="text"
                   required
                   placeholder="Your Name"
-                  className="w-full rounded-lg border border-gray-300 dark:border-slate-600
+                  className="w-full rounded border border-gray-300 dark:border-slate-600
                              bg-transparent px-4 py-3
                              focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
@@ -115,7 +119,7 @@ export const Contact = () => {
                   type="email"
                   required
                   placeholder="you@email.com"
-                  className="w-full rounded-lg border border-gray-300 dark:border-slate-600
+                  className="w-full rounded border border-gray-300 dark:border-slate-600
                              bg-transparent px-4 py-3
                              focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
@@ -130,7 +134,7 @@ export const Contact = () => {
                   rows="5"
                   required
                   placeholder="Write your message here..."
-                  className="w-full rounded-lg border border-gray-300 dark:border-slate-600
+                  className="w-full rounded border border-gray-300 dark:border-slate-600
                              bg-transparent px-4 py-3
                              focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
@@ -142,7 +146,7 @@ export const Contact = () => {
                 className="w-full flex items-center justify-center gap-2
                            bg-green-600 hover:bg-green-700 duration-150
                            text-white font-semibold
-                           rounded-lg px-6 py-3 transition"
+                           rounded px-6 py-3 transition"
               >
                 <FaPaperPlane />
                 Send Message

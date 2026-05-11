@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 /**
  * Custom hook to fetch data from api
  * @param {string} url - API endpoint
@@ -13,7 +12,6 @@ export const useFetch = (url) => {
 
   const fetchData = async () => {
     if (!url) return;
-
     setLoading(true);
     try {
       const res = await fetch(url);

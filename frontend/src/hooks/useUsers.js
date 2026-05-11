@@ -20,10 +20,10 @@ export const useUsers = () => {
   const { data = [], loading, error, refetch } = useFetch(`${ApiUrl}/users/`);
 
   return {
-    users: data,
+    users: Array.isArray(data) ? data : [],
     loading,
     error,
-    hasUsers: data.length > 0, // helper boolean to easily check if users exist
+    hasUsers: Array.isArray(data) && data.length > 0,
     refetch,
   };
 };
@@ -38,19 +38,25 @@ export const useCreateUser = () => {
     try {
       const res = await fetch(`${ApiUrl}/users/register/`, {
         method: "POST",
-
         // when only send text
         // body: JSON.stringify(payload),
-
         // files -- image ...
         body: payload,
       });
+      const data = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(JSON.stringify(data));
+        const firstError =
+          Object.values(data)?.[0]?.[0] ||
+          data?.detail ||
+          data?.message ||
+          "Failed to register user";
+
+        throw new Error(firstError);
       }
-      return true;
+      return data;
     } catch (error) {
       setError(error.message || "Something went wrong");
+      throw error;
     } finally {
       setLoading(false);
     }
@@ -104,7 +110,7 @@ export const useDeleteUser = () => {
   const deleteUser = async (user_id) => {
     setLoading(true);
     try {
-      const res = await fetch(`${ApiUrl}/users/${user_id}`, {
+      const res = await fetch(`${ApiUrl}/users/${user_id}/`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${user?.access}`,
@@ -126,11 +132,18 @@ export const useDeleteUser = () => {
 };
 // get user by id
 export const useGetUserById = (user_id) => {
-  const { data = [], error, loading } = useFetch(`${ApiUrl}/users/${user_id}`);
+  const {
+    data = [],
+    error,
+    loading,
+  } = useFetch(`${ApiUrl}/users/${user_id}`, {});
   return {
     user: data,
     loading,
     error,
+    headers: {
+      Authorization: `Bearer ${user?.access}`,
+    },
   };
 };
 
@@ -141,6 +154,7 @@ export const useActiveUser = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
+  const { user } = useAuth();
   const activeUser = async (user_id) => {
     setLoading(true);
     setError(null);
@@ -152,6 +166,7 @@ export const useActiveUser = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
         body: JSON.stringify({ status: "active" }),
       });

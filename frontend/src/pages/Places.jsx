@@ -9,7 +9,8 @@ import { NotFoundData } from "../components/helper/NotFoundData";
 import { PopularBlogCard } from "../components/PopularBlogCard";
 import { useBlogs } from "../hooks/useBlogs";
 
-import placeholder from "../assets/jaghori1.jpg";
+import placeholder from "../assets/place.png";
+
 import { Loader } from "../components/helper/Loading";
 import { ErrorMessage } from "../components/helper/Error";
 
@@ -41,7 +42,7 @@ export const PlacesInSite = () => {
   if (loading)
     return (
       <div className="mt-17">
-        <Loader />
+        <Loader text="loading places" />
       </div>
     );
   if (error)
@@ -52,7 +53,7 @@ export const PlacesInSite = () => {
     );
 
   return (
-    <section className="mt-5 md:mt-12 py-5 bg-gray-100 dark:bg-slate-800">
+    <section className="py-10 md:py-20 bg-gray-100 dark:bg-slate-800">
       <div className="max-w-7xl mx-auto px-4 md:px-8 md:pb-20">
         {/* ================= TOP CONTROLS ================= */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-12 pt-10">

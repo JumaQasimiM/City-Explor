@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { FaTrash, FaUserCheck } from "react-icons/fa";
-
-import { BASE_URL } from "../../api/ApiUrl";
+import { FaTrash, FaUserCheck, FaUser } from "react-icons/fa";
+import { MdPendingActions } from "react-icons/md";
+// for show images
+// import { BASE_URL } from "../../api/ApiUrl";
 
 import { useActiveUser, useDeleteUser, useUsers } from "../../hooks/useUsers";
 import { NotFoundData } from "../../components/helper/NotFoundData";
@@ -12,6 +13,10 @@ import { Loader } from "../../components/helper/Loading";
 
 // chart component
 import { UsersChart } from "../../components/dashboardComponent/UsersChart";
+import { useAuth } from "../../context/AuthContext";
+
+// images
+import user_cover from "../../assets/user_cover.png";
 export const Users = () => {
   /* ================= STATE ================= */
   const [searchUser, setSearchUser] = useState("");
@@ -22,7 +27,12 @@ export const Users = () => {
   const { deleteUser, loading: deleting } = useDeleteUser();
   const { activeUser } = useActiveUser();
 
-  /* ================= ACTIVATE ================= */
+  /*============= auth check , is viewer user be ========*/
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
+
+  /* ================= ACTIVATE !not complate!================= */
   const handleActivate = async (id) => {
     const success = await activeUser(id);
     success
@@ -35,9 +45,13 @@ export const Users = () => {
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
 
-    const success = await deleteUser(id);
-    success ? toast.success("User deleted") : toast.error("Delete failed");
-    success && refetch();
+    try {
+      await deleteUser(id);
+      toast.success("User deleted");
+      refetch();
+    } catch (error) {
+      toast.error(error.message || "Delete failed");
+    }
   };
 
   /* ================= FILTER ================= */
@@ -119,15 +133,31 @@ export const Users = () => {
                   className="hover:bg-slate-100 dark:hover:bg-slate-700/40 transition"
                 >
                   <td className="px-4 py-3">{index + 1}</td>
-                  <td className="px-4 py-3">{user.first_name}</td>
+                  {/* first name hide for user with viewer role */}
+                  {!isViewer && (
+                    <td className="px-4 py-3">{user.first_name}</td>
+                  )}
+                  {isViewer && <td className="px-4 py-3">No Permission</td>}
+
                   <td className="px-4 py-3">{user.last_name}</td>
-                  <td className="px-4 py-3">{user.email}</td>
+
+                  {!isViewer && <td className="px-4 py-3">{user.email}</td>}
+                  {isViewer && <td className="px-4 py-3">No Permission</td>}
+
+                  {/* avatar */}
                   <td className="px-4 py-3">
-                    <img
-                      src={`${BASE_URL}${user.avatar}`}
-                      alt="avatar"
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
+                    {!isViewer && (
+                      <img
+                        src={`${user.avatar}` || user_cover}
+                        onError={(e) => (e.target.src = user_cover)}
+                        // src={`${BASE_URL}${user.avatar}`}
+                        alt="avatar"
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    )}
+                    {isViewer && (
+                      <FaUser className="text-gray-500 dark:text-gray-300 text-sm" />
+                    )}
                   </td>
 
                   <td className="px-4 py-3">
@@ -141,39 +171,57 @@ export const Users = () => {
                     </span>
                   </td>
 
-                  <td className="px-4 py-3">{user.bio}</td>
-
+                  {/* role */}
+                  {!isViewer && <td className="px-4 py-3">{user.bio}</td>}
+                  {isViewer && <td className="px-4 py-3">No permission</td>}
                   {/* STATUS */}
-                  <td className="px-4 py-3 text-center">
-                    <button
-                      onClick={() => handleActivate(user.id)}
-                      disabled={user.status === "active"}
-                      className={`px-3 py-1 rounded-md text-xs font-semibold
-                      ${
-                        user.status === "active"
-                          ? "bg-gray-400 text-green-900 cursor-not-allowed"
-                          : "bg-orange-500 hover:bg-orange-600 text-black"
-                      }`}
-                    >
-                      {user.status === "active" ? "Active" : "Pending"}
-                    </button>
+                  <td className="px-4 py-3">
+                    <div className="flex justify-center gap-3">
+                      {user.status === "active" && (
+                        <span
+                          className="p-2 rounded-md text-green-600
+                          hover:bg-green-600/10 transition"
+                        >
+                          <FaUserCheck size={16} />
+                        </span>
+                      )}
+                      {user.status !== "active" && (
+                        <span
+                          className="p-2 rounded-md text-orange-600
+                          hover:bg-green-600/10 transition"
+                        >
+                          <MdPendingActions size={16} />
+                        </span>
+                      )}
+                    </div>
                   </td>
 
                   {/* ACTIONS */}
                   <td className="px-4 py-3">
                     <div className="flex justify-center gap-3">
-                      <button
-                        onClick={() => handleDelete(user.id)}
-                        disabled={deleting}
-                        className="p-2 rounded-md text-red-500
+                      {!isViewer && (
+                        <button
+                          onClick={() => handleDelete(user.id)}
+                          disabled={deleting}
+                          className="p-2 rounded-md text-red-500
                         hover:bg-red-500/10 transition disabled:opacity-50"
-                      >
-                        <FaTrash size={16} />
-                      </button>
+                        >
+                          <FaTrash size={16} />
+                        </button>
+                      )}
 
-                      {user.status !== "active" && (
+                      {user.status !== "active" && !isViewer && (
                         <button
                           onClick={() => handleActivate(user.id)}
+                          className="p-2 rounded-md text-green-600
+                          hover:bg-green-600/10 transition"
+                        >
+                          <FaUserCheck size={16} />
+                        </button>
+                      )}
+                      {isViewer && (
+                        <button
+                          title="No permission"
                           className="p-2 rounded-md text-green-600
                           hover:bg-green-600/10 transition"
                         >

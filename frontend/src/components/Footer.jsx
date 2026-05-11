@@ -1,5 +1,5 @@
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-
+import logo from "../assets/logo.png";
 export const Footer = () => {
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -13,9 +13,12 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b dark:border-white/10 border-slate-300">
           {/* Brand */}
           <div>
-            <h2 className="text-3xl font-bold text-green-500 mb-4 font-caveat">
-              City Explor
-            </h2>
+            <img
+              src={logo}
+              alt="City Explor"
+              title="Go to Home"
+              className="h-25 w-40"
+            />
             <p className="text-sm leading-relaxed text-slate-600 dark:text-slate-300">
               Discover cities, hotels, and hidden gems. Your trusted guide for
               budget-friendly and unforgettable travel experiences.
@@ -92,7 +95,7 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center py-6 gap-4">
           {/* Copyright */}
           <p className="text-xs text-slate-700 dark:text-slate-300">
-            © {new Date().getFullYear()} City Explor. All rights reserved.
+            © {new Date().getFullYear()} BeyondJA v1.0 All rights reserved.
           </p>
 
           {/* Social Icons */}

@@ -79,7 +79,11 @@ function App() {
 
               {/* Admin + Owner */}
               <Route
-                element={<ProtectedRoutes allowRole={["admin", "business"]} />}
+                element={
+                  <ProtectedRoutes
+                    allowRole={["admin", "business", "viewer"]}
+                  />
+                }
               >
                 <Route path="places">
                   <Route index element={<Places />} />

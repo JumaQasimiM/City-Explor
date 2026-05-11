@@ -16,7 +16,7 @@ export const ProtectedRoutes = ({ allowRole }) => {
     return <Navigate to="/login" replace />;
   }
 
-  // ✅ همیشه array check
+  // always array check
   if (allowRole && !allowRole.includes(user?.user?.role)) {
     // redirect based on role
     if (user?.user?.role === "business") {

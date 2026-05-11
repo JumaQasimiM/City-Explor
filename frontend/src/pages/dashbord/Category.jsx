@@ -11,6 +11,7 @@ import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { EditCategory } from "./EditModals/EditCategory";
+import { useAuth } from "../../context/AuthContext";
 
 export const Category = () => {
   const [categoryName, setCategoryName] = useState("");
@@ -20,6 +21,11 @@ export const Category = () => {
   const { createCategory, loading: createLoading } = useCreateCategory();
   const { deleteCategory, loading: deleteLoading } = useDeleteCategory();
 
+  // =========== check if the user viewer is ==========
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
+  const isAdmin = role === "admin";
   /* ================= ADD ================= */
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,6 +40,7 @@ export const Category = () => {
     if (success) {
       toast.success("Category created successfully");
       setCategoryName("");
+
       refetch();
     } else {
       toast.error("Failed to create category");
@@ -89,13 +96,19 @@ export const Category = () => {
             className="flex-1 px-4 py-2 rounded-md border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-white outline-none focus:ring-2 focus:ring-teal-500"
           />
 
-          <button
-            type="submit"
-            disabled={createLoading || !categoryName.trim()}
-            className="px-6 py-2 rounded-md bg-teal-600 text-white font-medium hover:bg-teal-700 transition disabled:opacity-50"
-          >
-            {createLoading ? "Adding..." : "Add Category"}
-          </button>
+          {!isViewer && (
+            <button
+              type="submit"
+              disabled={createLoading || !categoryName.trim()}
+              className={
+                isViewer
+                  ? "cursor-not-allowed px-6 py-2 rounded-md bg-teal-600 text-white font-medium hover:bg-teal-700 transition disabled:opacity-50"
+                  : "px-6 py-2 rounded-md bg-teal-600 text-white font-medium hover:bg-teal-700 transition disabled:opacity-50"
+              }
+            >
+              {createLoading ? "Adding..." : "Add Category"}
+            </button>
+          )}
         </form>
 
         {/* ================= LIST ================= */}
@@ -134,22 +147,25 @@ export const Category = () => {
                       <div className="flex justify-end gap-3">
                         <button
                           onClick={() => handleEdit(category.id)}
-                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition"
+                          disabled={isViewer}
+                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition disabled:cursor-not-allowed"
                         >
                           <FaEdit size={18} />
                         </button>
 
-                        <button
-                          onClick={() => handleDelete(category.id)}
-                          disabled={deleteLoading}
-                          className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
-                        >
-                          {deleteLoading ? (
-                            "..."
-                          ) : (
-                            <MdDeleteForever size={18} />
-                          )}
-                        </button>
+                        {!isViewer && (
+                          <button
+                            onClick={() => handleDelete(category.id)}
+                            disabled={deleteLoading}
+                            className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
+                          >
+                            {deleteLoading ? (
+                              "..."
+                            ) : (
+                              <MdDeleteForever size={18} />
+                            )}
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

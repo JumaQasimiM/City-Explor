@@ -1,6 +1,7 @@
 import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
 import { useReducer, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 /**
  * Custom hook to fetch cities from API
  *
@@ -12,7 +13,7 @@ import { useReducer, useState } from "react";
  * @returns {object}
  */
 export const useCities = () => {
-  const { data = [], error, loading, refetch } = useFetch(`${ApiUrl}/cities/`);
+  const { data, error, loading, refetch } = useFetch(`${ApiUrl}/cities/`);
 
   return {
     cities: data,
@@ -49,18 +50,28 @@ export const useCityById = (city_id) => {
 export const useDeleteCity = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const { user } = useAuth();
   const deleteCity = async (cityId) => {
     setLoading(true);
     setError(null);
 
     try {
       const res = await fetch(`${ApiUrl}/cities/${cityId}/`, {
+        headers: { Authorization: `Bearer ${user.access}` },
         method: "DELETE",
       });
+      let data = null;
+
+      try {
+        data = await res.json();
+      } catch (_) {
+        // empty body → ignore
+      }
 
       if (!res.ok) {
-        throw new Error("Failed to delete city");
+        throw new Error(
+          data?.detail || data?.message || "Failed to update City",
+        );
       }
 
       return true;
@@ -89,20 +100,24 @@ export const useDeleteCity = () => {
 export const useCreateCity = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const { user } = useAuth();
   const createCity = async (payload) => {
     setLoading(true);
     setError(null);
     try {
       const res = await fetch(`${ApiUrl}/cities/`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
+        },
         body: JSON.stringify(payload),
       });
+      const data = await res.json();
       if (!res.ok) {
-        throw new Error("Failed to create city");
+        throw new Error(data.detail || data.message || "Failed to create city");
       }
-      return await res.json();
+      return data;
     } catch (error) {
       setError(error.message || "something went wrong");
       throw error;
@@ -117,6 +132,7 @@ export const useCreateCity = () => {
 // update cits
 
 export const useEditCity = () => {
+  const { user } = useAuth();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const updateCity = async (city_id, payload) => {
@@ -126,6 +142,7 @@ export const useEditCity = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
 
         body: JSON.stringify(payload),

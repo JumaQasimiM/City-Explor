@@ -1,6 +1,7 @@
 import { useFetch } from "./useFetch";
 import { ApiUrl } from "../api/ApiUrl";
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 // =======================
 // GET COUNTRIES
@@ -32,7 +33,7 @@ export const useCountryById = (id) => {
 export const useCreateCountry = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const { user } = useAuth();
   const createCountry = async (payload) => {
     setLoading(true);
     setError(null);
@@ -42,12 +43,14 @@ export const useCreateCountry = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
         body: JSON.stringify(payload),
       });
 
       if (!res.ok) {
-        throw new Error("Failed to create country");
+        throw new Error(data.message || "Update failed");
+        throw new Error(data.message || "Failed to create country");
       }
 
       return await res.json();
@@ -69,6 +72,7 @@ export const useDeleteCountry = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const { user } = useAuth();
   const deleteCountry = async (country_id) => {
     setLoading(true);
     setError(null);
@@ -76,10 +80,13 @@ export const useDeleteCountry = () => {
     try {
       const res = await fetch(`${ApiUrl}/countries/${country_id}/`, {
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${user.access}`,
+        },
       });
 
       if (!res.ok) {
-        throw new Error("Failed to delete country");
+        throw new Error(data.message || "Delete failed");
       }
 
       return true;
@@ -98,7 +105,7 @@ export const useDeleteCountry = () => {
 export const useEditCountry = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const { user } = useAuth();
   const updateCountry = async (country_id, payload) => {
     setLoading(true);
     setError(null);
@@ -108,6 +115,7 @@ export const useEditCountry = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${user.access}`,
         },
         body: JSON.stringify(payload),
       });

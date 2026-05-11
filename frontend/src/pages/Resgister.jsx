@@ -40,7 +40,7 @@ export const RegisterUser = () => {
       return;
     }
 
-    // 🔥 IMPORTANT: FormData (for file upload)
+    // IMPORTANT: FormData (for file upload)
     const formDataToSend = new FormData();
 
     formDataToSend.append("first_name", first_name);
@@ -51,29 +51,32 @@ export const RegisterUser = () => {
     formDataToSend.append("bio", bio || "");
     formDataToSend.append("avatar", avatar);
 
-    const result = await createUser(formDataToSend);
-
-    if (result) {
-      toast.success("Account created successfully 🎉");
+    try {
+      await createUser(formDataToSend);
+      toast.success("Account created successfully ");
       e.target.reset();
       navigate("/login");
-    } else {
-      toast.error(error || "Something went wrong");
+    } catch (error) {
+      toast.error(error.message || "Something went wrong");
     }
   };
-
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage />;
 
   return (
     <section
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className="min-h-screen flex items-center justify-center bg-cover bg-center px-4"
+      className="font-quicksand min-h-screen flex items-center justify-center bg-cover bg-center px-4 relative py-20 my-15"
     >
-      <div className="w-full max-w-3xl bg-gray-200 dark:bg-slate-800 rounded p-6 shadow-lg">
-        <h1 className="text-3xl text-center font-bold mb-6 dark:text-white/60 text-gray-700">
-          Register User
-        </h1>
+      {/* Overlay */}
+      <div className="absolute z-0 inset-0 bg-black/60"></div>
+      <div className="z-10 w-full max-w-3xl bg-gray-200 dark:bg-slate-800/90 rounded p-6 shadow-lg">
+        <div className="text-center mb-8">
+          <h1 className="text-xl md:text-4xl font-bold font-quicksand text-gray-900 dark:text-white">
+            Register New User
+          </h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-400">
+            Create new account
+          </p>
+        </div>
 
         <form
           onSubmit={handleSubmit}

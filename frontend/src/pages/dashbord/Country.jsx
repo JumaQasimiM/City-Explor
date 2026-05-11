@@ -11,6 +11,7 @@ import { Loader } from "../../components/helper/Loading";
 import { ErrorMessage } from "../../components/helper/Error";
 import { NotFoundData } from "../../components/helper/NotFoundData";
 import { EditCountry } from "./EditModals/Editcountry";
+import { useAuth } from "../../context/AuthContext";
 
 export const Country = () => {
   /* ================= STATE ================= */
@@ -21,6 +22,10 @@ export const Country = () => {
   const { countries, error, loading, hasCountry, refetch } = useCountries();
   const { createCountry, loading: creating } = useCreateCountry();
   const { deleteCountry, loading: deleting } = useDeleteCountry();
+
+  const { user } = useAuth();
+  const role = user?.user?.role;
+  const isViewer = role === "viewer";
 
   /* ================= ADD ================= */
   const handleSubmit = async (e) => {
@@ -84,14 +89,18 @@ export const Country = () => {
               focus:ring-2 focus:ring-teal-500 outline-none"
           />
 
-          <button
-            type="submit"
-            disabled={creating || !countryName.trim()}
-            className="bg-teal-600 hover:bg-teal-700 text-white font-medium
-              rounded-md px-6 py-2 transition disabled:opacity-50"
-          >
-            {creating ? "Adding..." : "Add Country"}
-          </button>
+          {/* if viewer then cannot create */}
+
+          {!isViewer && (
+            <button
+              type="submit"
+              disabled={creating || !countryName.trim()}
+              className="bg-teal-600 hover:bg-teal-700 text-white font-medium
+              rounded-md px-6 py-2 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {creating ? "Adding..." : "Add Country"}
+            </button>
+          )}
         </form>
 
         {/* ================= COUNTRY LIST ================= */}
@@ -128,19 +137,22 @@ export const Country = () => {
                     <td className="py-3 px-2">
                       <div className="flex justify-end gap-3">
                         <button
+                          disabled={isViewer}
                           onClick={() => setEditCountryId(country.id)}
-                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition"
+                          className="p-2 rounded-md text-blue-500 hover:bg-blue-500/10 transition disabled:cursor-not-allowed"
                         >
                           <FaEdit size={16} />
                         </button>
 
-                        <button
-                          onClick={() => handleDelete(country.id)}
-                          disabled={deleting}
-                          className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
-                        >
-                          <FaTrash size={16} />
-                        </button>
+                        {!isViewer && (
+                          <button
+                            onClick={() => handleDelete(country.id)}
+                            disabled={deleting}
+                            className="p-2 rounded-md text-red-500 hover:bg-red-500/10 transition disabled:opacity-50"
+                          >
+                            <FaTrash size={16} />
+                          </button>
+                        )}
                       </div>
                     </td>
                   </tr>

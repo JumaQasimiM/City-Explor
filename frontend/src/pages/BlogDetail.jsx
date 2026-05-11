@@ -2,19 +2,22 @@ import { useParams, Link } from "react-router-dom";
 import { FaUserAlt, FaCalendarAlt, FaEye, FaArrowLeft } from "react-icons/fa";
 
 import { useBlogById } from "../hooks/useBlogs";
-import { BlogComments } from "../components/BlogComments";
+// import { BlogComments } from "../components/BlogComments";
 
 // import { formatDistanceToNow } from "date-fns";
 
+// image
+import blog_cover from "../assets/jaghori.png";
+import { Loader } from "../components/helper/Loading";
 export const BlogDetail = () => {
   const { id } = useParams();
   const { data: blog, loading, error } = useBlogById(id);
 
   if (loading) {
     return (
-      <section className="py-32 text-center text-gray-500">
-        Loading blog...
-      </section>
+      <div className="mt-17">
+        <Loader text={"loading blog"} />
+      </div>
     );
   }
 
@@ -39,8 +42,9 @@ export const BlogDetail = () => {
       {blog.image && (
         <div className="max-w-5xl mx-auto px-5">
           <img
-            src={blog.image}
+            src={blog.image || blog_cover}
             alt={blog.title}
+            onError={(e) => (e.target.src = blog_cover)}
             className="w-full h-[300px] md:h-[420px] object-cover rounded"
           />
         </div>
@@ -68,7 +72,7 @@ export const BlogDetail = () => {
         </div>
 
         {/* DESCRIPTION */}
-        <p className="text-base md:text-lg leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl">
+        <p className="text-base md:text-lg text-justify leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl">
           {blog.description}
         </p>
 
@@ -98,7 +102,8 @@ export const BlogDetail = () => {
       <div className="max-w-5xl mx-auto px-10 py-8 border-t border-gray-200 dark:border-slate-700 space-y-6">
         <div className="flex items-center gap-4">
           <img
-            src={blog.user?.avatar || "/default-avatar.png"}
+            src={blog.user?.avatar || blog_cover}
+            onError={(e) => (e.target.src = blog_cover)}
             className="w-14 h-14 rounded-full object-cover border"
           />
 
@@ -120,9 +125,9 @@ export const BlogDetail = () => {
       </div>
 
       {/* ===== COMMENTS ===== */}
-      <div className="max-w-5xl mx-auto px-5 py-12 border-t border-gray-200 dark:border-slate-700">
+      {/* <div className="max-w-5xl mx-auto px-5 py-12 border-t border-gray-200 dark:border-slate-700">
         <BlogComments blog_id={blog?.id} />
-      </div>
+      </div> */}
     </section>
   );
 };

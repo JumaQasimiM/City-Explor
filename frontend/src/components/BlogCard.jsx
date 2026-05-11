@@ -6,6 +6,8 @@ import { MdOutlineDateRange } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
+// images
+import blog_cover from "../assets/blog_cover2.jpg";
 export const BlogCard = ({ blog }) => {
   const { data: author } = useBlogAuthor(blog.user_id);
 
@@ -23,8 +25,9 @@ export const BlogCard = ({ blog }) => {
       {/* ===== IMAGE ===== */}
       <div className="h-[220px] overflow-hidden">
         <img
-          src={blog.image}
+          src={blog.image || blog_cover}
           alt={blog.title}
+          onError={(e) => (e.target.src = blog_cover)}
           className="
             w-full h-full object-cover
             transition duration-500

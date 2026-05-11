@@ -28,13 +28,6 @@ export const Login = () => {
       toast.error("Enter a valid password");
       return;
     }
-    // email validation
-    // const emailExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    // if (!emailExp.test(email)) {
-    //   toast.error("Enter a valid Email");
-    //   return;
-    // }
-
     // login create in authContext
     await login(username, password);
   };
@@ -42,10 +35,12 @@ export const Login = () => {
   useEffect(() => {
     if (!user) return;
 
-    if (user.user.role === "admin") {
+    if (
+      user.user.role === "admin" ||
+      user.user.role === "viewer" ||
+      user.user.role === "business"
+    ) {
       navigate("/dashboard", { replace: true });
-    } else if (user.user.role === "business") {
-      navigate("/dashboard/places", { replace: true });
     } else {
       navigate("/", { replace: true });
     }
@@ -69,7 +64,7 @@ export const Login = () => {
       <div className="relative w-full max-w-md bg-gray-200 dark:bg-slate-800/90 backdrop-blur-xl rounded  p-8 md:p-10">
         {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-xl md:text-4xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl md:text-4xl font-bold font-quicksand text-gray-900 dark:text-white">
             Welcome Back
           </h1>
           <p className="mt-2 text-gray-600 dark:text-gray-400">
@@ -81,8 +76,7 @@ export const Login = () => {
         <form className="space-y-6" onSubmit={handleLogin}>
           <div className="flex flex-col gap-2">
             <label className="form-label">
-              Username{" "}
-              <small className="text-red-700">[test User: testUser]</small>
+              Username <small className="text-red-700">[test User: demo]</small>
             </label>
             <input
               type="text"
@@ -96,7 +90,7 @@ export const Login = () => {
           <div className="flex flex-col gap-2">
             <label className="form-label">
               Password{" "}
-              <small className="text-red-700">[test pass: testP@ss09]</small>
+              <small className="text-red-700">[test pass: 123456]</small>
             </label>
             <input
               type="password"

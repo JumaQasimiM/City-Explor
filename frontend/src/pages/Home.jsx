@@ -1,28 +1,24 @@
 import { Hero } from "../components/Hero";
-import { PlaceArtical } from "../components/PlaceArtical";
-import { PopularHotels } from "../components/PopularHotels";
+import { Stats } from "../components/Stats";
 import { PopularPlaces } from "../components/PopularPlaces";
-import { PopularRestaurants } from "../components/PopularRestaurants";
-import { TestimonialsSlider } from "../components/Testimonials";
+import { HowUse } from "../components/HowUse";
+import { LatestBlogs } from "../components/LatestBlogs";
+import { Advertisment } from "../components/advertisment";
+import { SocialMedia } from "../components/socialMedia";
+import { Newsletter } from "../components/Newsletter";
 
 export const Home = () => {
   return (
     <>
-      {/* ============ Hero ======= */}
       <Hero />
-
-      {/* ============ Place Artical  ======= */}
-      <PlaceArtical />
-      {/* ============ Popular place ======= */}
+      <Stats />
+      <Advertisment />
+      <HowUse />
       <PopularPlaces />
-
-      {/* ============ Popular Hotels ======= */}
-      <PopularHotels />
-      {/* ============ Popular Restaurants ======= */}
-      <PopularRestaurants />
-      {/* ============ testmonial ======= */}
-      <TestimonialsSlider />
-      {/* ============ advertisment or offer ======= */}
+      <SocialMedia />
+      <LatestBlogs />
+      <Newsletter />
+      {/* <TestimonialsSlider /> */}
     </>
   );
 };
