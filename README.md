@@ -1,5 +1,5 @@
 # BeyondJA — Explore Beyond Jaghori
-## Live Demo [Click here to view the live demo] (https://beyondja.netlify.app/)
+## Live Demo [Click here to view the live demo](https://beyondja.netlify.app/)
 BeyondJA is a modern full-stack city exploration platform built with React.js and Django REST Framework.
 The platform allows users to discover places, cities, local experiences, and community-driven content through a clean UI and a role-based dashboard system.
 
