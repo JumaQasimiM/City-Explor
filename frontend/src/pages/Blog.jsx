@@ -11,6 +11,10 @@ import blog_cover from "../assets/blog_cover.png";
 export const Blog = () => {
   const { blogs = [], loading, error } = useBlogs();
 
+  // pagination
+  const page = 1;
+  const perPage = 5;
+  const totalBlog = blogs.lenght;
   if (loading)
     return (
       <div className="mt-20">

@@ -11,11 +11,9 @@ export const ProtectedRoutes = ({ allowRole }) => {
       </div>
     );
   }
-
   if (!user) {
     return <Navigate to="/login" replace />;
   }
-
   // always array check
   if (allowRole && !allowRole.includes(user?.user?.role)) {
     // redirect based on role

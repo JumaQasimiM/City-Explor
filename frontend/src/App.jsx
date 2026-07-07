@@ -11,7 +11,6 @@ import { Blog } from "./pages/Blog";
 import { BlogDetail } from "./pages/BlogDetail";
 import { Login } from "./pages/Login";
 import { RegisterUser } from "./pages/Resgister";
-import { ResetPassword } from "./pages/ResetPassword";
 import { NotFoundPage } from "./pages/404";
 
 // Layouts
@@ -56,7 +55,6 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterUser />} />
-            <Route path="/resetpassword" element={<ResetPassword />} />
           </Route>
 
           {/* ================= DASHBOARD (ALL LOGGED USERS) ================= */}
@@ -91,19 +89,6 @@ function App() {
                   <Route path=":id" element={<PlaceDetail />} />
                 </Route>
               </Route>
-              {/* Admin + writer (guide) */}
-              {/* <Route
-                element={
-                  <ProtectedRoutes
-                    allowRole={["admin", "business", "viewer"]}
-                  />
-                }
-              >
-                <Route path="blogs">
-                  <Route element={<DashboardBlogs />} />
-                  <Route path="add" element={<CreateBlog />} />
-                </Route>
-              </Route> */}
             </Route>
           </Route>
 

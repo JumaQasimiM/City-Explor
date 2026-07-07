@@ -6,13 +6,13 @@ export const NotFoundData = ({
 }) => (
   <div
     className="
-      flex flex-col items-center justify-center
-      py-14 px-6
-      text-center
-      bg-white dark:bg-slate-800
-      border border-dashed border-gray-300 dark:border-slate-600
-      rounded-xl
-    "
+          flex flex-col items-center justify-center
+          py-14 px-6
+          text-center
+          bg-white dark:bg-slate-800
+          border border-dashed border-gray-300 dark:border-slate-600
+          rounded-xl
+        "
   >
     {/* Icon */}
     <div

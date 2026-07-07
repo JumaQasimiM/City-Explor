@@ -8,7 +8,6 @@ import { useAuth } from "../../context/AuthContext";
 // image
 import user_cover from "../../assets/user_cover.png";
 //  for show images
-// import { BASE_URL } from "../../api/ApiUrl";
 export const UserListInfoDashboard = () => {
   const { users = [], error, loading } = useUsers();
 

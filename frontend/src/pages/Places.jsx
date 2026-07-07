@@ -140,7 +140,7 @@ export const PlacesInSite = () => {
             )}
           </div>
 
-          {/* بلاگ‌های محبوب */}
+          {/* popular blogs */}
           <div className="px-4 py-2">
             <div className="text-left mb-8">
               <h1 className="text-lg md:text-xl font-semibold text-gray-900 dark:text-gray-300 mb-2 border-b-2 border-b-gray-300 pb-3">
