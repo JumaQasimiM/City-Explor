@@ -31,6 +31,7 @@ import { Setting } from "./pages/dashbord/Setting";
 // Auth
 import { ProtectedRoutes } from "./routes/ProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
+import OnLoadPopup from "./components/helper/onLoadpopup";
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           theme="colored"
           transition={Bounce}
         />
+        <OnLoadPopup />
 
         <Routes>
           {/* ================= WEBSITE ROUTES ================= */}
