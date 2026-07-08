@@ -64,8 +64,8 @@ export const Blog = () => {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
           {/* ===== MAIN BLOG LIST ===== */}
           <article className="lg:col-span-3 space-y-8">
-            {blogs.map((blog) => (
-              <BlogCard blog={blog} key={blog.id} />
+            {blogs.map((blog, index) => (
+              <BlogCard blog={blog} index={index} key={blog.id} />
             ))}
           </article>
 

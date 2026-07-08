@@ -6,47 +6,83 @@ import { MdOutlineDateRange } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-// images
 import blog_cover from "../assets/blog_cover2.jpg";
-export const BlogCard = ({ blog }) => {
+
+export const BlogCard = ({ blog, index }) => {
   const { data: author } = useBlogAuthor(blog.user_id);
+
+  const isOdd = index % 2 !== 0;
 
   return (
     <article
-      className="
+      className={`
         group
-        bg-white dark:bg-slate-900
-        border border-gray-200 dark:border-slate-700
-        rounded overflow-hidden
-        shadow-sm hover:shadow-md
-        transition duration-300
-      "
+        grid
+        grid-cols-1
+        md:grid-cols-2
+        bg-white
+        border
+        border-slate-200
+        rounded
+        overflow-hidden
+        shadow-sm
+        transition-all
+        duration-300
+        ${isOdd ? "md:flex-row-reverse" : ""}
+      `}
     >
-      {/* ===== IMAGE ===== */}
-      <div className="h-[220px] overflow-hidden">
+      {/* IMAGE */}
+      <div
+        className={`
+          h-[300px]
+          overflow-hidden
+          ${isOdd ? "md:order-2" : "md:order-1"}
+        `}
+      >
         <img
           src={blog.image || blog_cover}
           alt={blog.title}
           onError={(e) => (e.target.src = blog_cover)}
           className="
-            w-full h-full object-cover
-            transition duration-500
+            w-full
+            h-full
+            object-cover
+            transition
+            duration-500
             group-hover:scale-105
           "
         />
       </div>
 
-      {/* ===== CONTENT ===== */}
-      <div className="p-6 space-y-4">
+      {/* CONTENT */}
+      <div
+        className={`
+          p-8
+          flex
+          flex-col
+          justify-center
+          ${isOdd ? "md:order-1" : "md:order-2"}
+        `}
+      >
         {/* META */}
-        <div className="flex flex-wrap gap-4 text-xs text-gray-500 dark:text-gray-400">
-          <span className="flex items-center gap-1 uppercase">
-            <FaUserAlt className="opacity-70" />{" "}
+        <div
+          className="
+            flex
+            flex-wrap
+            gap-5
+            text-xs
+            text-slate-500
+            mb-5
+          "
+        >
+          <span className="flex items-center gap-1">
+            <FaUserAlt />
             {blog.user?.first_name || "Unknown"} {blog.user?.last_name}
           </span>
 
           <span className="flex items-center gap-1">
             <MdOutlineDateRange />
+
             {new Date(blog.created_at).toLocaleDateString("de-DE", {
               year: "numeric",
               month: "long",
@@ -63,17 +99,26 @@ export const BlogCard = ({ blog }) => {
         {/* TITLE */}
         <h2
           className="
-            text-xl md:text-2xl font-semibold
-            text-gray-900 dark:text-white
-            leading-snug
-            group-hover:text-green-600 transition
+            text-2xl
+            font-bold
+            text-slate-900
+            leading-tight
+            group-hover:text-green-600
+            transition
           "
         >
           <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
         </h2>
 
         {/* DESCRIPTION */}
-        <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-3">
+        <p
+          className="
+            mt-4
+            text-slate-600
+            leading-relaxed
+            line-clamp-3
+          "
+        >
           {blog.description || "No description available."}
         </p>
 
@@ -81,13 +126,18 @@ export const BlogCard = ({ blog }) => {
         <Link
           to={`/blogs/${blog.id}`}
           className="
-            inline-flex items-center gap-1
-            text-green-600 font-medium text-sm
-            hover:gap-2 transition-all
+            mt-6
+            inline-flex
+            items-center
+            gap-2
+            text-green-600
+            font-semibold
+            hover:gap-3
+            transition-all
           "
         >
           Read more
-          <IoIosArrowRoundForward size={20} />
+          <IoIosArrowRoundForward size={22} />
         </Link>
       </div>
     </article>
