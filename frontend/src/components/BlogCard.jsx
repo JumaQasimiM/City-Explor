@@ -1,6 +1,9 @@
 import { useBlogAuthor } from "../hooks/useBlogs";
 import { Link } from "react-router-dom";
 
+// react markswon
+import ReactMarkdwon from "react-markdown";
+
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineDateRange } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
@@ -119,7 +122,9 @@ export const BlogCard = ({ blog, index }) => {
             line-clamp-3
           "
         >
-          {blog.description || "No description available."}
+          <ReactMarkdwon>
+            {blog.description || "No description available."}
+          </ReactMarkdwon>
         </p>
 
         {/* BUTTON */}

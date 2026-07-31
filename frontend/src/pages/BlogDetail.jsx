@@ -1,6 +1,8 @@
 import { useParams, Link } from "react-router-dom";
 import { FaUserAlt, FaCalendarAlt, FaEye, FaArrowLeft } from "react-icons/fa";
 
+// react markdwon
+import ReactMarkdwwon from "react-markdown";
 import { useBlogById } from "../hooks/useBlogs";
 // import { BlogComments } from "../components/BlogComments";
 
@@ -73,7 +75,7 @@ export const BlogDetail = () => {
 
         {/* DESCRIPTION */}
         <p className="text-base md:text-lg text-justify leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl">
-          {blog.description}
+          <ReactMarkdwwon>{blog.description}</ReactMarkdwwon>
         </p>
 
         {/* TAGS */}
