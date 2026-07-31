@@ -1,5 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Link } from "react-router-dom";
+// react markdwon
+import ReactMarkdwon from "react-markdown";
 // Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
@@ -74,7 +76,9 @@ export const LatestBlogsSwiper = () => {
                 </h3>
 
                 <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed text-justify">
-                  {blog.description.slice(0, 150)}
+                  <ReactMarkdwon>
+                    {blog.description.slice(0, 150)}
+                  </ReactMarkdwon>
                 </p>
 
                 <div className="flex flex-col items-left sm:flex-row gap-3 text-xs text-slate-500 dark:text-slate-400 mt-5 mb-3">

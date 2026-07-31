@@ -74,9 +74,9 @@ export const BlogDetail = () => {
         </div>
 
         {/* DESCRIPTION */}
-        <p className="text-base md:text-lg text-justify leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl">
+        <div className="text-base md:text-lg text-justify leading-relaxed text-gray-700 dark:text-gray-300 max-w-3xl">
           <ReactMarkdwwon>{blog.description}</ReactMarkdwwon>
-        </p>
+        </div>
 
         {/* TAGS */}
         {blog.tags && (
