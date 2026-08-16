@@ -17,7 +17,7 @@ const OnLoadPopup = () => {
   if (!showPopup) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-5">
+    <div className="fixed inset-0 z-200 flex items-center justify-center px-5">
       {/* Background */}
       <div
         className="
@@ -34,7 +34,7 @@ const OnLoadPopup = () => {
         w-full
         max-w-lg
         overflow-hidden
-        rounded-3xl
+        rounded
         bg-white
         shadow-2xl
         border border-white/30
@@ -145,7 +145,7 @@ const OnLoadPopup = () => {
             text-slate-900
             "
           >
-            Loading NEON Project
+            Loading Data
           </h1>
 
           <p
@@ -260,16 +260,19 @@ const OnLoadPopup = () => {
               >
                 Status
               </p>
-
-              <h3
-                className="
+              {cities.length > 0 ? (
+                <h3
+                  className="
                 text-xl
                 font-bold
                 text-green-600
                 "
-              >
-                Ready
-              </h3>
+                >
+                  Ready
+                </h3>
+              ) : (
+                "Please wait"
+              )}
             </div>
           </div>
 
